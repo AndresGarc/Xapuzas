@@ -1,111 +1,90 @@
-
-
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
   View,
+  StyleSheet,
+  Button,
+  Pressable,
+  Modal
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Formulario from './src/components/Formulario';
 
-const Section = ({ children, title }): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+
+
+  //Aquí van la declaracion de hooks y el estado / variable que contiene la información y una función que modifica el state
+  /*const [ cliente, setCliente ] = useState({}); // lo que hay aquí dentro es el valor inicial de ese objeto, en este caso cliente es un objeto vacío
+  const [total, setTotal] = useState(0); // esto es un número
+  const [clientes, setClientes] = useState([]); // esto es una colección
+  const [modal, setModal] = useState(false); // esto es un booleano
+  */
+
+  //Al estar definido aquí solo puedes usar este estado en este componente
+  const [modalVisible, setModalVisible] = useState(false);
+
+  //todo lo de aquí está escrito en js
+  const nuevaCitaHnandler = () => {
+    //para modficiar esa variable declarada en el state debe ser mediante la función declarada
+    setModalVisible(true);
+  }
+
+  const closeModal = () => {
+    setModalVisible(false);
+  }
+
+
+  //Este return es muy importante, es lo que saldrá en pantalla -> aquí esta la sintaxis de js+html
+  // Añadir que no puedes devolver varios elementos, debe ser solo 1
+  // {' '} ES UN ESPACIO EN BLANCO
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+    <SafeAreaView style={styles.background}>
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+      <Text style={styles.titulo}>Xapuzas</Text>
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+      <Pressable onPress={ () => setModalVisible(true) } style={styles.btn}>
+        <Text style={styles.btnTxt}>Crear</Text>
+      </Pressable>
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            QUE ME DEJE a a
-          </Section>
+      <Formulario 
+        modalVisible = {modalVisible}
+        setModalVisible = {setModalVisible}
+      />
 
-          <Section title="Me fumo 47 porros seguidos">
-            Buenas tardes familia FUNCIONAMO LA COMPILACION O NO
-          </Section>
-
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
     </SafeAreaView>
   );
 };
 
+//ESTILOS
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  titulo: {
+    textAlign: 'center',
+    fontSize: 30,
+    marginTop: 10
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  tituloBold: {
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  background: {
+    backgroundColor: '#FAE7C4',
+    flex: 1
   },
-  highlight: {
-    fontWeight: '700',
+  btn: {
+   backgroundColor: '#EDAC70',
+   padding: 15,
+   margin: 20,
+   borderRadius: 10
   },
+  btnTxt: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 15,
+    textTransform: 'uppercase'
+  }
+
 });
+
 
 export default App;
