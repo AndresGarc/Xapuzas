@@ -8,14 +8,16 @@ import {
     View,
     TextInput,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 
 
-//le mando las propiedades que me interesan
-const Formulario = ({modalVisible, setModalVisible}) => {
+//le mando las propiedades que me interesan => ({props})
+const CrearTarea = () => {
 
     const [titulo, setTitulo] = useState('');
     const [cliente, setCliente] = useState('');
@@ -27,6 +29,8 @@ const Formulario = ({modalVisible, setModalVisible}) => {
     const [fecha, setFecha] = useState(new Date());
     const [showHora, setShowTime] = useState(false);
     const [hora, setTime] = useState(new Date());
+
+    const navegacion = useNavigation();
 
     const pickDate = (event, selectedDate) => {
         const currentDate = selectedDate;
@@ -40,13 +44,27 @@ const Formulario = ({modalVisible, setModalVisible}) => {
         setTime(selectedTime); 
     }
 
+    const handleTarea = () => {
+        //VALIDACION
+        //La alerta -> titulo, descripcion y los diferentes botones que quieras añadir para la alerta
+        if(titulo == ''){
+            Alert.alert(
+                'Algo va mal',
+                'El título es obligatorio',
+                [{text: 'Entendido'}]
+            );
+            return
+        }
+
+
+    }
+
 
     return (
-        <Modal animationType='fade' visible={modalVisible}>
             <SafeAreaView style={styles.background}>
                 <ScrollView>
                     <View style={styles.flexHorizontal}>
-                        <Pressable onPress={ () => setModalVisible(!modalVisible) } style={styles.btn}>
+                        <Pressable onPress={ () => navegacion.navigate("Tareas") } style={styles.btn}>
                             <Text style={styles.btnTxt}>Cerrar</Text>
                         </Pressable>
                         <Text style={styles.titulo}>Creador de tareas</Text>
@@ -159,13 +177,12 @@ const Formulario = ({modalVisible, setModalVisible}) => {
                     </View>
 
 
-                    <Pressable onPress={ () => setModalVisible(false) } style={styles.btn}>
+                    <Pressable onPress={handleTarea} style={styles.btn}>
                         <Text style={styles.btnTxt}>Crear</Text>
                     </Pressable>
 
                 </ScrollView>
             </SafeAreaView>
-      </Modal>
     )
 }
 
@@ -233,4 +250,4 @@ const styles = StyleSheet.create({
   
   });
 
-export default Formulario;
+export default CrearTarea;
