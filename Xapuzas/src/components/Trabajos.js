@@ -10,6 +10,7 @@ import {
   Pressable,
   Modal
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Trabajos = () => {
 
@@ -28,10 +29,11 @@ const Trabajos = () => {
 
   return (
     <SafeAreaView style={styles.background}>
-
-      <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } style={styles.btn}>
-        <Text style={styles.btnTxt}>+</Text>
-      </Pressable>
+      <ScrollView>
+        <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } style={styles.btn}>
+          <Text style={styles.btnTxt}>+</Text>
+        </Pressable>
+      </ScrollView>
     </SafeAreaView>
   );
 };

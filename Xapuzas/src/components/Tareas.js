@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import Icon  from 'react-native-vector-icons/MaterialIcons';
 
 import {
   SafeAreaView,
@@ -10,6 +11,7 @@ import {
   Pressable,
   Modal
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Tareas = () => {
 
@@ -41,12 +43,18 @@ const Tareas = () => {
   // {' '} ES UN ESPACIO EN BLANCO
   return (
     <SafeAreaView style={styles.background}>
-
+      <ScrollView>
       <Pressable onPress={ () => navegacion.navigate("Crear tarea") } style={styles.btn}>
         <Text style={styles.btnTxt}>+</Text>
       </Pressable>
 
+
+      </ScrollView>
+      
+
+
 {/*
+      <Icon name="done" size={20}/>
       <Formulario 
         modalVisible = {modalVisible}
         setModalVisible = {setModalVisible}
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
   }
 
 });
+
 
 
 export default Tareas;

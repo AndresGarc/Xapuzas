@@ -11,7 +11,7 @@ const StackTrabajo = () => {
       <Stack.Navigator
         screenOptions={{headerShown: false}}
       >
-        <Stack.Screen name="Trabajos" component={Trabajos} />
+        <Stack.Screen name="ConsultaTrabajo" component={Trabajos} />
         <Stack.Screen name="Crear trabajo" component={crearTrabajo} />
       </Stack.Navigator>
 

@@ -64,7 +64,7 @@ const CrearTarea = () => {
             <SafeAreaView style={styles.background}>
                 <ScrollView>
                     <View style={styles.flexHorizontal}>
-                        <Pressable onPress={ () => navegacion.navigate("Tareas") } style={styles.btn}>
+                        <Pressable onPress={ () => navegacion.navigate("ConsultaTarea") } style={styles.btn}>
                             <Text style={styles.btnTxt}>Cerrar</Text>
                         </Pressable>
                         <Text style={styles.titulo}>Creador de tareas</Text>

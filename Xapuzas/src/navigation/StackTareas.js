@@ -12,7 +12,7 @@ const StackTareas = () => {
       <Stack.Navigator
         screenOptions={{headerShown: false}}
       >
-        <Stack.Screen name="Tareas" component={Tareas} />
+        <Stack.Screen name="ConsultaTarea" component={Tareas} />
         <Stack.Screen name="Crear tarea" component={CrearTarea} />
       </Stack.Navigator>
 
