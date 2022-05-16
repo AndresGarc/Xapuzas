@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import Icon  from 'react-native-vector-icons/MaterialIcons';
+import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   SafeAreaView,
@@ -44,14 +44,17 @@ const Tareas = () => {
   return (
     <SafeAreaView style={styles.background}>
       <ScrollView>
-      <Pressable onPress={ () => navegacion.navigate("Crear tarea") } style={styles.btn}>
-        <Text style={styles.btnTxt}>+</Text>
-      </Pressable>
+        
+
 
 
       </ScrollView>
       
-
+      <View style={styles.crearBtn}>
+          <Pressable onPress={ () => navegacion.navigate("Crear tarea") } >
+            <Text style={styles.crearTxt}>Crear<Icon name="plus-circle" size={30} color='black' style={styles.crearIcon} /></Text>
+          </Pressable>
+      </View>
 
 {/*
       <Icon name="done" size={20}/>
@@ -78,17 +81,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAE7C4',
     flex: 1
   },
-  btn: {
-   backgroundColor: '#EDAC70',
-   padding: 15,
-   margin: 20,
-   borderRadius: 10
-  },
-  btnTxt: {
+  crearTxt: {
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 15,
     textTransform: 'uppercase'
+  },
+  crearBtn:{
+    backgroundColor: '#EDAC70',
+    position: 'absolute',
+    bottom:0,
+    width: '100%',
+    padding: 10
+  },
+  crearIcon:{
+    marginTop: 15
   }
 
 });

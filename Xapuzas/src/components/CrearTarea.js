@@ -16,6 +16,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
 
+
 //le mando las propiedades que me interesan => ({props})
 const CrearTarea = () => {
 
@@ -41,7 +42,7 @@ const CrearTarea = () => {
     const pickTime = (event, selectedTime) => {
         const currentTime = selectedTime;
         setShowTime(false);
-        setTime(selectedTime); 
+        setTime(currentTime); 
     }
 
     const handleTarea = () => {

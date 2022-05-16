@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   SafeAreaView,
@@ -30,10 +31,15 @@ const Trabajos = () => {
   return (
     <SafeAreaView style={styles.background}>
       <ScrollView>
-        <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } style={styles.btn}>
-          <Text style={styles.btnTxt}>+</Text>
-        </Pressable>
+
       </ScrollView>
+
+      <View style={styles.crearBtn}>
+          <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } >
+            <Text style={styles.crearTxt}>Crear<Icon name="plus-circle" size={30} color='black' style={styles.crearIcon} /></Text>
+          </Pressable>
+      </View>
+
     </SafeAreaView>
   );
 };
@@ -58,11 +64,21 @@ const styles = StyleSheet.create({
    margin: 20,
    borderRadius: 10
   },
-  btnTxt: {
+  crearTxt: {
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 15,
     textTransform: 'uppercase'
+  },
+  crearBtn:{
+    backgroundColor: '#EDAC70',
+    position: 'absolute',
+    bottom:0,
+    width: '100%',
+    padding: 10
+  },
+  crearIcon:{
+    marginTop: 15
   }
 
 });
