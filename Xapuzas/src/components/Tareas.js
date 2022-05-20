@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -12,6 +12,9 @@ import {
   Modal
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
+import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea } from '../database/tarea-service'
 
 const Tareas = () => {
 
@@ -36,6 +39,29 @@ const Tareas = () => {
   const closeModal = () => {
     setModalVisible(false);
   }
+
+  //useCallback para ??
+  const loadTareas = async () => {
+    try {
+      const db = await conectarDB();
+      await crearTTareas(db);
+      //await deleteTarea(db, 1);
+      //await postTarea(db);
+      //await getTareas(db);
+      await getTareaID(db, 1);
+      //await putTarea(db,1);
+      //await borrarTTarea(db);
+      //await borrarTodo(db);
+
+    } catch(error){
+      console.log(`error en el loader ${error}`);
+    }
+  }
+
+  //no puedes instanciarlo para esperar, pero dentro si puedes
+  useEffect(()=>{
+    loadTareas();
+  });
 
 
   //Este return es muy importante, es lo que saldrá en pantalla -> aquí esta la sintaxis de js+html

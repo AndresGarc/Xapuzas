@@ -1,27 +1,38 @@
+/*
+    DATABASE SERVICE
+    Aquí se encuentra la lógica general de la base de datos, como su conexión, configuración o borrado completo
+*/
 import SQLite, { openDatabase, enablePromise } from 'react-native-sqlite-storage';
 
 
-export const conectarDB = async () => {
-    console.log("conectando");
-    return SQLite.openDatabase({name:"xapuzas.db", location:'default'});
-}
+//CONECTAR A LA BASE DE DATOS
+export const conectarDB = async () => { return SQLite.openDatabase({name:"xapuzas.db", location:'default'}); }
 
-export const crearTEstados = async (db) => {
 
+//BORRAR TABLAS
+export const borrarTTarea = async (db) => {
     await db.transaction( tx => {
-        tx.executeSql(`CREATE TABLE IF NOT EXISTS estados (estado_id INTEGER PRIMARY KEY,nombre VARCHAR(16),icono VARCHAR(16))`, [],
-        () => {  console.log("tabla creada"); },
-        (error) => {   console.log(error.message); });
-    }, error => {  console.log(error.message); 
-    }, () => {  console.log("transacción finalizada"); });
-
-    
+        tx.executeSql(`DROP TABLE IF EXISTS tarea;`), [],
+        () => {console.log("tabla tarea borrada");},
+        (error) => {console.log(error.message);}
+    });
 }
 
-export const crearTTareas = async (db) => {
-    console.log("Crear tabla de tareas");
-}
 
-export const crearTTrabajos = async (db) => {
-    console.log("Crear tabla de trabajos");
+
+//BORRAR TODAS LAS TABLAS
+export const borrarTodo = async (db) => {
+    await db.transaction( tx => {
+        tx.executeSql(`DROP TABLE IF EXISTS trabajo;`, [],
+        () => {console.log("tabla trabajos borrada");},
+        (error) => {console.log(error.message);});
+
+        tx.executeSql(`DROP TABLE IF EXISTS estados;`, [],
+        () => {console.log("tabla estados borrada");},
+        (error) => {console.log(error.message);});
+
+        tx.executeSql(`DROP TABLE IF EXISTS tarea;`, [],
+        () => {console.log("tabla tarea borrada");},
+        (error) => {console.log(error.message);});
+    });
 }

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -13,10 +13,27 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { conectarDB, borrarTodo } from '../database/db-service'
+import { crearTTrabajos } from '../database/trabajo-service';
+
 const Trabajos = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const navegacion = useNavigation();
+
+  //useCallback para ??
+  const loadTrabajos = async ()=> {
+    try {
+
+      const db = await conectarDB();
+      await crearTTrabajos(db);
+
+    } catch(error){
+      console.log(`error en el loader ${error}`);
+    }
+  }
+
+
 
   //todo lo de aquí está escrito en js
   const nuevaCitaHnandler = () => {
@@ -27,6 +44,10 @@ const Trabajos = () => {
   const closeModal = () => {
     setModalVisible(false);
   }
+
+  useEffect( ()=>{
+    loadTrabajos();
+  });
 
   return (
     <SafeAreaView style={styles.background}>
