@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
+import { styles } from '../assets/styles';
+import Icon  from 'react-native-vector-icons/Ionicons';
+import {Picker} from '@react-native-picker/picker';
 
 import {
   SafeAreaView,
@@ -14,11 +16,15 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { conectarDB, borrarTodo } from '../database/db-service'
-import { crearTTrabajos } from '../database/trabajo-service';
+import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
 const Trabajos = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [selected, setSelected] = useState(0); //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
+  const [data, setData] = useState(["Titulo1", "Titulo2","Titulo2","Titulo1", "Titulo2","Titulo1", "Titulo2",]);
+  //const [data, setData] = useState([]);
+ 
   const navegacion = useNavigation();
 
   //useCallback para ??
@@ -26,11 +32,25 @@ const Trabajos = () => {
     try {
 
       const db = await conectarDB();
-      await crearTTrabajos(db);
+      //await crearTTrabajos(db);
+      //await postTrabajos(db); //checke basico
+      //await getTrabajos(db); checke basico
+      //await getTrabajoID(db, 1); //checke basico
+      //await putTrabajos(db, 1); checke basico
+      //await putEstado(db, 1, 1); //checke basico
+      //await deleteTrabajo(db,4); // checke basico
+      //await postEstados(db); //checke basico
+      //await putIconoEstado(db, 4, "checkbox-outline"); //checke basico
 
     } catch(error){
       console.log(`error en el loader ${error}`);
     }
+  }
+
+  //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
+  const setTrabajos = (value) =>{
+    setSelected(value);
+    //filtrar
   }
 
 
@@ -51,58 +71,77 @@ const Trabajos = () => {
 
   return (
     <SafeAreaView style={styles.background}>
-      <ScrollView>
+      
+      <Text style={styles.tituloTrabs}>¿Qué trabajos quieres ver?</Text>
+      
+      <View style={styles.header}>
+        
+          <Picker
+            selectedValue={selected}
+            onValueChange={(itemValue, itemIndex) => setTrabajos(itemValue)}
+            style={styles.pickerBck}
+            mode='dropdown'
+          >
+            <Picker.Item label="Todos" value={0}/>
+            <Picker.Item label="Pendientes" value={1}/>
+            <Picker.Item label="Vistos" value={2}/>
+            <Picker.Item label="Aceptados" value={3}/>
+            <Picker.Item label="Terminados" value={4}/>
 
-      </ScrollView>
+          </Picker>
 
-      <View style={styles.crearBtn}>
-          <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } >
-            <Text style={styles.crearTxt}>Crear<Icon name="plus-circle" size={30} color='black' style={styles.crearIcon} /></Text>
+
+
+        <View style={styles.contentHelp}>
+          <Pressable style={styles.help}>
+            <Icon name="md-help-circle" size={50} color='#EDAC70' />
           </Pressable>
+        </View>
+
       </View>
+
+      {
+        data.length==0 ? 
+          <View style={styles.noData}>
+            <Icon name='sad-outline' size={30}></Icon>
+            <Text>No hay trabajos creados</Text>
+            <Text>Toca el botón Crear para añadir un trabajo</Text>
+          </View>
+        :
+          <ScrollView>
+            <View style={styles.listaTareas}>
+              {data.map( (trab, i) => {
+                  return (
+                      <Pressable style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{console.log("Detalle");}}>
+                        <Text style={styles.textT}>{trab}</Text>
+
+                        <Pressable style={styles.terminar} onPress={()=>{console.log("Estado");}}>
+                          <Icon name='eye-off-outline' size={35} color='#EDAC70'/>
+                        </Pressable>  
+
+                        <Pressable style={styles.terminar} onPress={()=>{console.log("Borrar");}}>
+                          <Icon name='trash-outline' size={35} color='#EDAC70'/>
+                        </Pressable>  
+
+                      </Pressable>
+                  );
+                }
+              )}
+            </View>
+          </ScrollView>
+        }
+
+
+      <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } style={styles.crearBtn}>
+          <Text style={styles.crearTxt}>Crear</Text>
+          <Text style={styles.crearIcon}>
+            <Icon name="add-circle" size={30} color='black'/>
+          </Text>
+        </Pressable>
 
     </SafeAreaView>
   );
 };
-
-//ESTILOS
-const styles = StyleSheet.create({
-  titulo: {
-    textAlign: 'center',
-    fontSize: 30,
-    marginTop: 10
-  },
-  tituloBold: {
-    fontWeight: 'bold',
-  },
-  background: {
-    backgroundColor: '#FAE7C4',
-    flex: 1
-  },
-  btn: {
-   backgroundColor: '#EDAC70',
-   padding: 15,
-   margin: 20,
-   borderRadius: 10
-  },
-  crearTxt: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 15,
-    textTransform: 'uppercase'
-  },
-  crearBtn:{
-    backgroundColor: '#EDAC70',
-    position: 'absolute',
-    bottom:0,
-    width: '100%',
-    padding: 10
-  },
-  crearIcon:{
-    marginTop: 15
-  }
-
-});
 
 
 export default Trabajos;

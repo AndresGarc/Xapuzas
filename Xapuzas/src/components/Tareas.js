@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon  from 'react-native-vector-icons/Ionicons';
+import { styles } from '../assets/styles';
 
 import {
   SafeAreaView,
   Text,
   View,
-  StyleSheet,
   Button,
   Pressable,
   Modal
@@ -25,6 +25,10 @@ const Tareas = () => {
   const [clientes, setClientes] = useState([]); // esto es una colección
   const [modal, setModal] = useState(false); // esto es un booleano
   */
+  
+  const [urgente, setUrgente] = useState(1); // 1 urgente / 0 pendientes
+  //const [data, setData] = useState(["Titulo1", "Titulo2","Titulo2","Titulo1", "Titulo2","Titulo1", "Titulo2",]);
+  const [data, setData] = useState([]);
 
   //Al estar definido aquí solo puedes usar este estado en este componente
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,15 +44,27 @@ const Tareas = () => {
     setModalVisible(false);
   }
 
+  const showUrgentes = () => {
+    if(urgente == 0){
+      setUrgente(1);
+    }
+  }
+
+  const showPendientes = () => {
+    if(urgente == 1){
+      setUrgente(0);
+    }
+  }
+
   //useCallback para ??
   const loadTareas = async () => {
     try {
       const db = await conectarDB();
-      await crearTTareas(db);
+      //await crearTTareas(db);
       //await deleteTarea(db, 1);
       //await postTarea(db);
       //await getTareas(db);
-      await getTareaID(db, 1);
+      //await getTareaID(db, 1);
       //await putTarea(db,1);
       //await borrarTTarea(db);
       //await borrarTodo(db);
@@ -66,21 +82,64 @@ const Tareas = () => {
 
   //Este return es muy importante, es lo que saldrá en pantalla -> aquí esta la sintaxis de js+html
   // Añadir que no puedes devolver varios elementos, debe ser solo 1
-  // {' '} ES UN ESPACIO EN BLANCO
+  // {' '} ES UN ESPACIO EN BLANCO         
   return (
     <SafeAreaView style={styles.background}>
-      <ScrollView>
+
+      <View style={styles.header}>
         
-
-
-
-      </ScrollView>
-      
-      <View style={styles.crearBtn}>
-          <Pressable onPress={ () => navegacion.navigate("Crear tarea") } >
-            <Text style={styles.crearTxt}>Crear<Icon name="plus-circle" size={30} color='black' style={styles.crearIcon} /></Text>
+        <View style={styles.contentPicker}>
+          <Pressable style={ urgente == 1  ? styles.btnFocusL : styles.btnPickerL} onPress={ () => showUrgentes()}>
+            <Text style={styles.btnText}>Urgentes</Text>
           </Pressable>
+
+          <Pressable style={urgente == 0 ? styles.btnFocusR : styles.btnPickerR} onPress={() => showPendientes()}>
+            <Text style={styles.btnText}>Pendientes</Text>
+          </Pressable>
+        </View>
+
+
+        <View style={styles.contentHelp}>
+          <Pressable style={styles.help}>
+            <Icon name="md-help-circle" size={50} color='#EDAC70' />
+          </Pressable>
+        </View>
+
       </View>
+
+        {
+        data.length==0 ? 
+          <View style={styles.noData}>
+            <Icon name='sad-outline' size={30}></Icon>
+            <Text>No hay tareas creadas</Text>
+            <Text>Toca el botón Crear para añadir una tarea</Text>
+          </View>
+        :
+          <ScrollView>
+            <View style={styles.listaTareas}>
+              {data.map( (tarea, i) => {
+                  return (
+                      <Pressable style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{console.log("Detalle");}}>
+                        <Text style={styles.textT}>{tarea}</Text>
+                        <Pressable style={styles.terminar} onPress={()=>{console.log("Terminar");}}>
+                          <Icon name='checkmark-circle-outline' size={40} color='#EDAC70'/>
+                        </Pressable>  
+                      </Pressable>
+                  );
+                }
+              )}
+            </View>
+          </ScrollView>
+        }
+      
+
+        <Pressable onPress={ () => navegacion.navigate("Crear tarea") } style={styles.crearBtn}>
+          <Text style={styles.crearTxt}>Crear</Text>
+          <Text style={styles.crearIcon}>
+            <Icon name="add-circle" size={30} color='black'/>
+          </Text>
+        </Pressable>
+
 
 {/*
       <Icon name="done" size={20}/>
@@ -92,39 +151,6 @@ const Tareas = () => {
     </SafeAreaView>
   );
 };
-
-//ESTILOS
-const styles = StyleSheet.create({
-  titulo: {
-    textAlign: 'center',
-    fontSize: 30,
-    marginTop: 10
-  },
-  tituloBold: {
-    fontWeight: 'bold',
-  },
-  background: {
-    backgroundColor: '#FAE7C4',
-    flex: 1
-  },
-  crearTxt: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 15,
-    textTransform: 'uppercase'
-  },
-  crearBtn:{
-    backgroundColor: '#EDAC70',
-    position: 'absolute',
-    bottom:0,
-    width: '100%',
-    padding: 10
-  },
-  crearIcon:{
-    marginTop: 15
-  }
-
-});
 
 
 

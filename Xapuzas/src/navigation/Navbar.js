@@ -34,7 +34,7 @@ const Navbar = (props) => {
             display: hide ? "none" : "flex"
           },
           tabBarLabelStyle: {
-            fontSize:16
+            fontSize:18
           },
           tabBarActiveTintColor: '#000',
           swipeEnabled:false,

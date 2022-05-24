@@ -62,128 +62,128 @@ const CrearTarea = () => {
 
 
     return (
-            <SafeAreaView style={styles.background}>
-                <ScrollView>
-                    <View style={styles.flexHorizontal}>
-                        <Pressable onPress={ () => navegacion.navigate("ConsultaTarea") } style={styles.btn}>
-                            <Text style={styles.btnTxt}>Cerrar</Text>
-                        </Pressable>
-                        <Text style={styles.titulo}>Creador de tareas</Text>
-                    </View>
+        <SafeAreaView style={styles.background}>
+            <ScrollView>
+                <View style={styles.flexHorizontal}>
+                    <Pressable onPress={ () => navegacion.navigate("ConsultaTarea") } style={styles.btn}>
+                        <Text style={styles.btnTxt}>Cerrar</Text>
+                    </Pressable>
+                    <Text style={styles.titulo}>Creador de tareas</Text>
+                </View>
 
-                    {/* Título */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Título de la tarea</Text>
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='default'
-                            placeholder='escribe aquí el título...'    
-                            value={titulo}
-                            onChangeText={setTitulo}
-                        />
-                        <Pressable style={styles.btnVoz}>
-                            <Text style={styles.btnTxt}>Usar voz</Text>
-                        </Pressable>
-
-                        <Text>Para crear una tarea sólo es obligatorio escribir un título</Text>
-                    </View>
-
-                    {/* Cliente */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Cliente</Text>
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='default'
-                            placeholder='escribe aquí el cliente...'  
-                            value={cliente}  
-                            onChangeText={setCliente}
-                            
-                        />
-                    </View>
-
-                    {/* Teléfono */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Teléfono</Text>
-                                                
-                            <TextInput 
-                                style= {styles.inputTxt}
-                                keyboardType='number-pad'
-                                placeholder='escribe aquí el teléfono...'    
-                                maxLength={9}
-                                value={tlf}  
-                                onChangeText={setTlf}
-                            />
-
-                    </View>
-
-                    {/* Direccion */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Dirección</Text>
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='default'
-                            placeholder='escribe aquí la dirección...'  
-                            value={dir}  
-                            onChangeText={setDir}
-                            
-                        />
-                    </View>
-
-                    {/* Fecha */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Día para hacerla</Text>        
-                        <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
-                            <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
-                        </Pressable>
-                        
-                        { show && (
-                        <DateTimePicker
-                            value={fecha}
-                            display='default'
-                            mode= "date"
-                            onChange={pickDate}
-                        />
-                        )}
-                    </View>
-
-                    {/* Fecha */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>¿A qué hora?</Text>        
-                        <Pressable onPress={ () => setShowTime(true)} style={styles.inputDate}>
-                            <Text>{hora.getHours()}:{hora.getMinutes()}</Text>
-                        </Pressable>
-                        
-                        { showHora && (
-                        <DateTimePicker
-                            value={hora}
-                            display='default'
-                            mode= "time"
-                            onChange={pickTime}
-                        />
-                        )}
-                    </View>
-
-                    
-                    {/* Notas */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Otras notas</Text>
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='default'
-                            placeholder='escribe aquí una nota...'  
-                            value={notas}  
-                            onChangeText={setNotas}
-                            
-                        />
-                    </View>
-
-
-                    <Pressable onPress={handleTarea} style={styles.btn}>
-                        <Text style={styles.btnTxt}>Crear</Text>
+                {/* Título */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Título de la tarea</Text>
+                    <TextInput 
+                        style= {styles.inputTxt}
+                        keyboardType='default'
+                        placeholder='escribe aquí el título...'    
+                        value={titulo}
+                        onChangeText={setTitulo}
+                    />
+                    <Pressable style={styles.btnVoz}>
+                        <Text style={styles.btnTxt}>Usar voz</Text>
                     </Pressable>
 
-                </ScrollView>
-            </SafeAreaView>
+                    <Text>Para crear una tarea sólo es obligatorio escribir un título</Text>
+                </View>
+
+                {/* Cliente */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Cliente</Text>
+                    <TextInput 
+                        style= {styles.inputTxt}
+                        keyboardType='default'
+                        placeholder='escribe aquí el cliente...'  
+                        value={cliente}  
+                        onChangeText={setCliente}
+                        
+                    />
+                </View>
+
+                {/* Teléfono */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Teléfono</Text>
+                                            
+                        <TextInput 
+                            style= {styles.inputTxt}
+                            keyboardType='number-pad'
+                            placeholder='escribe aquí el teléfono...'    
+                            maxLength={9}
+                            value={tlf}  
+                            onChangeText={setTlf}
+                        />
+
+                </View>
+
+                {/* Direccion */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Dirección</Text>
+                    <TextInput 
+                        style= {styles.inputTxt}
+                        keyboardType='default'
+                        placeholder='escribe aquí la dirección...'  
+                        value={dir}  
+                        onChangeText={setDir}
+                        
+                    />
+                </View>
+
+                {/* Fecha */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Día para hacerla</Text>        
+                    <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
+                        <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                    </Pressable>
+                    
+                    { show && (
+                    <DateTimePicker
+                        value={fecha}
+                        display='default'
+                        mode= "date"
+                        onChange={pickDate}
+                    />
+                    )}
+                </View>
+
+                {/* Fecha */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>¿A qué hora?</Text>        
+                    <Pressable onPress={ () => setShowTime(true)} style={styles.inputDate}>
+                        <Text>{hora.getHours()}:{hora.getMinutes()}</Text>
+                    </Pressable>
+                    
+                    { showHora && (
+                    <DateTimePicker
+                        value={hora}
+                        display='default'
+                        mode= "time"
+                        onChange={pickTime}
+                    />
+                    )}
+                </View>
+
+                
+                {/* Notas */}
+                <View style={styles.campo}>
+                    <Text style={styles.label}>Otras notas</Text>
+                    <TextInput 
+                        style= {styles.inputTxt}
+                        keyboardType='default'
+                        placeholder='escribe aquí una nota...'  
+                        value={notas}  
+                        onChangeText={setNotas}
+                        
+                    />
+                </View>
+
+
+                <Pressable onPress={handleTarea} style={styles.btn}>
+                    <Text style={styles.btnTxt}>Crear</Text>
+                </Pressable>
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

@@ -19,9 +19,10 @@ export const crearTTareas = async (db) => {
             hora DATETIME,
             fecha_creada DATETIME,
             notas VARCHAR(255)
-            )`, [],
-        () => {  console.log("tabla tarea creada"); },
-        (error) => {   console.log(error.message); }
+            )`,
+            [],
+            () => {  console.log("tabla tarea creada"); },
+            (error) => {   console.log(error.message); }
         );
     }, error => {  console.log(error.message); });
 
@@ -33,9 +34,10 @@ export const getTareas = async (db) => {
 
     await db.transaction( async (tx) => {
         await tx.executeSql(`SELECT tarea_id, titulo
-            FROM tarea;`, [],
+            FROM tarea;`, 
+            [],
             (txn, res) => {
-                let result 
+                let result; 
             }
         );
     });
@@ -46,7 +48,8 @@ export const getTareaID = async (db, id) => {
 
     await db.transaction( async (tx) => {
         await tx.executeSql(`SELECT tarea_id, titulo, cliente, direccion, tlf, fecha, hora, notas FROM tarea
-            WHERE tarea_id = ?`, [id],
+            WHERE tarea_id = ?`, 
+            [id],
             (txn, res) => {console.log(res.rows.item(0));},
             (error) => { console.log(error.message); }
         );
@@ -62,10 +65,10 @@ export const postTarea = async (db) => {
 
     await db.transaction( async (tx) => {
         await tx.executeSql(`INSERT INTO tarea (titulo, urgente, cliente, direccion, tlf, fecha, hora, fecha_creada, notas)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `, [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), date.toDateString(), notas],
-        () =>{ console.log("tarea creada");},
-        (error) => { console.log(error.message);}
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), date.toDateString(), notas],
+            () =>{ console.log("tarea creada");},
+            (error) => { console.log(error.message);}
         );
     }); 
 
@@ -87,10 +90,10 @@ export const putTarea = async (db, id) => {
                 fecha = ?,
                 hora = ?,
                 notas = ?
-            WHERE tarea_id = ?;
-        `, [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), notas, id],
-        () => {console.log("tarea modificada");},
-        (error) => {console.log(error.message);}
+            WHERE tarea_id = ?;`,
+            [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), notas, id],
+            () => {console.log("tarea modificada");},
+            (error) => {console.log(error.message);}
         );
     });
 
@@ -101,10 +104,10 @@ export const deleteTarea = async (db, id) => {
 
     await db.transaction(async (tx) => {
         await tx.executeSql(`DELETE FROM tarea
-            WHERE tarea_id LIKE ?;
-        `, [id],
-        () => {console.log("tarea borrada");},
-        (error) => {console.log(error.message);}
+            WHERE tarea_id LIKE ?;`,
+            [id],
+            () => {console.log("tarea borrada");},
+            (error) => {console.log(error.message);}
         );
     });
 
