@@ -10,8 +10,13 @@ export const styles = StyleSheet.create({
   
 //HEADER - filtro + ayuda -----------------------------------------------------------------------------------------------------------------------------
     header:{
-      flexDirection: 'row',
-      marginTop: 5
+        flexDirection: 'row',
+        marginTop: 5
+    },
+    headerCrear:{
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginVertical: 10
     },
 
     //HELP
@@ -58,12 +63,16 @@ export const styles = StyleSheet.create({
         paddingHorizontal:30,
         borderBottomRightRadius: 10,
         borderTopRightRadius: 10,
-        fontWeight: 'bold',
         backgroundColor: '#EDAC70'
     },
-    btnText:{
+    pickTxtF:{
       fontSize: 18,
       color: 'black',
+      fontWeight: 'bold',
+    },
+    pickTxt:{
+        fontSize: 18,
+        color: 'black',
     },
 
     //END PICKER TAREAS --------------------------------------------------------------------------------------------------------------------------------
@@ -93,8 +102,8 @@ export const styles = StyleSheet.create({
     },
     textT:{
         flex:1,
-        padding:20,
-        fontSize: 15,
+        padding:18,
+        fontSize: 18,
         color: 'black'
     },
     terminar:{
@@ -104,6 +113,118 @@ export const styles = StyleSheet.create({
     },
 
 //END LISTA DE TAREAS-------------------------------------------------------------------------------------------------------------------------  
+
+//CREAR ---------------------------------------------------------------------------------------------------------------------------------------
+    titCrear:{
+        fontSize:26,
+        color: 'black',
+        textAlign: 'center'
+    },
+    closeCrear:{
+        marginTop:5,
+        marginLeft:10,
+        paddingRight: 5,
+        alignItems:'center'
+    },  
+    contentTitle:{
+        flex:3,
+        justifyContent:'center',
+    },
+    inputTxt:{
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        fontSize: 16,
+        paddingLeft: 15,
+        marginRight: 20
+    },
+    label:{
+        fontSize: 22,
+        color: '#000',
+        marginBottom:10,
+        marginLeft: 5,
+        fontWeight: 'bold'
+    },
+    campo:{
+        marginHorizontal: 25,
+        marginVertical: 10
+    },
+    btnVoz:{
+        flexDirection:'row',
+        backgroundColor: '#EDAC70',
+        width: '40%',
+        padding: 10,
+        borderRadius: 10,
+        marginVertical: 10,
+    },
+    txtVoz:{
+        color: 'black',
+        fontSize: 18,
+        marginLeft: 7,
+        marginTop: 2
+    },
+    contentUrgente:{
+        flexDirection:'row',
+        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#EDAC70'
+    },
+    txtUrgente:{
+        color: 'black',
+        fontSize: 20,
+        marginBottom: 15
+    },
+    checkbox: {
+        color: '#EDAC70'
+    },
+    inputDate:{
+        backgroundColor: '#FFF',
+        padding: 10,
+        borderRadius: 10
+    },
+    borderBot:{
+        color: 'black',
+        fontSize: 16,
+        paddingBottom: 10,
+        marginBottom: 10,
+        borderBottomColor: '#EDAC70',
+        borderBottomWidth: 1
+    },  
+    contentTlf: {
+        flexDirection: 'row',
+        marginBottom: 10,
+        justifyContent: 'space-between',
+    },
+    inputTlf:{
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        paddingLeft: 15,
+        fontSize: 16,
+        width: '48%',
+    }, 
+    inputNewTlf:{
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        marginTop: 5,
+        paddingLeft: 15,
+        fontSize: 16,
+        width: '42%',
+    },
+    newTlf:{
+        fontSize: 18,
+        color: 'black',
+        paddingTop: 5,
+        marginLeft: 5
+    },  
+    removeTlf:{
+        marginTop: 13,
+    },
+    labelDateMat:{
+        fontSize: 18,
+        color: 'black',
+        marginVertical: 10,
+        marginLeft: 10
+    },
+//END CREAR ---------------------------------------------------------------------------------------------------------------------------------------
 
 //END TAREAS------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -120,7 +241,6 @@ export const styles = StyleSheet.create({
         height:50,
         marginTop: 10,
         marginLeft: 20,
-        borderRadius: 10
     },
 //END TRABAJOS
 
@@ -141,6 +261,8 @@ export const styles = StyleSheet.create({
         borderColor: '#EDAC70',
         backgroundColor: 'white',
     },
+    radioGroup:{
+    },  
 //END AJUSTES
 
 
@@ -157,6 +279,9 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontSize: 15
     },
+    degradado:{
+        flex:1
+    },  
 
     //BOTÓN INFERIOR DE CREAR
     crearTxt: {
@@ -179,7 +304,73 @@ export const styles = StyleSheet.create({
     },
     crearIcon:{
         marginTop: 5
-    }
+    },
+    content:{
+        flexDirection:'row',
+    },
+    green:{
+        backgroundColor: 'green'
+    },
+    
+    black:{
+        fontSize: 18,
+        color: 'black'
+    },
+
+    minBlack:{
+        fontSize: 16,
+        color: 'black'
+    },
+
+    mBottomXl:{
+        marginBottom: 60
+    },
+
+    //ESTRUCTURA MODAL
+    mFondo:{
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        flex:1,
+        justifyContent:'center'
+    },
+    mContent:{
+        backgroundColor: 'white',
+        borderRadius:10,
+        borderWidth:2,
+        borderColor: '#F6D6B8',
+        marginHorizontal: 30
+    },
+    iconModal:{
+        paddingHorizontal:5,
+        marginLeft: 5
+    },
+    iconModal2:{
+        marginLeft: 5
+    },
+    topModal:{
+        flexDirection: 'row',
+        justifyContent:'flex-end',
+        margin: 10
+    },
+    contentDetalle:{
+        marginTop: 5,
+        marginBottom: 60,
+        marginHorizontal: 30
+    },
+    crearBtnModal:{
+        flexDirection: 'row',
+        flex:1,
+        backgroundColor: '#EDAC70',
+        position: 'absolute',
+        justifyContent:'center',
+        bottom:0,
+        width: '100%',
+        padding: 5,
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+    },
+
+
+
 //END GENERAL ------------------------------------------------------------------------------------------------------------------------------------------
   
   });

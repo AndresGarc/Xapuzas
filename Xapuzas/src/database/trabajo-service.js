@@ -3,6 +3,8 @@
     Aquí se encuentra la lógica relacionada con la base de datos y los trabajos
 */
 
+import { conectarDB } from "./db-service";
+
 //CREAR TABLA DE TRABAJOS Y ESTADOS
 export const crearTTrabajos = async (db) => {
     
@@ -44,31 +46,41 @@ export const crearTTrabajos = async (db) => {
 }
 
 //GET - TRABAJOS
-export const getTrabajos = async (db) => {
-    
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`SELECT trabajo_id, titulo
-            FROM trabajo;`, 
-            [],
-            (txn, res) => { console.log(res.rows.item(0)); },
-            (error) => { console.log(error.message); }
-        );
+export const getTrabajos = async () => {
+    const db = await conectarDB();
+
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`SELECT trabajo_id, titulo
+                FROM trabajo;`, 
+                [],
+                (txn, res) => { 
+                    resolve(res.rows.raw()); 
+                },
+                (error) => { 
+                    reject(error.message); 
+                }
+            );
+        });
     });
+
 
 }
 
-export const getTrabajoID = async (db, id) => {
+export const getTrabajoID = async (id) => {
+    const db = await conectarDB();
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`SELECT *
-            FROM trabajo
-            WHERE trabajo_id = ?`, 
-            [id],
-            (txn, res) => { console.log(res.rows.item(0)); },
-            (error) => { console.log(error.message); }
-        );
-    });
-
+    return await new Promise( (resolve, reject) => {
+            db.transaction( async (tx) => {
+            tx.executeSql(`SELECT *
+                FROM trabajo
+                WHERE trabajo_id = ?`, 
+                [id],
+                (txn, res) => { resolve(res.rows.item(0)); },
+                (error) => { reject(error.message); }
+            );
+        });
+    })
 }
 
 //POST - TRABAJOS

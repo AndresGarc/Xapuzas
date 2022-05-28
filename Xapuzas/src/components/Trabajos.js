@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { styles } from '../assets/styles';
 import Icon  from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
 
 import {
@@ -14,20 +15,21 @@ import {
   Modal
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DetalleTrabajo from './DetalleTrabajo';
 
 import { conectarDB, borrarTodo } from '../database/db-service'
 import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
 const Trabajos = () => {
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState(0); //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
-  const [data, setData] = useState(["Titulo1", "Titulo2","Titulo2","Titulo1", "Titulo2","Titulo1", "Titulo2",]);
-  //const [data, setData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState([]);
+  const [trabDetalle, setDetalle] = useState([]);
  
   const navegacion = useNavigation();
 
-  //useCallback para ??
+
   const loadTrabajos = async ()=> {
     try {
 
@@ -54,83 +56,96 @@ const Trabajos = () => {
   }
 
 
+  const showDetalle = (id) => {
+    
+    getTrabajoID(id).then((data) => {
+      setDetalle(data);
+      setModalVisible(true);
+    })
 
-  //todo lo de aquí está escrito en js
-  const nuevaCitaHnandler = () => {
-    //para modficiar esa variable declarada en el state debe ser mediante la función declarada
-    setModalVisible(true);
-  }
-
-  const closeModal = () => {
-    setModalVisible(false);
   }
 
   useEffect( ()=>{
-    loadTrabajos();
-  });
+    console.log("use effect trabajos");
+    getTrabajos().then((data) => {
+      setData(data);
+    }).catch((error) => console.log(error));
+  }, []);
 
   return (
     <SafeAreaView style={styles.background}>
-      
-      <Text style={styles.tituloTrabs}>¿Qué trabajos quieres ver?</Text>
-      
-      <View style={styles.header}>
+      <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
         
-          <Picker
-            selectedValue={selected}
-            onValueChange={(itemValue, itemIndex) => setTrabajos(itemValue)}
-            style={styles.pickerBck}
-            mode='dropdown'
-          >
-            <Picker.Item label="Todos" value={0}/>
-            <Picker.Item label="Pendientes" value={1}/>
-            <Picker.Item label="Vistos" value={2}/>
-            <Picker.Item label="Aceptados" value={3}/>
-            <Picker.Item label="Terminados" value={4}/>
+        <Text style={styles.tituloTrabs}>¿Qué trabajos quieres ver?</Text>
+        
+        <View style={styles.header}>
+          
+            <Picker
+              selectedValue={selected}
+              onValueChange={(itemValue, itemIndex) => setTrabajos(itemValue)}
+              style={styles.pickerBck}
+              mode='dropdown'
+            >
+              <Picker.Item label="Todos" value={0} style={styles.black}/>
+              <Picker.Item label="Pendientes" value={1} style={styles.black}/>
+              <Picker.Item label="Vistos" value={2} style={styles.black}/>
+              <Picker.Item label="Aceptados" value={3} style={styles.black}/>
+              <Picker.Item label="Terminados" value={4} style={styles.black}/>
 
-          </Picker>
+            </Picker>
 
 
 
-        <View style={styles.contentHelp}>
-          <Pressable style={styles.help}>
-            <Icon name="md-help-circle" size={50} color='#EDAC70' />
-          </Pressable>
+          <View style={styles.contentHelp}>
+            <Pressable style={styles.help}>
+              <Icon name="md-help-circle" size={50} color='#EDAC70' />
+            </Pressable>
+          </View>
+
         </View>
 
-      </View>
-
-      {
-        data.length==0 ? 
-          <View style={styles.noData}>
-            <Icon name='sad-outline' size={30}></Icon>
-            <Text>No hay trabajos creados</Text>
-            <Text>Toca el botón Crear para añadir un trabajo</Text>
-          </View>
-        :
-          <ScrollView>
-            <View style={styles.listaTareas}>
-              {data.map( (trab, i) => {
-                  return (
-                      <Pressable style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{console.log("Detalle");}}>
-                        <Text style={styles.textT}>{trab}</Text>
-
-                        <Pressable style={styles.terminar} onPress={()=>{console.log("Estado");}}>
-                          <Icon name='eye-off-outline' size={35} color='#EDAC70'/>
-                        </Pressable>  
-
-                        <Pressable style={styles.terminar} onPress={()=>{console.log("Borrar");}}>
-                          <Icon name='trash-outline' size={35} color='#EDAC70'/>
-                        </Pressable>  
-
-                      </Pressable>
-                  );
-                }
-              )}
+        {
+          data.length==0 ? 
+            <View style={styles.noData}>
+              <Icon name='sad-outline' size={30} color={'black'}></Icon>
+              <Text style={styles.minBlack}>No hay trabajos creados</Text>
+              <Text style={styles.minBlack}>Toca el botón Crear para añadir un trabajo</Text>
             </View>
-          </ScrollView>
-        }
+          :
+            <ScrollView>
+              <View style={styles.listaTareas}>
+                {data.map( (trab, i) => {
+                    return (
+                        <Pressable key={trab.trabajo_id} style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{showDetalle(trab.trabajo_id)}}>
+                          <Text style={styles.textT}>{trab.titulo}</Text>
 
+                          <Pressable style={styles.terminar} onPress={()=>{console.log("Estado");}}>
+                            <Icon name='eye-off-outline' size={35} color='#EDAC70'/>
+                          </Pressable>  
+
+                          <Pressable style={styles.terminar} onPress={()=>{console.log("Borrar");}}>
+                            <Icon name='trash-outline' size={35} color='#EDAC70'/>
+                          </Pressable>  
+
+                        </Pressable>
+                    );
+                  }
+                )}
+              </View>
+            </ScrollView>
+          }
+
+          { modalVisible &&
+          <DetalleTrabajo
+            modalVisible = {modalVisible}
+            setModalVisible = {setModalVisible}
+            data={trabDetalle}
+            setDataDetalle={setDetalle}
+          />
+
+          }
+
+      </LinearGradient>
 
       <Pressable onPress={ () => navegacion.navigate("Crear trabajo") } style={styles.crearBtn}>
           <Text style={styles.crearTxt}>Crear</Text>

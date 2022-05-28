@@ -1,4 +1,7 @@
 import React, { Fragment, useState } from 'react';
+import { styles } from '../assets/styles';
+import Icon  from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {
     Modal,
@@ -12,6 +15,8 @@ import {
     Alert
 } from 'react-native'
 
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,16 +24,24 @@ import { useNavigation } from '@react-navigation/native';
 //le mando las propiedades que me interesan => ({props})
 const CrearTrabajo = () => {
 
+    //elementos para el formulario
     const [titulo, setTitulo] = useState('');
     const [cliente, setCliente] = useState('');
-    const [tlf, setTlf] = useState('');
+    const [iTlf, setAddTlf] = useState(1);
+    const [tlfnombre1, setTN1] = useState('');
+    const [tlf1, setTlf1] = useState('');
+    const [tlfnombre2, setTN2] = useState('');
+    const [tlf2, setTlf2] = useState('');
+    const [tlfnombre3, setTN3] = useState('');
+    const [tlf3, setTlf3] = useState('');
     const [dir, setDir] = useState('');
     const [notas, setNotas] = useState('');
-
-    const [show, setShow] = useState(false);
     const [fecha, setFecha] = useState(new Date());
-    const [showHora, setShowTime] = useState(false);
-    const [hora, setTime] = useState(new Date());
+
+    //añadidos
+    const [show, setShow] = useState(false);
+    const [showFecha, setShowFecha] = useState(false);
+    const [radio, setRadio] = useState(0);
 
     const navegacion = useNavigation();
 
@@ -44,7 +57,45 @@ const CrearTrabajo = () => {
         setTime(selectedTime); 
     }
 
-    const handleTarea = () => {
+    const radioData =[{
+        id:'1',
+        label: 'Sin pedir',
+        value: 0
+    },{
+        id:'2',
+        label: 'Pedido',
+        value: 1
+    },{
+        id:'3',
+        label: 'Recogido',
+        value: 2
+    }];
+
+    const addTlf = () => {     
+        if (iTlf==1) setAddTlf(2);
+        else if(iTlf==2) setAddTlf(3);
+    }
+
+    const removeTlf = () => {   
+        if(iTlf==3) setAddTlf(2);
+        if(iTlf==2) setAddTlf(1);
+    }
+
+    const handleRadio = (value) => {
+        console.log(value);
+        setRadio(value);
+        
+        /*
+        
+        //Si se ha pedido en una fecha
+        if(array[0].value == 1){
+            setShowFecha(true);
+        } else { //resto de situaciones
+            setShowFecha(false);
+        }*/
+    }
+
+    const handleCrear = () => {
         //VALIDACION
         //La alerta -> titulo, descripcion y los diferentes botones que quieras añadir para la alerta
         if(titulo == ''){
@@ -56,43 +107,65 @@ const CrearTrabajo = () => {
             return
         }
 
-
     }
 
 
     return (
-            <SafeAreaView style={styles.background}>
-                <ScrollView>
-                    <View style={styles.flexHorizontal}>
-                        <Pressable onPress={() => navegacion.navigate("ConsultaTrabajo")} style={styles.btn}>
-                            <Text style={styles.btnTxt}>Cerrar</Text>
+        <SafeAreaView style={styles.background}>
+
+            <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
+
+                <ScrollView style={styles.mBottomXl}>
+
+                    <View style={styles.headerCrear}>
+
+                        <Pressable onPress={ () => navegacion.navigate("ConsultaTrabajo") } style={styles.closeCrear}>
+                            <Icon name="close" size={40} color='black'/>
+                            <Text style={styles.black}>Cerrar</Text>
                         </Pressable>
-                        <Text style={styles.titulo}>Creador de trabajos</Text>
+
+                        <View style={styles.contentTitle}>
+                            <Text style={styles.titCrear}>Creador de trabajos</Text>
+                        </View>
+
+                        <View style={styles.contentHelp}>
+                            <Pressable style={styles.help}>
+                                <Icon name="md-help-circle" size={50} color='#EDAC70' />
+                            </Pressable>
+                        </View>
+
                     </View>
 
                     {/* Título */}
                     <View style={styles.campo}>
+
                         <Text style={styles.label}>Título de la tarea</Text>
                         <TextInput 
                             style= {styles.inputTxt}
-                            keyboardType='default'
                             placeholder='escribe aquí el título...'    
                             value={titulo}
                             onChangeText={setTitulo}
                         />
-                        <Pressable style={styles.btnVoz}>
-                            <Text style={styles.btnTxt}>Usar voz</Text>
-                        </Pressable>
 
-                        <Text>Para crear una tarea sólo es obligatorio escribir un título</Text>
+                        <Pressable style={styles.btnVoz}>
+                            <Icon name="mic-outline" color='black' size={30}/>
+                            <Text style={styles.txtVoz}>Usar voz</Text>
+                        </Pressable>    
+
+                        <Text style={styles.borderBot}>Para crear una tarea sólo es obligatorio escribir un título</Text>
+                    
                     </View>
 
                     {/* Cliente */}
                     <View style={styles.campo}>
-                        <Text style={styles.label}>Cliente</Text>
+
+                        <View style={styles.content}>
+                            <Icon name="person-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Cliente</Text>
+                        </View>
+
                         <TextInput 
                             style= {styles.inputTxt}
-                            keyboardType='default'
                             placeholder='escribe aquí el cliente...'  
                             value={cliente}  
                             onChangeText={setCliente}
@@ -102,22 +175,97 @@ const CrearTrabajo = () => {
 
                     {/* Teléfono */}
                     <View style={styles.campo}>
-                        <Text style={styles.label}>Teléfono</Text>
-                                                
+                        
+                        <View style={styles.content}>
+                            <Icon name="call-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Teléfonos</Text>
+                        </View>   
+
+                        <View style={styles.contentTlf}>
                             <TextInput 
-                                style= {styles.inputTxt}
-                                keyboardType='number-pad'
-                                placeholder='escribe aquí el teléfono...'    
-                                maxLength={9}
-                                value={tlf}  
-                                onChangeText={setTlf}
+                                style= {styles.inputTlf}
+                                placeholder='nombre'    
+                                value={tlfnombre1}  
+                                onChangeText={setTN1}
                             />
+
+                            <TextInput 
+                                style= {styles.inputTlf}
+                                keyboardType='number-pad'
+                                placeholder='telefono'    
+                                maxLength={9}
+                                value={tlf1}  
+                                onChangeText={setTlf1}
+                            />  
+                        </View>
+
+                        <View style={{display: iTlf>=2 ? 'flex' : 'none'}}>
+                            <View style={styles.contentTlf}>
+                                
+                                <Pressable onPress={() => {removeTlf()}} style={styles.removeTlf}>
+                                    <Icon name="remove-circle-outline" size={33} color='black'/>
+                                </Pressable>
+
+                                <TextInput 
+                                    style= {styles.inputNewTlf}
+                                    placeholder='nombre'    
+                                    value={tlfnombre2}  
+                                    onChangeText={setTN2}
+                                />
+
+                                <TextInput 
+                                    style= {styles.inputNewTlf}
+                                    keyboardType='number-pad'
+                                    placeholder='telefono'    
+                                    maxLength={9}
+                                    value={tlf2}  
+                                    onChangeText={setTlf2}
+                                />  
+                            </View>
+                        </View>
+
+                        <View style={{display: iTlf==3 ? 'flex' : 'none'}}>
+                            <View style={styles.contentTlf}>
+
+                                <Pressable onPress={() => {removeTlf()}} style={styles.removeTlf}>
+                                    <Icon name="remove-circle-outline" size={33} color='black'/>
+                                </Pressable>
+
+                                <TextInput 
+                                    style= {styles.inputNewTlf}
+                                    placeholder='nombre'    
+                                    value={tlfnombre3}  
+                                    onChangeText={setTN3}
+                                />
+
+                                <TextInput 
+                                    style= {styles.inputNewTlf}
+                                    keyboardType='number-pad'
+                                    placeholder='telefono'    
+                                    maxLength={9}
+                                    value={tlf3}  
+                                    onChangeText={setTlf3}
+                                />  
+                            </View>
+                        </View>
+
+                        <View style={{display: iTlf==3 ? 'none' : 'flex'}}>
+                            <Pressable style={styles.content} onPress={()=>addTlf()}>
+                                <Icon name="add-circle" size={33} color='black'/>
+                                <Text style={styles.newTlf}>Añadir otro teléfono</Text>
+                            </Pressable>
+                        </View>
 
                     </View>
 
                     {/* Direccion */}
                     <View style={styles.campo}>
-                        <Text style={styles.label}>Dirección</Text>
+
+                        <View style={styles.content}>
+                            <Icon name="location-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Dirección</Text>
+                        </View> 
+
                         <TextInput 
                             style= {styles.inputTxt}
                             keyboardType='default'
@@ -128,12 +276,56 @@ const CrearTrabajo = () => {
                         />
                     </View>
 
-                    {/* Fecha */}
+                    {/* Materiales pedidos */}
                     <View style={styles.campo}>
-                        <Text style={styles.label}>Día para hacerla</Text>        
-                        <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
-                            <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
-                        </Pressable>
+
+                        <View style={styles.content}>
+                            <Icon name="today-sharp" color="black" size={30}/>
+                            <Text style={styles.label}>Materiales pedidos</Text>
+                        </View>  
+
+                        <RadioForm 
+                            initial={0}
+                            animation={false}
+                        >
+
+                        {
+                            radioData.map((obj, i) => (
+                                <RadioButton key={i}>
+                                    
+                                    <RadioButtonInput
+                                        obj={obj}
+                                        index={i}
+                                        buttonSize={22}
+                                        buttonStyle={{margin:5}}
+                                        buttonInnerColor={'#EDAC70'}
+                                        buttonOuterColor={'#EDAC70'}
+                                        isSelected={radio == i}
+                                        onPress={(value) => {setRadio(value)}}
+                                    />
+
+                                    <RadioButtonLabel
+                                        obj={obj}
+                                        index={i}
+                                        labelStyle={{fontSize: 18, color: 'black'}}
+                                        onPress={(value) => {setRadio(value)}}
+                                    />
+                                
+                                </RadioButton>
+                            ))
+                        }
+
+                        </RadioForm>
+
+                        <View style={{display: radio==1 ? 'flex' : 'none'}}>
+
+                            <Text style={styles.labelDateMat}>¿Qué día ha sido pedido?</Text>
+
+                            <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
+                                <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                            </Pressable>
+
+                        </View>
                         
                         { show && (
                         <DateTimePicker
@@ -143,29 +335,17 @@ const CrearTrabajo = () => {
                             onChange={pickDate}
                         />
                         )}
-                    </View>
 
-                    {/* Fecha */}
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>¿A qué hora?</Text>        
-                        <Pressable onPress={ () => setShowTime(true)} style={styles.inputDate}>
-                            <Text>{hora.getHours()}:{hora.getMinutes()}</Text>
-                        </Pressable>
-                        
-                        { showHora && (
-                        <DateTimePicker
-                            value={hora}
-                            display='default'
-                            mode= "time"
-                            onChange={pickTime}
-                        />
-                        )}
                     </View>
 
                     
                     {/* Notas */}
                     <View style={styles.campo}>
-                        <Text style={styles.label}>Otras notas</Text>
+
+                        <View style={styles.content}>
+                            <Icon name="document-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Otras notas</Text>
+                        </View> 
                         <TextInput 
                             style= {styles.inputTxt}
                             keyboardType='default'
@@ -175,79 +355,21 @@ const CrearTrabajo = () => {
                             
                         />
                     </View>
-
-
-                    <Pressable onPress={handleTarea} style={styles.btn}>
-                        <Text style={styles.btnTxt}>Crear</Text>
-                    </Pressable>
+                
 
                 </ScrollView>
-            </SafeAreaView>
+                
+            </LinearGradient>
+
+            <Pressable onPress={ () => handleCrear() } style={styles.crearBtn}>
+                <Text style={styles.crearTxt}>Crear</Text>
+                <Text style={styles.crearIcon}>
+                    <Icon name="add-circle" size={30} color='black'/>
+                </Text>
+            </Pressable>
+
+        </SafeAreaView>
     )
 }
-
-/*ESTILOS*/
-const styles = StyleSheet.create({
-    /* ESTILOS FORMULARIO*/
-    inputTxt:{
-        backgroundColor: '#FFF',
-        borderRadius: 10
-    },
-    label:{
-        fontSize: 18,
-        color: '#000',
-        marginBottom: 10,
-        fontWeight: 'bold'
-    },
-    campo:{
-        marginHorizontal: 25,
-        marginTop: 10
-    },
-    btnVoz:{
-        backgroundColor: '#EDAC70',
-        padding: 10,
-        borderRadius: 10,
-        marginVertical: 10
-    },
-    inputDate:{
-        backgroundColor: '#FFF',
-        padding: 10,
-        borderRadius: 10
-    },
-    
-
-
-    /*ESTILOS GENERALES (POR AHORA)*/
-    titulo: {
-      textAlign: 'center',
-      fontSize: 30,
-      marginTop: 20,
-      color: '#000'
-    },
-    tituloBold: {
-      fontWeight: 'bold',
-    },
-    background: {
-      backgroundColor: '#FAE7C4',
-      flex: 1
-    },
-    btn: {
-     backgroundColor: '#EDAC70',
-     padding: 15,
-     margin: 20,
-     borderRadius: 10
-    },
-    btnTxt: {
-      fontWeight: 'bold',
-      textAlign: 'center',
-      fontSize: 15,
-      textTransform: 'uppercase'
-    },
-    flexHorizontal:{
-        flexDirection: 'row'
-    },
-
-  
-  });
 
 export default CrearTrabajo;

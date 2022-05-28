@@ -3,10 +3,12 @@
     Aquí se encuentra la lógica relacionada con la base de datos y las tareas
 */
 import { Tarea } from "./models";
+import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
+
 
 //CREAR TABLA DE TAREAS
 export const crearTTareas = async (db) => {
-
+    
     await db.transaction( (tx) => {
         tx.executeSql(`CREATE TABLE IF NOT EXISTS tarea (
             tarea_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,47 +32,63 @@ export const crearTTareas = async (db) => {
 
 
 //GET - TAREAS 
-export const getTareas = async (db) => {
+export const getTareas = async () => {
+    const db = await conectarDB();
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`SELECT tarea_id, titulo
-            FROM tarea;`, 
-            [],
-            (txn, res) => {
-                let result; 
-            }
-        );
+    return await new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(`SELECT tarea_id, titulo
+                FROM tarea;`, 
+                [],
+                (txn, res) => {
+                    resolve(res.rows.raw());
+                },
+                (error) => {
+                    reject(error.message);
+                }
+            );
+        });
+
     });
-
 }
 
-export const getTareaID = async (db, id) => {
+export const getTareaID = async (id) => {
+    const db = await conectarDB();
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`SELECT tarea_id, titulo, cliente, direccion, tlf, fecha, hora, notas FROM tarea
-            WHERE tarea_id = ?`, 
-            [id],
-            (txn, res) => {console.log(res.rows.item(0));},
-            (error) => { console.log(error.message); }
-        );
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`SELECT tarea_id, titulo, cliente, direccion, tlf, fecha, hora, notas FROM tarea
+               WHERE tarea_id = ?`, 
+               [id],
+               (txn, res) => {
+                   resolve(res.rows.item(0));
+               },
+               (error) => { 
+                   reject(error.message);
+               }
+           );
+       });
     });
 
 }
 
 //POST - TAREAS -- HAY QUE PASARLE DATA EN UNA SOLA VARIABLE
-export const postTarea = async (db) => {
+export const postTarea = async (data) => {
+    const db = await conectarDB();
 
     let date = new Date();
-    let titulo = "Titulaciones de titulos"; let urgente = 0; let cliente = "Paco"; let dir = "C/ Langreo"; let tlf = 666666666; let notas="ANOTACIONES";
-
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`INSERT INTO tarea (titulo, urgente, cliente, direccion, tlf, fecha, hora, fecha_creada, notas)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), date.toDateString(), notas],
-            () =>{ console.log("tarea creada");},
-            (error) => { console.log(error.message);}
-        );
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`INSERT INTO tarea (titulo, urgente, cliente, direccion, tlf, fecha, hora, fecha_creada, notas)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data[0], data[1], data[2], data[3], data[4], data[5], data[6], date.toDateString(), data[7]],
+                () =>{ resolve(null)},
+                (error) => { reject(error)}
+            );
+        }); 
     }); 
+
+
 
 }
 

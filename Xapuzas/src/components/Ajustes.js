@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styles } from '../assets/styles';
-import Icon  from 'react-native-vector-icons/AntDesign';
+import Icon  from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {
   SafeAreaView,
@@ -18,34 +19,37 @@ const Ajustes = () => {
 
   return (
     <SafeAreaView style={styles.background}>
+      <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
 
-      <View style={styles.header}>
-      
-        <Text style={styles.titAjuste}>¿Qué quieres hacer?</Text>
+        <View style={styles.header}>
+        
+          <Text style={styles.titAjuste}>¿Qué quieres hacer?</Text>
 
-        <View style={styles.contentHelp}>
-          <Pressable style={styles.help}>
-            <Icon name="questioncircle" size={40} color='#EDAC70' />
-          </Pressable>
+          <View style={styles.contentHelp}>
+            <Pressable style={styles.help}>
+              <Icon name="md-help-circle" size={50} color='#EDAC70' />
+            </Pressable>
+          </View>
+
         </View>
 
-      </View>
+        <View style={styles.contentAjustes}>
 
-      <View style={styles.contentAjustes}>
+          <Pressable style={styles.btnAjuste}>
+            <Text style={styles.text}>Crear copia de seguridad</Text>
+          </Pressable>
 
-        <Pressable style={styles.btnAjuste}>
-          <Text style={styles.text}>Crear copia de seguridad</Text>
-        </Pressable>
+          <Pressable style={styles.btnAjuste}>
+            <Text style={styles.text}>Recuperar información</Text>
+          </Pressable>
 
-        <Pressable style={styles.btnAjuste}>
-          <Text style={styles.text}>Recuperar información</Text>
-        </Pressable>
+          <Pressable style={styles.btnAjuste}>
+            <Text style={styles.text}>Borrar todos los datos</Text>
+          </Pressable>
 
-        <Pressable style={styles.btnAjuste}>
-          <Text style={styles.text}>Borrar todos los datos</Text>
-        </Pressable>
+        </View>
 
-      </View>
+      </LinearGradient>
 
     </SafeAreaView>
   );
