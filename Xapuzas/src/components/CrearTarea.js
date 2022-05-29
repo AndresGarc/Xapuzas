@@ -25,7 +25,9 @@ import { postTarea } from '../database/tarea-service';
 
 
 //le mando las propiedades que me interesan => ({props})
-const CrearTarea = () => {
+const CrearTarea = ({route}) => {
+
+    const {mode} = route.params;
 
     const [titulo, setTitulo] = useState(null);
     const [cliente, setCliente] = useState(null);
@@ -44,7 +46,9 @@ const CrearTarea = () => {
 
     const pickDate = (event, selectedDate) => {
 
-        if(event.type != "dismissed") setFecha(selectedDate);
+        if(event.type != "dismissed") {
+            setFecha(selectedDate);
+        }
         setShow(false);
     }
 
@@ -57,9 +61,14 @@ const CrearTarea = () => {
 
     const handleTarea = () => {
 
-        //VALIDACION
-        //La alerta -> titulo, descripcion y los diferentes botones que quieras añadir para la alerta
-        if(titulo == ''){
+        let vacio;
+        let cli; let dire; let tlfo; let not; let date; let time;
+
+        //VALIDACION 
+        if(titulo!=null) vacio=titulo.trim();
+        
+
+        if(vacio == '' || titulo == null){
             Alert.alert(
                 'Algo va mal',
                 'El título es obligatorio',
@@ -69,16 +78,49 @@ const CrearTarea = () => {
         }
 
         //FORMATEAR LOS DATOS
-        let data = [titulo,urgente,cliente, dir, tlf, fecha, hora, notas];
+        // {hora.getHours()}:{hora.getMinutes()}
+        if(fecha!=null) date = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
+        if(hora!=null) time = `${hora.getHours()}:${hora.getMinutes()}`;
+
+        if(cliente!=null) {
+            if(cliente.trim()==''){
+                cli= null;
+            } else{
+                cli=cliente;
+            }
+        } if(dir!=null){
+            if(dir.trim()==''){
+                dire= null;
+            } else {
+                dire=dir;
+            }
+        } if(tlf!=null){
+            if(tlf.trim()==''){
+                tlfo= null;
+            } else{
+                tlfo=tlf;
+            }
+        } if(notas!=null){
+            if(notas.trim()==''){
+                notas= null;
+            } else{
+                not=notas;
+            }
+        }
+
+        let data = [titulo,urgente,cli, dire, tlfo, date, time, not];
 
         //SUBIR LOS DATOS
         postTarea(data).then((data) => {
+
             Alert.alert(
                 '¡Todo ha ido bien!',
                 'Esta tarea ha sido creada correctamente',
                 [{
                     text: 'Entendido',
-                    onPress: () => navegacion.navigate("ConsultaTarea")
+                    onPress: () => navegacion.navigate("ConsultaTarea", {
+                        creada: true
+                    })
                 }]
             )
         }).catch((error) => console.log(error))
@@ -101,7 +143,7 @@ const CrearTarea = () => {
                         </Pressable>
                         
                         <View style={styles.contentTitle}>
-                            <Text style={styles.titCrear}>Creador de tareas</Text>
+                            <Text style={styles.titCrear}>de tareas</Text>
                         </View>
 
                         <View style={styles.contentHelp}>
@@ -168,25 +210,6 @@ const CrearTarea = () => {
                         />
                     </View>
 
-                    {/* Teléfono */}
-                    <View style={styles.campo}>
-
-                        <View style={styles.content}>
-                            <Icon name="call-outline" color='black' size={30}/>
-                            <Text style={styles.label}>Teléfono</Text>
-                        </View>    
-
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='number-pad'
-                            placeholder='escribe aquí el teléfono...'    
-                            maxLength={9}
-                            value={tlf}  
-                            onChangeText={setTlf}
-                        />
-
-                    </View>
-
                     {/* Direccion */}
                     <View style={styles.campo}>
                     
@@ -204,6 +227,25 @@ const CrearTarea = () => {
                             onChangeText={setDir}
                             
                         />
+                    </View>
+
+                    {/* Teléfono */}
+                    <View style={styles.campo}>
+
+                        <View style={styles.content}>
+                            <Icon name="call-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Teléfono</Text>
+                        </View>    
+
+                        <TextInput 
+                            style= {styles.inputTxt}
+                            keyboardType='number-pad'
+                            placeholder='escribe aquí el teléfono...'    
+                            maxLength={9}
+                            value={tlf}  
+                            onChangeText={setTlf}
+                        />
+
                     </View>
 
                     {/* Fecha */}
@@ -244,8 +286,7 @@ const CrearTarea = () => {
                         </View>     
 
                         <Pressable onPress={ () => setShowTime(true)} style={styles.inputDate}>
-                            {
-                                hora!=undefined ?
+                            { hora!=undefined ?
                                     <Text>{hora.getHours()}:{hora.getMinutes()}</Text>
                                 :
                                     <Text>Toca aquí para indicar la hora</Text>
@@ -279,6 +320,7 @@ const CrearTarea = () => {
                             keyboardType='default'
                             placeholder='escribe aquí una nota...'  
                             value={notas}  
+                            multiline
                             onChangeText={setNotas}
                             
                         />

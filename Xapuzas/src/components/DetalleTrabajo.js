@@ -54,14 +54,75 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =
 
                     <View style={styles.contentDetalle}>
 
-                        <Text>{data.titulo}</Text>
-                        { data.cliente!= null &&  <Text>{data.cliente}</Text>}
-                        { data.direccion!= null &&  <Text>{data.direccion}</Text>}
+                        <Text style={styles.titModal}>{data.titulo}</Text>
+
+                        { data.cliente!= null &&
+                            <View style={styles.labelModal}>
+                                <Icon name="person-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.cliente}</Text>
+                            </View>
+                        }
+
+                        { data.direccion!= null &&  
+                            <View style={styles.labelModal}>
+                                <Icon name="location-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.direccion}</Text>
+                            </View>
+                        }
+
+                        { data.tlf1!= null &&  
+                            <View>
+                                <View style={styles.labelModal}>
+                                    <Icon name="call-outline" color='#EDAC70' size={40}/>
+                                    <Text style={styles.labTitModal}>Teléfonos</Text>
+                                </View>
+
+                                <View style={styles.contentModTlf}>
+
+                                    <View style={styles.cliTlfModal}>
+                                        <Text style={styles.textTfl}>{data.cliente_tlf1}</Text>
+                                        {data.cliente_tlf2 != null && <Text style={styles.textTfl}>{data.cliente_tlf2}</Text>}
+                                        {data.cliente_tlf3 != null && <Text style={styles.textTfl}>{data.cliente_tlf3}</Text>}
+                                    </View>
+
+                                    <View style={styles.TlfModal}>
+                                        <Text style={styles.textTfl}>{data.tlf1}</Text>
+                                        {data.tlf2 != null && <Text style={styles.textTfl}>{data.tlf2}</Text>}
+                                        {data.tlf3 != null && <Text style={styles.textTfl}>{data.tlf3}</Text>}
+                                    </View>
+                                </View>
+
+                            </View>
+
+                        }
+
+                        { data.pedido_mat!= null &&  
+                            <View style={styles.mBottomS}>
+                                <View style={styles.labelModal}>
+                                    <Icon name="today-sharp" color='#EDAC70' size={40}/>
+                                    <Text style={styles.labTitModal}>Materiales pedidos</Text>
+                                </View>
+                                
+                                {data.pedido_mat==0 && <Text style={styles.textModal}>Sin pedir </Text> }
+
+                                {data.pedido_mat==1 && <Text style={styles.textModal}>Pedido el día: {data.dia_pedido} </Text> }
+
+                                {data.pedido_mat==2 && <Text style={styles.textModal}>Recogido </Text> }
+
+                            </View>
+                        }
+
+                        { data.notas!= null &&  
+                        <View style={styles.labelModal}>
+                            <Icon name="document-outline" color='#EDAC70' size={40}/>
+                            <Text style={styles.textModal}>{data.notas}</Text>
+                        </View>
+                        }
 
                     </View>
 
                     <Pressable style={styles.crearBtnModal}>
-                        <Text style={styles.crearTxt}>Crear</Text>
+                        <Text style={styles.crearTxt}>Borrar/Visto</Text>
                         <Text style={styles.crearIcon}>
                         <Icon name="add-circle" size={30} color='black'/>
                     </Text>

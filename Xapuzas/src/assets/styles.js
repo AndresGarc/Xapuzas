@@ -325,6 +325,9 @@ export const styles = StyleSheet.create({
     mBottomXl:{
         marginBottom: 60
     },
+    mBottomS:{
+        marginBottom: 10
+    },
 
     //ESTRUCTURA MODAL
     mFondo:{
@@ -352,9 +355,50 @@ export const styles = StyleSheet.create({
         margin: 10
     },
     contentDetalle:{
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 60,
         marginHorizontal: 30
+    },
+    titModal:{
+        fontSize:26,
+        fontWeight: 'bold',
+        color: 'black',
+        marginBottom: 20
+    },
+    labelModal:{
+        flexDirection:'row',
+        alignItems: 'center',
+        marginBottom:10
+    },
+    textModal:{
+        fontSize:18,
+        color: 'black',
+        marginLeft: 10
+    },
+    textTfl:{
+        fontSize:18,
+        color: 'black',
+        marginBottom:20,
+        marginLeft: 15
+    },
+    labTitModal:{
+        fontSize:18,
+        color: 'black',
+        marginLeft: 10,
+        fontWeight:'bold'
+    },
+    contentModTlf:{
+        flexDirection: 'row',
+        marginBottom: 5
+    },
+    cliTlfModal:{
+        paddingRight: 10,
+        borderRightColor: '#EDAC70',
+        borderRightWidth: 2,
+        paddingTop: 10
+    },
+    TlfModal:{
+        paddingTop:10
     },
     crearBtnModal:{
         flexDirection: 'row',

@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { styles } from '../assets/styles';
 import Icon  from 'react-native-vector-icons/Ionicons';
@@ -66,11 +66,18 @@ const Trabajos = () => {
   }
 
   useEffect( ()=>{
-    console.log("use effect trabajos");
+    /*
+    getTrabajos().then((data) => {
+      setData(data);
+    }).catch((error) => console.log(error)); */
+  }, []);
+
+  useFocusEffect( React.useCallback(() => {
     getTrabajos().then((data) => {
       setData(data);
     }).catch((error) => console.log(error));
-  }, []);
+
+}, []) );
 
   return (
     <SafeAreaView style={styles.background}>

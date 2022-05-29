@@ -75,15 +75,19 @@ export const getTareaID = async (id) => {
 //POST - TAREAS -- HAY QUE PASARLE DATA EN UNA SOLA VARIABLE
 export const postTarea = async (data) => {
     const db = await conectarDB();
-
     let date = new Date();
+    
     return await new Promise((resolve, reject) => {
         db.transaction( async (tx) => {
             tx.executeSql(`INSERT INTO tarea (titulo, urgente, cliente, direccion, tlf, fecha, hora, fecha_creada, notas)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [data[0], data[1], data[2], data[3], data[4], data[5], data[6], date.toDateString(), data[7]],
-                () =>{ resolve(null)},
-                (error) => { reject(error)}
+                (txn, res) =>{ 
+                    resolve([res.insertId, data[0]]); 
+                },
+                (error) => { 
+                    reject(error);
+                }
             );
         }); 
     }); 

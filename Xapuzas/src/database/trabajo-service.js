@@ -84,22 +84,26 @@ export const getTrabajoID = async (id) => {
 }
 
 //POST - TRABAJOS
-export const postTrabajos = async (db) => {
-
+export const postTrabajos = async (data) => {
+    const db = await conectarDB();
     let date = new Date();
-    let titulo = "Cocina cibeles"; let cliente = "Paco"; let dir = "C/ Benimont 2"; 
-    let ctl1 = "Paco"; let tlf1 = 654812348; let ctl2 = "Mujer paco"; let tlf2= 648123785;
-    let ctl3 = null; let tlf3 = null ; let pedido = 0; let dped = date.toDateString(); let notas = null;
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`INSERT INTO trabajo (titulo, estado_id, cliente, direccion, cliente_tlf1 , tlf1,
-            cliente_tlf2, tlf2, cliente_tlf3, tlf3, pedido_mat, dia_pedido, fecha_creada, notas)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-            [titulo, 0, cliente, dir, ctl1, tlf1, ctl2, tlf2, ctl3, tlf3, pedido, dped, date.toDateString(), notas],
-            () =>{ console.log("trabajo creado");},
-            (error) => { console.log(error.message);}
-        );
-    }); 
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`INSERT INTO trabajo (titulo, estado_id, cliente, direccion, cliente_tlf1 , tlf1,
+                cliente_tlf2, tlf2, cliente_tlf3, tlf3, pedido_mat, dia_pedido, fecha_creada, notas)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+                [data[0], 0, data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], date.toDateString(), data[11]],
+                (txn, res) =>{ 
+                    resolve([res.insertId]);
+                },
+                (error) => { 
+                    reject(error.message);
+                }
+            );
+        }); 
+    })
+
 
 }
 

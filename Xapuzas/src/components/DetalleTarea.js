@@ -18,8 +18,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { conectarDB, borrarTodo } from '../database/db-service'
 
 
-
 const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
+
+    const navegacion = useNavigation();
 
     const closeModal = () => {
         setModalVisible(false);
@@ -42,7 +43,7 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
                             <Icon name="md-help-circle" size={50} color='#EDAC70' />
                         </Pressable>
 
-                        <Pressable style={styles.iconModal}>
+                        <Pressable  style={styles.iconModal}>
                             <Icon name="create-outline" size={45} color='black'/>
                         </Pressable>
 
@@ -54,22 +55,57 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
 
                     <View style={styles.contentDetalle}>
 
-                        <Text>{data.titulo}</Text>
-                        { data.cliente!= null &&  <Text>{data.cliente}</Text>}
-                        { data.direccion!= null &&  <Text>{data.direccion}</Text>}
-                        { data.tlf!= null &&  <Text>{data.tlf}</Text>}
-                        { data.fecha!= null &&  <Text>{data.fecha}</Text>}
-                        { data.hora!= null &&  <Text>{data.hora}</Text>}
+                        <Text style={styles.titModal}>{data.titulo}</Text>
+                        { data.cliente!= null &&
+                            <View style={styles.labelModal}>
+                                <Icon name="person-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.cliente}</Text>
+                            </View>
+                        }
+
+                        { data.direccion!= null &&  
+                            <View style={styles.labelModal}>
+                                <Icon name="location-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.direccion}</Text>
+                            </View>
+                        }
+
+                        { data.tlf!= null &&  
+                            <View style={styles.labelModal}>
+                                <Icon name="call-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.tlf}</Text>
+                            </View>
+                        }
+
+                        { data.fecha!= null &&  
+                            <View style={styles.labelModal}>
+                                <Icon name="today-sharp" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.fecha}</Text>
+                            </View>
+                        }
+
+                        { data.hora!= null &&  
+                            <View style={styles.labelModal}>
+                                <Icon name="time-outline" color='#EDAC70' size={40}/>
+                                <Text style={styles.textModal}>{data.hora}</Text>
+                            </View>
+                        }
+
+                        { data.notas!= null &&  
+                        <View style={styles.labelModal}>
+                            <Icon name="document-outline" color='#EDAC70' size={40}/>
+                            <Text style={styles.textModal}>{data.notas}</Text>
+                        </View>
+                        }
 
                     </View>
 
                     <Pressable style={styles.crearBtnModal}>
-                        <Text style={styles.crearTxt}>Crear</Text>
+                        <Text style={styles.crearTxt}>Terminar</Text>
                         <Text style={styles.crearIcon}>
-                        <Icon name="add-circle" size={30} color='black'/>
-                    </Text>
-
-        </Pressable>
+                        <Icon name='checkmark-circle-outline' size={30} color='black'/>
+                        </Text>
+                    </Pressable>
 
                 </View>
 

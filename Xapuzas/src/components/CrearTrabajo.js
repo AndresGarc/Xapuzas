@@ -19,42 +19,36 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import { postTrabajos } from '../database/trabajo-service';
 
 
 //le mando las propiedades que me interesan => ({props})
 const CrearTrabajo = () => {
 
     //elementos para el formulario
-    const [titulo, setTitulo] = useState('');
-    const [cliente, setCliente] = useState('');
+    const [titulo, setTitulo] = useState(null);
+    const [cliente, setCliente] = useState(null);
     const [iTlf, setAddTlf] = useState(1);
-    const [tlfnombre1, setTN1] = useState('');
-    const [tlf1, setTlf1] = useState('');
-    const [tlfnombre2, setTN2] = useState('');
-    const [tlf2, setTlf2] = useState('');
-    const [tlfnombre3, setTN3] = useState('');
-    const [tlf3, setTlf3] = useState('');
-    const [dir, setDir] = useState('');
-    const [notas, setNotas] = useState('');
-    const [fecha, setFecha] = useState(new Date());
+    const [tlfnombre1, setTN1] = useState(null);
+    const [tlf1, setTlf1] = useState(null);
+    const [tlfnombre2, setTN2] = useState(null);
+    const [tlf2, setTlf2] = useState(null);
+    const [tlfnombre3, setTN3] = useState(null);
+    const [tlf3, setTlf3] = useState(null);
+    const [dir, setDir] = useState(null);
+    const [notas, setNotas] = useState(null);
+    const [fecha, setFecha] = useState(null);
+    const defaultFecha = new Date();
 
     //añadidos
     const [show, setShow] = useState(false);
-    const [showFecha, setShowFecha] = useState(false);
     const [radio, setRadio] = useState(0);
 
     const navegacion = useNavigation();
 
     const pickDate = (event, selectedDate) => {
-        const currentDate = selectedDate;
+        if(event.type != "dismissed") setFecha(selectedDate);
         setShow(false);
-        setFecha(currentDate);
-    }
-
-    const pickTime = (event, selectedTime) => {
-        const currentTime = selectedTime;
-        setShowTime(false);
-        setTime(selectedTime); 
     }
 
     const radioData =[{
@@ -81,24 +75,17 @@ const CrearTrabajo = () => {
         if(iTlf==2) setAddTlf(1);
     }
 
-    const handleRadio = (value) => {
-        console.log(value);
-        setRadio(value);
-        
-        /*
-        
-        //Si se ha pedido en una fecha
-        if(array[0].value == 1){
-            setShowFecha(true);
-        } else { //resto de situaciones
-            setShowFecha(false);
-        }*/
-    }
-
     const handleCrear = () => {
+
+        let vacio;
+        let cli; let dire; let not; let date; 
+        let tlfo1; let tlfo2; let tlfo3;
+        let ntlf1; let ntlf2; let ntlf3; 
+
         //VALIDACION
-        //La alerta -> titulo, descripcion y los diferentes botones que quieras añadir para la alerta
-        if(titulo == ''){
+        if(titulo!=null) vacio=titulo.trim();
+
+        if(vacio=='' || titulo == null){
             Alert.alert(
                 'Algo va mal',
                 'El título es obligatorio',
@@ -106,6 +93,85 @@ const CrearTrabajo = () => {
             );
             return
         }
+
+        //FORMATEAR LOS DATOS
+        if(fecha!=null) {
+            if(radio==1){
+                date = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
+            }
+        }
+
+
+        if(cliente!=null) {
+            if(cliente.trim()==''){
+                cli= null;
+            } else{
+                cli=cliente;
+            }
+        } if(dir!=null){
+            if(dir.trim()==''){
+                dire= null;
+            } else{
+                dire=dir;
+            }
+        } if(tlf1!=null){
+            if(tlf1.trim()==''){
+                tlfo1= null;
+            } else{
+                tlfo1=tlf1;
+            }
+        } if(tlfnombre1!=null){
+            if(tlfnombre1.trim()==''){
+                ntlf1= null;
+            } else{
+                ntlf1=tlfnombre1;
+            }
+        } if(tlf2!=null){
+            if(tlf2.trim()==''){
+                tlfo2= null;
+            } else{
+                tlfo2=tlf2;
+            }
+        } if(tlfnombre2!=null){
+            if(tlfnombre2.trim()==''){
+                ntlf2= null;
+            } else{
+                ntlf2=tlfnombre2;
+            }
+        } if(tlf3!=null){
+            if(tlf3.trim()==''){
+                tlfo3= null;
+            } else{
+                tlfo3=tlf3;
+            }
+        } if(tlfnombre3!=null){
+            if(tlfnombre3.trim()==''){
+                ntlf3= null;
+            } else{
+                ntlf3=tlfnombre3;
+            }
+        }if(notas!=null){
+            if(notas.trim()==''){
+                notas= null;
+            } else{
+                not=notas;
+            }
+        }
+
+        let data = [titulo, cli, dire, ntlf1, tlfo1, ntlf2, tlfo2, ntlf3, tlfo3, radio ,date, not];
+
+        postTrabajos(data).then((data) => {
+
+            Alert.alert(
+                '¡Todo ha ido bien!',
+                'Este trabajo ha sido creado correctamente',
+                [{
+                    text: 'Entendido',
+                    onPress: () => navegacion.navigate("ConsultaTrabajo")
+                }]
+            )
+
+        }).catch((error) => console.log(error));
 
     }
 
@@ -139,11 +205,12 @@ const CrearTrabajo = () => {
                     {/* Título */}
                     <View style={styles.campo}>
 
-                        <Text style={styles.label}>Título de la tarea</Text>
+                        <Text style={styles.label}>Título del trabajo</Text>
                         <TextInput 
                             style= {styles.inputTxt}
                             placeholder='escribe aquí el título...'    
                             value={titulo}
+                            multiline
                             onChangeText={setTitulo}
                         />
 
@@ -169,6 +236,25 @@ const CrearTrabajo = () => {
                             placeholder='escribe aquí el cliente...'  
                             value={cliente}  
                             onChangeText={setCliente}
+                            
+                        />
+                    </View>
+
+                    
+                    {/* Direccion */}
+                    <View style={styles.campo}>
+
+                        <View style={styles.content}>
+                            <Icon name="location-outline" color='black' size={30}/>
+                            <Text style={styles.label}>Dirección</Text>
+                        </View> 
+
+                        <TextInput 
+                            style= {styles.inputTxt}
+                            keyboardType='default'
+                            placeholder='escribe aquí la dirección...'  
+                            value={dir}  
+                            onChangeText={setDir}
                             
                         />
                     </View>
@@ -258,24 +344,6 @@ const CrearTrabajo = () => {
 
                     </View>
 
-                    {/* Direccion */}
-                    <View style={styles.campo}>
-
-                        <View style={styles.content}>
-                            <Icon name="location-outline" color='black' size={30}/>
-                            <Text style={styles.label}>Dirección</Text>
-                        </View> 
-
-                        <TextInput 
-                            style= {styles.inputTxt}
-                            keyboardType='default'
-                            placeholder='escribe aquí la dirección...'  
-                            value={dir}  
-                            onChangeText={setDir}
-                            
-                        />
-                    </View>
-
                     {/* Materiales pedidos */}
                     <View style={styles.campo}>
 
@@ -322,17 +390,22 @@ const CrearTrabajo = () => {
                             <Text style={styles.labelDateMat}>¿Qué día ha sido pedido?</Text>
 
                             <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
-                                <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                                { fecha!=undefined ?
+                                    <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                                :
+                                    <Text>Toca aquí para indicar la fecha</Text>
+                                }
                             </Pressable>
 
                         </View>
                         
                         { show && (
                         <DateTimePicker
-                            value={fecha}
+                            value={defaultFecha}
                             display='default'
                             mode= "date"
                             onChange={pickDate}
+                            maximumDate={defaultFecha}
                         />
                         )}
 
@@ -349,6 +422,7 @@ const CrearTrabajo = () => {
                         <TextInput 
                             style= {styles.inputTxt}
                             keyboardType='default'
+                            multiline
                             placeholder='escribe aquí una nota...'  
                             value={notas}  
                             onChangeText={setNotas}

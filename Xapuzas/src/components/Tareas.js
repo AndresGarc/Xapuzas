@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,12 +18,13 @@ import DetalleTarea from './DetalleTarea';
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea } from '../database/tarea-service'
 
-const Tareas = () => {
+const Tareas = ({route}) => {
 
   const [urgente, setUrgente] = useState(1); // 1 urgente / 0 pendientes
   const [data, setData] = useState([]);
   const [dataDetalle, setDataDetalle] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const navegacion = useNavigation();
 
@@ -43,14 +44,15 @@ const Tareas = () => {
 
   const loadTareas = async () => {
     try {
-      //const db = await conectarDB();
-      //await crearTTareas(db);
+      const db = await conectarDB();
+      //
       //await deleteTarea(db, 1);
       //await postTarea(db);
       //await getTareas();
       //await getTareaID(db, 1);
       //await putTarea(db,1);
-      //await borrarTTarea(db);
+      await borrarTTarea(db);
+      await crearTTareas(db);
       //await borrarTodo(db);
       
 
@@ -70,15 +72,30 @@ const Tareas = () => {
 
   }
 
-  //no puedes instanciarlo para esperar, pero dentro si puedes
+  //PRIMERA CARGA  
+  
   useEffect(()=>{
-    console.log("use effect tareas");
-    //LA MOVIE, tarda en cargarse (obviamente)
+
+   
+    /*
     getTareas().then((data) => {
       setData(data);
-    }).catch((error) => console.log(error))
+  
+    }).catch((error) => console.log(error))*/
+  
 
-  }, []);
+  }, []); 
+
+  //useFocusEffect - cuando la pantalla este focuseada -- siempre cargara
+  useFocusEffect( React.useCallback(() => {
+
+
+      getTareas().then((data) => {
+        setData(data);
+    
+      }).catch((error) => console.log(error))
+
+  }, []) );
 
 
   return (
@@ -142,7 +159,9 @@ const Tareas = () => {
 
       </LinearGradient>
 
-      <Pressable onPress={ () => navegacion.navigate("Crear tarea") } style={styles.crearBtn}>
+      <Pressable onPress={ () => {navegacion.navigate("Crear tarea",{mode:"crear"});}} 
+        style={styles.crearBtn}
+      >
           <Text style={styles.crearTxt}>Crear</Text>
           <Text style={styles.crearIcon}>
             <Icon name="add-circle" size={30} color='black'/>
