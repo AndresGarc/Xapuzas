@@ -21,9 +21,18 @@ import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, 
 
 const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
 
+    const navegacion = useNavigation();
+
     const closeModal = () => {
         setModalVisible(false);
         setDataDetalle([]);
+    }
+
+    const irEditor = () => {
+        let datos = data;
+        setModalVisible(false);
+        setDataDetalle([]);
+        navegacion.navigate("Crear trabajo",{mode:"Editor", data: datos});
     }
 
 
@@ -42,7 +51,7 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =
                             <Icon name="md-help-circle" size={50} color='#EDAC70' />
                         </Pressable>
 
-                        <Pressable style={styles.iconModal}>
+                        <Pressable onPress={ () => irEditor()} style={styles.iconModal}>
                             <Icon name="create-outline" size={45} color='black'/>
                         </Pressable>
 

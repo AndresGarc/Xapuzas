@@ -159,7 +159,7 @@ const Tareas = ({route}) => {
 
       </LinearGradient>
 
-      <Pressable onPress={ () => {navegacion.navigate("Crear tarea",{mode:"crear"});}} 
+      <Pressable onPress={ () => {navegacion.navigate("Crear tarea",{mode:"Creador"});}} 
         style={styles.crearBtn}
       >
           <Text style={styles.crearTxt}>Crear</Text>

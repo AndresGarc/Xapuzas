@@ -17,17 +17,17 @@ import {
 } from 'react-native'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import { IconReloj } from '../common/Octicons';
-import { postTarea } from '../database/tarea-service';
+import { postTarea, putTarea } from '../database/tarea-service';
 
 
 
 //le mando las propiedades que me interesan => ({props})
 const CrearTarea = ({route}) => {
 
-    const {mode} = route.params;
+    const {mode, data} = route.params;
 
     const [titulo, setTitulo] = useState(null);
     const [cliente, setCliente] = useState(null);
@@ -58,6 +58,33 @@ const CrearTarea = ({route}) => {
         setShowTime(false);
          
     }
+
+    const verDatos = () => {
+        console.log(data);
+    }
+
+    useFocusEffect( React.useCallback(() => {
+
+        
+        if(data!=undefined){
+            setTitulo(data.titulo)
+            if(data.urgente == 1) setUrgente(true);
+            setCliente(data.cliente)
+            setDir(data.direccion)
+            if(data.tlf != null) setTlf(data.tlf.toString())
+            setNotas(data.notas)
+            if(data.fecha != null){
+                let split = data.fecha.split('/'); let dia= parseInt(split[0]); let mes= parseInt(split[1]); let anyo= parseInt(split[2]);
+                let fechita = new Date(anyo, mes-1, dia);
+                setFecha(fechita);
+            }
+            if(data.hora != null){
+                let horita = new Date(`2019-01-01T${data.hora}:00.000Z`);
+                setTime(horita);
+            }
+        } 
+  
+    }, []) );
 
     const handleTarea = () => {
 
@@ -108,22 +135,43 @@ const CrearTarea = ({route}) => {
             }
         }
 
-        let data = [titulo,urgente,cli, dire, tlfo, date, time, not];
 
-        //SUBIR LOS DATOS
-        postTarea(data).then((data) => {
+        //NUEVA TAREA O EDITAR TAREA
+        let datos = [titulo,urgente,cli, dire, tlfo, date, time, not];
+        if(data==undefined){ // NUEVA TAREA
 
-            Alert.alert(
-                '¡Todo ha ido bien!',
-                'Esta tarea ha sido creada correctamente',
-                [{
-                    text: 'Entendido',
-                    onPress: () => navegacion.navigate("ConsultaTarea", {
-                        creada: true
-                    })
-                }]
-            )
-        }).catch((error) => console.log(error))
+            postTarea(datos).then((data) => {
+
+                Alert.alert(
+                    '¡Todo ha ido bien!',
+                    'Esta tarea ha sido creada correctamente',
+                    [{
+                        text: 'Entendido',
+                        onPress: () => navegacion.navigate("ConsultaTarea", {
+                            creada: true
+                        })
+                    }]
+                )
+
+            }).catch((error) => console.log(error))
+
+        } else { // EDITAR
+
+            putTarea(data.tarea_id, datos).then((data) => {
+
+                Alert.alert(
+                    '¡Todo ha ido bien!',
+                    'Esta tarea ha sido editada correctamente',
+                    [{
+                        text: 'Entendido',
+                        onPress: () => navegacion.navigate("ConsultaTarea")
+                    }]
+                )
+
+            }).catch((error) => console.log(error))
+
+        }
+
 
     }
 
@@ -143,12 +191,12 @@ const CrearTarea = ({route}) => {
                         </Pressable>
                         
                         <View style={styles.contentTitle}>
-                            <Text style={styles.titCrear}>de tareas</Text>
+                            <Text style={styles.titCrear}>{mode} de tareas</Text>
                         </View>
 
                         <View style={styles.contentHelp}>
                             <Pressable style={styles.help}>
-                                <Icon name="md-help-circle" size={50} color='#EDAC70' />
+                                <Icon onPress={ () => verDatos() } name="md-help-circle" size={50} color='#EDAC70' />
                             </Pressable>
                         </View>
 

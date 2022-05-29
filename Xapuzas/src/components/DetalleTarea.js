@@ -27,6 +27,12 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
         setDataDetalle([]);
     }
 
+    const irEditor = () => {
+        let datos = data;
+        setModalVisible(false);
+        setDataDetalle([]);
+        navegacion.navigate("Crear tarea",{mode:"Editor", data: datos});
+    }
 
     return(
         <Modal
@@ -43,7 +49,7 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
                             <Icon name="md-help-circle" size={50} color='#EDAC70' />
                         </Pressable>
 
-                        <Pressable  style={styles.iconModal}>
+                        <Pressable onPress={ () => irEditor()} style={styles.iconModal}>
                             <Icon name="create-outline" size={45} color='black'/>
                         </Pressable>
 

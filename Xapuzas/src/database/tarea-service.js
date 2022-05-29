@@ -56,8 +56,8 @@ export const getTareaID = async (id) => {
     const db = await conectarDB();
 
     return await new Promise((resolve, reject) => {
-        db.transaction( async (tx) => {
-            tx.executeSql(`SELECT tarea_id, titulo, cliente, direccion, tlf, fecha, hora, notas FROM tarea
+        db.transaction( (tx) => {
+            tx.executeSql(`SELECT tarea_id,titulo, urgente, cliente, direccion, tlf, fecha, hora, notas FROM tarea
                WHERE tarea_id = ?`, 
                [id],
                (txn, res) => {
@@ -78,7 +78,7 @@ export const postTarea = async (data) => {
     let date = new Date();
     
     return await new Promise((resolve, reject) => {
-        db.transaction( async (tx) => {
+        db.transaction( (tx) => {
             tx.executeSql(`INSERT INTO tarea (titulo, urgente, cliente, direccion, tlf, fecha, hora, fecha_creada, notas)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [data[0], data[1], data[2], data[3], data[4], data[5], data[6], date.toDateString(), data[7]],
@@ -97,27 +97,30 @@ export const postTarea = async (data) => {
 }
 
 //PUT - TAREAS
-export const putTarea = async (db, id) => {
-
+export const putTarea = async (id, data) => {
+    
+    const db = await conectarDB();
     let date = new Date();
-    let titulo = "Titulaciones de titulos"; let urgente = 0; let cliente = "Paquito el chocolatero"; let dir = "C/ Langreo"; let tlf = 666666666; let notas="ANOTACIONES";
-
-    await db.transaction(async (tx) => {
-        await tx.executeSql(`UPDATE tarea
-            SET titulo = ?,
-                urgente = ?,
-                cliente = ?,
-                direccion = ?,
-                tlf = ?,
-                fecha = ?,
-                hora = ?,
-                notas = ?
-            WHERE tarea_id = ?;`,
-            [titulo, urgente, cliente, dir, tlf, date.toDateString(), date.toDateString(), notas, id],
-            () => {console.log("tarea modificada");},
-            (error) => {console.log(error.message);}
-        );
-    });
+    
+    return await new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(`UPDATE tarea
+                SET titulo = ?,
+                    urgente = ?,
+                    cliente = ?,
+                    direccion = ?,
+                    tlf = ?,
+                    fecha = ?,
+                    hora = ?,
+                    notas = ?
+                WHERE tarea_id = ?;`,
+                [data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], id],
+                (txn, res) => {resolve(data[0])},
+                (error) => {reject(error)}
+            );
+        });
+    })
+    
 
 }
 

@@ -18,12 +18,14 @@ import {
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useNavigation } from '@react-navigation/native';
-import { postTrabajos } from '../database/trabajo-service';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { postTrabajos, putTrabajos } from '../database/trabajo-service';
 
 
 //le mando las propiedades que me interesan => ({props})
-const CrearTrabajo = () => {
+const CrearTrabajo = ({route}) => {
+
+    const {mode, data} = route.params;
 
     //elementos para el formulario
     const [titulo, setTitulo] = useState(null);
@@ -73,6 +75,10 @@ const CrearTrabajo = () => {
     const removeTlf = () => {   
         if(iTlf==3) setAddTlf(2);
         if(iTlf==2) setAddTlf(1);
+    }
+
+    const verDatos = () => {
+        console.log(data);
     }
 
     const handleCrear = () => {
@@ -126,31 +132,35 @@ const CrearTrabajo = () => {
             } else{
                 ntlf1=tlfnombre1;
             }
-        } if(tlf2!=null){
-            if(tlf2.trim()==''){
-                tlfo2= null;
-            } else{
-                tlfo2=tlf2;
+        } if (iTlf>=2){
+            if(tlf2!=null){
+                if(tlf2.trim()==''){
+                    tlfo2= null;
+                } else{
+                    tlfo2=tlf2;
+                }
+            } if(tlfnombre2!=null){
+                if(tlfnombre2.trim()==''){
+                    ntlf2= null;
+                } else{
+                    ntlf2=tlfnombre2;
+                }
+            } 
+        } if(iTlf==3){
+            if(tlf3!=null){
+                if(tlf3.trim()==''){
+                    tlfo3= null;
+                } else{
+                    tlfo3=tlf3;
+                }
+            } if(tlfnombre3!=null){
+                if(tlfnombre3.trim()==''){
+                    ntlf3= null;
+                } else{
+                    ntlf3=tlfnombre3;
+                }
             }
-        } if(tlfnombre2!=null){
-            if(tlfnombre2.trim()==''){
-                ntlf2= null;
-            } else{
-                ntlf2=tlfnombre2;
-            }
-        } if(tlf3!=null){
-            if(tlf3.trim()==''){
-                tlfo3= null;
-            } else{
-                tlfo3=tlf3;
-            }
-        } if(tlfnombre3!=null){
-            if(tlfnombre3.trim()==''){
-                ntlf3= null;
-            } else{
-                ntlf3=tlfnombre3;
-            }
-        }if(notas!=null){
+        } if(notas!=null){
             if(notas.trim()==''){
                 notas= null;
             } else{
@@ -158,9 +168,11 @@ const CrearTrabajo = () => {
             }
         }
 
-        let data = [titulo, cli, dire, ntlf1, tlfo1, ntlf2, tlfo2, ntlf3, tlfo3, radio ,date, not];
+        //NUEVA TAREA O EDITAR TAREA
+        let datos = [titulo, cli, dire, ntlf1, tlfo1, ntlf2, tlfo2, ntlf3, tlfo3, radio ,date, not];
+        if(data==undefined){ // CREAR
 
-        postTrabajos(data).then((data) => {
+            postTrabajos(data).then((data) => {
 
             Alert.alert(
                 '¡Todo ha ido bien!',
@@ -171,9 +183,57 @@ const CrearTrabajo = () => {
                 }]
             )
 
-        }).catch((error) => console.log(error));
+            }).catch((error) => console.log(error));
+        
+        } else { // EDITAR
+
+            putTrabajos(data.trabajo_id, datos).then((data) => {
+                Alert.alert(
+                    '¡Todo ha ido bien!',
+                    'Este trabajo ha sido editado correctamente',
+                    [{
+                        text: 'Entendido',
+                        onPress: () => navegacion.navigate("ConsultaTrabajo")
+                    }]
+                )
+            }).catch((error) => console.log(error))
+
+        } 
+
+        
 
     }
+
+    useFocusEffect( React.useCallback(() => {
+
+        if(data!=undefined){
+            setTitulo(data.titulo);
+            setCliente(data.cliente);
+            setDir(data.direccion);
+            if(data.tlf1 != null)  setTlf1(data.tlf1.toString());
+            setTN1(data.cliente_tlf1);
+
+            if(data.tlf2 != null){
+                setAddTlf(2);
+                setTlf2(data.tlf2.toString());
+            }
+            setTN2(data.cliente_tlf2);
+            if(data.tlf3 != null){
+                setAddTlf(3);
+                setTlf3(data.tlf3.toString());
+            }
+
+            setTN3(data.cliente_tlf3);
+            setNotas(data.notas);
+            if(data.dia_pedido != null){
+                let split = data.dia_pedido.split('/'); let dia= parseInt(split[0]); let mes= parseInt(split[1]); let anyo= parseInt(split[2]);
+                let fechita = new Date(anyo, mes-1, dia);
+                setFecha(fechita);
+            }
+            setRadio(data.pedido_mat);
+        }
+
+    }, []) )
 
 
     return (
@@ -191,7 +251,7 @@ const CrearTrabajo = () => {
                         </Pressable>
 
                         <View style={styles.contentTitle}>
-                            <Text style={styles.titCrear}>Creador de trabajos</Text>
+                            <Text style={styles.titCrear}>{mode} de trabajos</Text>
                         </View>
 
                         <View style={styles.contentHelp}>

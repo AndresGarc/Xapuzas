@@ -108,35 +108,35 @@ export const postTrabajos = async (data) => {
 }
 
 //PUT - TRABAJOS
-export const putTrabajos = async (db, id) => {
+export const putTrabajos = async (id, data) => {
 
+    const db = await conectarDB();
     let date = new Date();
-    let titulo = "EDIT"; let cliente = "EDIT"; let dir = null; 
-    let ctl1 = "EDIT"; let tlf1 = 654812348; let ctl2 = null; let tlf2= null;
-    let ctl3 = null; let tlf3 = null ; let pedido = 0; let dped = null; let notas = null;
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`UPDATE trabajo
-            SET titulo = ?,
-                cliente = ?,
-                direccion = ?,
-                cliente_tlf1 = ?,
-                tlf1 = ?,
-                cliente_tlf2 = ?,
-                tlf2 = ?,
-                cliente_tlf3 = ?,
-                tlf3 = ?,
-                pedido_mat = ?,
-                dia_pedido = ?,
-                fecha_creada = ?,
-                notas = ?
-            WHERE trabajo_id = ?;`, 
-            [titulo, cliente, dir, ctl1, tlf1, ctl2, tlf2, ctl3, tlf3, pedido, dped, date.toDateString(), notas, id],
-            () =>{ console.log("trabajo editado");},
-            (error) => { console.log(error.message);}
-        );
-    }); 
-
+    // cambiar los parámetros por elemetnos del array de datos!!!!!
+    return await new Promise((resolve,reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(`UPDATE trabajo
+                SET titulo = ?,
+                    cliente = ?,
+                    direccion = ?,
+                    cliente_tlf1 = ?,
+                    tlf1 = ?,
+                    cliente_tlf2 = ?,
+                    tlf2 = ?,
+                    cliente_tlf3 = ?,
+                    tlf3 = ?,
+                    pedido_mat = ?,
+                    dia_pedido = ?,
+                    notas = ?
+                WHERE trabajo_id = ?;`, 
+                [data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], id],
+                (txn, res) =>{ resolve(data[0])},
+                (error) => { reject(error)}
+            );
+        }); 
+    });
+    
 }
 
 export const putEstado = async (db, id ,estado) =>{
