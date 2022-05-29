@@ -79,7 +79,8 @@ const CrearTarea = ({route}) => {
                 setFecha(fechita);
             }
             if(data.hora != null){
-                let horita = new Date(`2019-01-01T${data.hora}:00.000Z`);
+                let split = data.hora.split(':'); let h = parseInt(split[0]); let m = parseInt(split[1]);
+                let horita = new Date(); horita.setHours(h,m);
                 setTime(horita);
             }
         } 
