@@ -165,7 +165,9 @@ const CrearTarea = ({route}) => {
                     'Esta tarea ha sido editada correctamente',
                     [{
                         text: 'Entendido',
-                        onPress: () => navegacion.navigate("ConsultaTarea")
+                        onPress: () => navegacion.navigate("ConsultaTarea", {
+                            creada: true
+                        })
                     }]
                 )
 
@@ -186,7 +188,7 @@ const CrearTarea = ({route}) => {
 
                     <View style={styles.headerCrear}>
 
-                        <Pressable onPress={ () => navegacion.navigate("ConsultaTarea") } style={styles.closeCrear}>
+                        <Pressable onPress={ () => navegacion.navigate("ConsultaTarea", { creada: false }) } style={styles.closeCrear}>
                             <Icon name="close" size={40} color='black'/>
                             <Text style={styles.black}>Cerrar</Text>
                         </Pressable>

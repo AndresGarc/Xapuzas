@@ -86,6 +86,7 @@ export const getTrabajoID = async (id) => {
 //POST - TRABAJOS
 export const postTrabajos = async (data) => {
     const db = await conectarDB();
+    console.log(data[0]);
     let date = new Date();
 
     return await new Promise((resolve, reject) => {

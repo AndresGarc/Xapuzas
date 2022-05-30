@@ -87,6 +87,7 @@ const CrearTrabajo = ({route}) => {
         let cli; let dire; let not; let date; 
         let tlfo1; let tlfo2; let tlfo3;
         let ntlf1; let ntlf2; let ntlf3; 
+        console.log(titulo);
 
         //VALIDACION
         if(titulo!=null) vacio=titulo.trim();
@@ -172,14 +173,16 @@ const CrearTrabajo = ({route}) => {
         let datos = [titulo, cli, dire, ntlf1, tlfo1, ntlf2, tlfo2, ntlf3, tlfo3, radio ,date, not];
         if(data==undefined){ // CREAR
 
-            postTrabajos(data).then((data) => {
+            postTrabajos(datos).then((data) => {
 
             Alert.alert(
                 '¡Todo ha ido bien!',
                 'Este trabajo ha sido creado correctamente',
                 [{
                     text: 'Entendido',
-                    onPress: () => navegacion.navigate("ConsultaTrabajo")
+                    onPress: () => navegacion.navigate("ConsultaTrabajo", {
+                        creada:true
+                    })
                 }]
             )
 
@@ -193,7 +196,9 @@ const CrearTrabajo = ({route}) => {
                     'Este trabajo ha sido editado correctamente',
                     [{
                         text: 'Entendido',
-                        onPress: () => navegacion.navigate("ConsultaTrabajo")
+                        onPress: () => navegacion.navigate("ConsultaTrabajo", {
+                            creada:true
+                        })
                     }]
                 )
             }).catch((error) => console.log(error))
@@ -245,7 +250,7 @@ const CrearTrabajo = ({route}) => {
 
                     <View style={styles.headerCrear}>
 
-                        <Pressable onPress={ () => navegacion.navigate("ConsultaTrabajo") } style={styles.closeCrear}>
+                        <Pressable onPress={ () => navegacion.navigate("ConsultaTrabajo", {creada: false}) } style={styles.closeCrear}>
                             <Icon name="close" size={40} color='black'/>
                             <Text style={styles.black}>Cerrar</Text>
                         </Pressable>

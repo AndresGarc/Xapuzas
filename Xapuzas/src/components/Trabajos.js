@@ -20,7 +20,7 @@ import DetalleTrabajo from './DetalleTrabajo';
 import { conectarDB, borrarTodo } from '../database/db-service'
 import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
-const Trabajos = () => {
+const Trabajos = ({route}) => {
 
   const [selected, setSelected] = useState(0); //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
   const [modalVisible, setModalVisible] = useState(false);
@@ -65,19 +65,25 @@ const Trabajos = () => {
 
   }
 
-  useEffect( ()=>{
-    /*
+  const loadLista = () => {
     getTrabajos().then((data) => {
       setData(data);
-    }).catch((error) => console.log(error)); */
+    }).catch((error) => console.log(error)); 
+  }
+
+  useEffect( ()=>{
+    loadLista();
   }, []);
 
   useFocusEffect( React.useCallback(() => {
-    getTrabajos().then((data) => {
-      setData(data);
-    }).catch((error) => console.log(error));
-
-}, []) );
+    if(route.params!=undefined){
+      if(route.params.creada==true){
+        console.log("lololo");
+        loadLista();
+        navegacion.setParams({creada:false});
+      }
+    }
+}, [route.params]) );
 
   return (
     <SafeAreaView style={styles.background}>

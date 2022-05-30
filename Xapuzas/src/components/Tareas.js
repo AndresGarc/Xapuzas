@@ -2,6 +2,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import SplashScreen from  "react-native-splash-screen";
+
 import { styles } from '../assets/styles';
 
 import {
@@ -23,8 +25,8 @@ const Tareas = ({route}) => {
   const [urgente, setUrgente] = useState(1); // 1 urgente / 0 pendientes
   const [data, setData] = useState([]);
   const [dataDetalle, setDataDetalle] = useState([]);
+
   const [modalVisible, setModalVisible] = useState(false);
-  const [load, setLoad] = useState(false);
 
   const navegacion = useNavigation();
 
@@ -72,30 +74,33 @@ const Tareas = ({route}) => {
 
   }
 
-  //PRIMERA CARGA  
-  
-  useEffect(()=>{
-
-   
-    /*
+  const loadLista= () => {
     getTareas().then((data) => {
       setData(data);
   
-    }).catch((error) => console.log(error))*/
+    }).catch((error) => console.log(error))
+  }
+
+  const irCrear = () => {
+    navegacion.navigate("Crear tarea",{mode:"Creador"});
+  }
+
+  //PRIMERA CARGA  
+  
+  useEffect(()=>{
+    loadLista()
+  }, []); 
   
 
-  }, []); 
-
-  //useFocusEffect - cuando la pantalla este focuseada -- siempre cargara
   useFocusEffect( React.useCallback(() => {
+    if(route.params!=undefined){
+      if(route.params.creada==true){
+        loadLista();
+        navegacion.setParams({creada:false});
+      }
+    }
 
-
-      getTareas().then((data) => {
-        setData(data);
-    
-      }).catch((error) => console.log(error))
-
-  }, []) );
+  }, [route.params]) );
 
 
   return (
@@ -159,8 +164,7 @@ const Tareas = ({route}) => {
 
       </LinearGradient>
 
-      <Pressable onPress={ () => {navegacion.navigate("Crear tarea",{mode:"Creador"});}} 
-        style={styles.crearBtn}
+      <Pressable onPress={()=>{irCrear()}}  style={styles.crearBtn}
       >
           <Text style={styles.crearTxt}>Crear</Text>
           <Text style={styles.crearIcon}>
