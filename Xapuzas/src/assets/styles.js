@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     //PICKER TAREAS --------------------------------------------------------------------------------------------------------------------------------------
     contentPicker:{
       marginVertical: 10,
-      marginHorizontal: 20,
+      marginHorizontal: 15,
       flexDirection: 'row',
     },
     btnPickerL:{
@@ -47,7 +47,6 @@ export const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal:30,
         borderBottomLeftRadius: 10,
-        fontWeight: 'bold',
         borderTopLeftRadius: 10,
         backgroundColor: '#EDAC70'
     },
@@ -68,11 +67,12 @@ export const styles = StyleSheet.create({
     pickTxtF:{
       fontSize: 18,
       color: 'black',
-      fontWeight: 'bold',
+      fontFamily:'OpenSans-SemiBold',
     },
     pickTxt:{
         fontSize: 18,
         color: 'black',
+        fontFamily:'OpenSans-Regular',
     },
 
     //END PICKER TAREAS --------------------------------------------------------------------------------------------------------------------------------
@@ -104,6 +104,7 @@ export const styles = StyleSheet.create({
         flex:1,
         padding:18,
         fontSize: 18,
+        fontFamily:'OpenSans-Regular',
         color: 'black'
     },
     terminar:{
@@ -116,7 +117,8 @@ export const styles = StyleSheet.create({
 
 //CREAR ---------------------------------------------------------------------------------------------------------------------------------------
     titCrear:{
-        fontSize:26,
+        fontSize:25,
+        fontFamily:'OpenSans-Regular',
         color: 'black',
         textAlign: 'center'
     },
@@ -142,7 +144,7 @@ export const styles = StyleSheet.create({
         color: '#000',
         marginBottom:10,
         marginLeft: 5,
-        fontWeight: 'bold'
+        fontFamily:'OpenSans-SemiBold',
     },
     campo:{
         marginHorizontal: 25,
@@ -158,6 +160,7 @@ export const styles = StyleSheet.create({
     },
     txtVoz:{
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         fontSize: 18,
         marginLeft: 7,
         marginTop: 2
@@ -170,6 +173,7 @@ export const styles = StyleSheet.create({
     },
     txtUrgente:{
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         fontSize: 20,
         marginBottom: 15
     },
@@ -178,11 +182,23 @@ export const styles = StyleSheet.create({
     },
     inputDate:{
         backgroundColor: '#FFF',
-        padding: 10,
+        width: '50%',
         borderRadius: 10
+    },
+    txtDate:{
+        color: 'black',
+        fontSize: 16,
+        fontFamily:'OpenSans-Regular',
+        padding: 13
+    },
+    placeholderDate:{
+        fontSize: 15,
+        padding: 15,
+        opacity: 0.7
     },
     borderBot:{
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         fontSize: 16,
         paddingBottom: 10,
         marginBottom: 10,
@@ -212,6 +228,7 @@ export const styles = StyleSheet.create({
     newTlf:{
         fontSize: 18,
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         paddingTop: 5,
         marginLeft: 5
     },  
@@ -221,6 +238,7 @@ export const styles = StyleSheet.create({
     labelDateMat:{
         fontSize: 18,
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         marginVertical: 10,
         marginLeft: 10
     },
@@ -231,6 +249,7 @@ export const styles = StyleSheet.create({
 //TRABAJOS
     tituloTrabs: {
         fontSize: 18,
+        fontFamily:'OpenSans-Regular',
         marginLeft: 20,
         marginTop:10
     },
@@ -246,6 +265,7 @@ export const styles = StyleSheet.create({
 
 //AJUSTES
     titAjuste:{
+        fontFamily:'OpenSans-Regular',
         textAlignVertical:"center",
         fontSize: 18,
         marginLeft: 25
@@ -277,6 +297,7 @@ export const styles = StyleSheet.create({
     },
     text:{
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         fontSize: 15
     },
     degradado:{
@@ -286,7 +307,7 @@ export const styles = StyleSheet.create({
     //BOTÓN INFERIOR DE CREAR
     crearTxt: {
         color:'black',
-        fontWeight: 'bold',
+        fontFamily:'OpenSans-SemiBold',
         textAlign: 'center',
         fontSize: 18,
         textTransform: 'uppercase',
@@ -314,12 +335,14 @@ export const styles = StyleSheet.create({
     
     black:{
         fontSize: 18,
-        color: 'black'
+        color: 'black',
+        fontFamily:'OpenSans-Regular',
     },
 
     minBlack:{
         fontSize: 16,
-        color: 'black'
+        color: 'black',
+        fontFamily:'OpenSans-Regular',
     },
 
     mBottomXl:{
@@ -361,7 +384,7 @@ export const styles = StyleSheet.create({
     },
     titModal:{
         fontSize:26,
-        fontWeight: 'bold',
+        fontFamily:'OpenSans-SemiBold',
         color: 'black',
         marginBottom: 20
     },
@@ -372,20 +395,22 @@ export const styles = StyleSheet.create({
     },
     textModal:{
         fontSize:18,
+        fontFamily:'OpenSans-Regular',
         color: 'black',
         marginLeft: 10
     },
     textTfl:{
         fontSize:18,
         color: 'black',
+        fontFamily:'OpenSans-Regular',
         marginBottom:20,
         marginLeft: 15
     },
     labTitModal:{
         fontSize:18,
         color: 'black',
+        fontFamily:'OpenSans-SemiBold',
         marginLeft: 10,
-        fontWeight:'bold'
     },
     contentModTlf:{
         flexDirection: 'row',

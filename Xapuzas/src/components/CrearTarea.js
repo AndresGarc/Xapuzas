@@ -8,7 +8,7 @@ import {
     Modal,
     Text,
     Pressable,
-    StyleSheet,
+    Keyboard,
     View,
     TextInput,
     SafeAreaView,
@@ -40,22 +40,29 @@ const CrearTarea = ({route}) => {
     const [showHora, setShowTime] = useState(false);
     const [fecha, setFecha] = useState(null);
     const [hora, setTime] = useState(null);
+    const [defFecha, setDefF] = useState(new Date());
+    const [defHora, setDefH] = useState(new Date());
     const defaultFecha = new Date();
 
     const navegacion = useNavigation();
 
     const pickDate = (event, selectedDate) => {
 
+        setShow(false);
         if(event.type != "dismissed") {
             setFecha(selectedDate);
+            setDefF(selectedDate);
         }
-        setShow(false);
     }
 
     const pickTime = (event, selectedTime) => {
 
-        if(event.type != "dismissed") setTime(selectedTime);
         setShowTime(false);
+        if(event.type != "dismissed"){
+            setTime(selectedTime);
+            setDefH(selectedTime);
+        } 
+        
          
     }
 
@@ -107,8 +114,21 @@ const CrearTarea = ({route}) => {
 
         //FORMATEAR LOS DATOS
         // {hora.getHours()}:{hora.getMinutes()}
-        if(fecha!=null) date = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
-        if(hora!=null) time = `${hora.getHours()}:${hora.getMinutes()}`;
+        if(fecha!=null){
+            let dia; let mes;
+            if(fecha.getDate()/10<1) dia=`0${fecha.getDate()}`; else dia=`${fecha.getDate()}`;
+            if(fecha.getMonth()/10<1) mes=`0${fecha.getMonth()+1}`; else mes=`${fecha.getMonth()+1}`
+
+            date = `${dia}/${mes}/${fecha.getFullYear()}`;
+        } 
+
+        if(hora!=null) {
+            let h; let m;
+            if(hora.getHours()/10<1) h=`0${hora.getHours()}`; else h=`${hora.getHours()}`;
+            if(hora.getMonth()/10<1) m=`0${hora.getMonth()}`; else h=`${hora.getMonth()}`;
+
+            time = `${h}:${m}`;
+        }
 
         if(cliente!=null) {
             if(cliente.trim()==''){
@@ -184,7 +204,7 @@ const CrearTarea = ({route}) => {
 
             <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
 
-                <ScrollView style={styles.mBottomXl}>
+                <ScrollView style={styles.mBottomXl} keyboardShouldPersistTaps='handled'>
 
                     <View style={styles.headerCrear}>
 
@@ -309,17 +329,19 @@ const CrearTarea = ({route}) => {
                         </View>    
 
 
-                        <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
+                        <Pressable onPressIn={ () => {setShow(true); Keyboard.dismiss()}} style={styles.inputDate}>
                             { fecha!=undefined ?
-                                <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                                <Text style={styles.txtDate}>{fecha.getDate()/10<1 ? `0${fecha.getDate()}` : fecha.getDate()}/
+                                {(fecha.getMonth()+1)/10<1 ? `0${fecha.getMonth()+1}` : fecha.getMonth()+1}/
+                                {fecha.getFullYear()}</Text>
                               :
-                                <Text>Toca aquí para indicar la fecha</Text>
+                                <Text style={styles.placeholderDate}>Toca aquí para indicar la fecha</Text>
                             }
                         </Pressable>
                         
                         { show && (
                             <DateTimePicker
-                                value={defaultFecha}
+                                value={defFecha}
                                 display='default'
                                 mode= "date"
                                 onChange={pickDate}
@@ -336,18 +358,20 @@ const CrearTarea = ({route}) => {
                             <Text style={styles.label}>¿A qué hora?</Text>
                         </View>     
 
-                        <Pressable onPress={ () => setShowTime(true)} style={styles.inputDate}>
+                        <Pressable onPress={ () => {setShowTime(true); Keyboard.dismiss()}} style={styles.inputDate}>
                             { hora!=undefined ?
-                                    <Text>{hora.getHours()}:{hora.getMinutes()}</Text>
+                                    <Text style={styles.txtDate}>{hora.getHours()/10<1 ? `0${hora.getHours()}` : hora.getHours()}:
+                                        {hora.getMinutes()/10<1 ? `0${hora.getMinutes()}` : hora.getMinutes()}
+                                    </Text>
                                 :
-                                    <Text>Toca aquí para indicar la hora</Text>
+                                    <Text style={styles.placeholderDate}>Toca aquí para indicar la hora</Text>
                             }
                             
                         </Pressable>
                         
                         { showHora && (
                             <DateTimePicker
-                                value={defaultFecha}
+                                value={defHora}
                                 display='default'
                                 mode= "time"
                                 onChange={pickTime}

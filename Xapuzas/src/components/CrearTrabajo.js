@@ -7,7 +7,7 @@ import {
     Modal,
     Text,
     Pressable,
-    StyleSheet,
+    Keyboard,
     View,
     TextInput,
     SafeAreaView,
@@ -49,8 +49,8 @@ const CrearTrabajo = ({route}) => {
     const navegacion = useNavigation();
 
     const pickDate = (event, selectedDate) => {
-        if(event.type != "dismissed") setFecha(selectedDate);
         setShow(false);
+        if(event.type != "dismissed") setFecha(selectedDate);
     }
 
     const radioData =[{
@@ -73,6 +73,7 @@ const CrearTrabajo = ({route}) => {
     }
 
     const removeTlf = () => {   
+       // Keyboard.dismiss();
         if(iTlf==3) setAddTlf(2);
         if(iTlf==2) setAddTlf(1);
     }
@@ -246,7 +247,7 @@ const CrearTrabajo = ({route}) => {
 
             <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
 
-                <ScrollView style={styles.mBottomXl}>
+                <ScrollView style={styles.mBottomXl} keyboardShouldPersistTaps='handled'>
 
                     <View style={styles.headerCrear}>
 
@@ -434,14 +435,14 @@ const CrearTrabajo = ({route}) => {
                                         buttonInnerColor={'#EDAC70'}
                                         buttonOuterColor={'#EDAC70'}
                                         isSelected={radio == i}
-                                        onPress={(value) => {setRadio(value)}}
+                                        onPress={(value) => {setRadio(value); Keyboard.dismiss()}}
                                     />
 
                                     <RadioButtonLabel
                                         obj={obj}
                                         index={i}
                                         labelStyle={{fontSize: 18, color: 'black'}}
-                                        onPress={(value) => {setRadio(value)}}
+                                        onPress={(value) => {setRadio(value); Keyboard.dismiss()}}
                                     />
                                 
                                 </RadioButton>
@@ -454,11 +455,13 @@ const CrearTrabajo = ({route}) => {
 
                             <Text style={styles.labelDateMat}>¿Qué día ha sido pedido?</Text>
 
-                            <Pressable onPress={ () => setShow(true)} style={styles.inputDate}>
+                            <Pressable onPress={ () => {setShow(true);  Keyboard.dismiss()}} style={styles.inputDate}>
                                 { fecha!=undefined ?
-                                    <Text>{fecha.getDate()}/{fecha.getMonth()+1}/{fecha.getFullYear()}</Text>
+                                    <Text style={styles.txtDate}>{fecha.getDate()}/
+                                        {(fecha.getMonth()+1)/10<1 ? `0${fecha.getMonth()+1}` : fecha.getMonth()+1 }/
+                                        {fecha.getFullYear()}</Text>
                                 :
-                                    <Text>Toca aquí para indicar la fecha</Text>
+                                    <Text style={styles.placeholderDate}>Toca aquí para indicar la fecha</Text>
                                 }
                             </Pressable>
 

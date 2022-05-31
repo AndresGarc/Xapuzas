@@ -4,11 +4,8 @@ import { styles } from '../assets/styles';
 import Icon  from 'react-native-vector-icons/Ionicons';
 
 import {
-  SafeAreaView,
   Text,
   View,
-  StyleSheet,
-  Button,
   Pressable,
   Modal
 } from 'react-native';
