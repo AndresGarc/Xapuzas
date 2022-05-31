@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTarea from './DetalleTarea';
+import modalConfirmacion from '../common/modalConfirmacion'
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea } from '../database/tarea-service'
@@ -27,6 +28,7 @@ const Tareas = ({route}) => {
   const [dataDetalle, setDataDetalle] = useState([]);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [confVisible, setconfVisible] = useState(false);
 
   const navegacion = useNavigation();
 
@@ -72,6 +74,10 @@ const Tareas = ({route}) => {
       setModalVisible(true);
     }).catch((error) => console.log(error)); 
 
+  }
+
+  const showConfirm = () => {
+    setconfVisible(true);
   }
 
   const loadLista= () => {
@@ -136,13 +142,13 @@ const Tareas = ({route}) => {
               <Text style={styles.minBlack}>Toca el botón Crear para añadir una tarea</Text>
             </View>
           :
-            <ScrollView>
+            <ScrollView style={styles.mTopM}>
               <View style={styles.listaTareas}>
                 {data.map( (tarea, i) => {
                     return (
                         <Pressable key={tarea.tarea_id} style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{showDetalle(tarea.tarea_id)}}>
                           <Text style={styles.textT}>{tarea.titulo}</Text>
-                          <Pressable style={styles.terminar} onPress={()=>{console.log("Terminar");}}>
+                          <Pressable style={styles.terminar} onPress={()=>{showConfirm("Terminar");}}>
                             <Icon name='checkmark-circle-outline' size={40} color='#EDAC70'/>
                           </Pressable>  
                         </Pressable>
@@ -159,6 +165,14 @@ const Tareas = ({route}) => {
             setModalVisible = {setModalVisible}
             data={dataDetalle}
             setDataDetalle={setDataDetalle}
+          />
+        }
+
+        { confVisible &&
+          <modalConfirmacion 
+            confVisible={confVisible}
+            setconfVisible={setconfVisible}
+            type={2}
           />
         }
 

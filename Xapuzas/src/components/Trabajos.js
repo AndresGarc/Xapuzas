@@ -125,7 +125,7 @@ const Trabajos = ({route}) => {
               <Text style={styles.minBlack}>Toca el botón Crear para añadir un trabajo</Text>
             </View>
           :
-            <ScrollView>
+            <ScrollView style={styles.mTopM}>
               <View style={styles.listaTareas}>
                 {data.map( (trab, i) => {
                     return (

@@ -87,7 +87,6 @@ export const styles = StyleSheet.create({
     },
     listaTareas:{
         backgroundColor:'white',
-        marginTop: 20,
         marginBottom: 80,
         marginHorizontal: 30,
         borderRadius: 10
@@ -344,7 +343,9 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontFamily:'OpenSans-Regular',
     },
-
+    mTopM:{
+        marginTop: 20
+    },
     mBottomXl:{
         marginBottom: 60
     },

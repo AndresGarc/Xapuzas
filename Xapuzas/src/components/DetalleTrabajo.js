@@ -10,12 +10,6 @@ import {
   Modal
 } from 'react-native';
 
-import { ScrollView } from 'react-native-gesture-handler';
-
-import { conectarDB, borrarTodo } from '../database/db-service'
-import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
-
-
 const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
 
     const navegacion = useNavigation();
