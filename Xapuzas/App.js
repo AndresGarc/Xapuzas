@@ -1,6 +1,7 @@
 import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {  SafeAreaView, View } from 'react-native';
+import SplashScreen from  "react-native-splash-screen";
 import Navbar from './src/navigation/Navbar';
 
 const ref = createNavigationContainerRef();
@@ -9,11 +10,17 @@ const App = () => {
 
   const [routeName, setRouteName] = useState();
 
+  
+  useEffect(() => {
+  });
+  
+
   return (
     <NavigationContainer
       ref={ref}
       onReady = {()=>{
         setRouteName(ref.getCurrentRoute().name)
+        
       }}
       onStateChange={
         async () => {

@@ -77,7 +77,8 @@ const Tareas = ({route}) => {
   const loadLista= () => {
     getTareas().then((data) => {
       setData(data);
-  
+      
+      SplashScreen.hide()
     }).catch((error) => console.log(error))
   }
 
