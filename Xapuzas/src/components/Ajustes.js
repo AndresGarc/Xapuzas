@@ -11,11 +11,18 @@ import {
   Pressable,
   Modal
 } from 'react-native';
+import ModalConfirmacion from '../common/ModalConfirmacion';
 
 const Ajustes = () => {
 
+  const [typeModal, setType] = useState();
+  const [confVisible, setconfVisible] = useState(false);
 
-
+  
+  const showConfirm = (type) => {
+    setType(type);
+    setconfVisible(true);
+  }
 
   return (
     <SafeAreaView style={styles.background}>
@@ -43,9 +50,17 @@ const Ajustes = () => {
             <Text style={styles.text}>Recuperar información</Text>
           </Pressable>
 
-          <Pressable style={styles.btnAjuste}>
+          <Pressable style={styles.btnAjuste} onPress={() => {showConfirm(4);}}>
             <Text style={styles.text}>Borrar todos los datos</Text>
           </Pressable>
+
+          { confVisible &&
+          <ModalConfirmacion 
+            confVisible={confVisible}
+            setconfVisible={setconfVisible}
+            type={typeModal}
+          />
+        }
 
         </View>
 

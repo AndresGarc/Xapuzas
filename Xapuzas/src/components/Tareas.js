@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTarea from './DetalleTarea';
-import modalConfirmacion from '../common/modalConfirmacion'
+import ModalConfirmacion from '../common/ModalConfirmacion';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea } from '../database/tarea-service'
@@ -26,6 +26,8 @@ const Tareas = ({route}) => {
   const [urgente, setUrgente] = useState(1); // 1 urgente / 0 pendientes
   const [data, setData] = useState([]);
   const [dataDetalle, setDataDetalle] = useState([]);
+  const [terminarData, setTerminar] = useState([]);
+  const [typeModal, setType] = useState();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [confVisible, setconfVisible] = useState(false);
@@ -45,30 +47,7 @@ const Tareas = ({route}) => {
     }
   }
 
-
-  const loadTareas = async () => {
-    try {
-      const db = await conectarDB();
-      //
-      //await deleteTarea(db, 1);
-      //await postTarea(db);
-      //await getTareas();
-      //await getTareaID(db, 1);
-      //await putTarea(db,1);
-      await borrarTTarea(db);
-      await crearTTareas(db);
-      //await borrarTodo(db);
-      
-
-    } catch(error){
-      console.log(`error en el loader ${error}`);
-    }
-  }
-
   const showDetalle = (id) => {
-    //console.log("ello");
-
-    
     getTareaID(id).then((data) => {
       setDataDetalle(data);
       setModalVisible(true);
@@ -76,16 +55,23 @@ const Tareas = ({route}) => {
 
   }
 
-  const showConfirm = () => {
+  const showConfirm = (type,id, titulo) => {
+    setTerminar([id,titulo]);
+    setType(type);
     setconfVisible(true);
   }
 
   const loadLista= () => {
     getTareas().then((data) => {
       setData(data);
-      
-      SplashScreen.hide()
+      SplashScreen.hide();
     }).catch((error) => console.log(error))
+  }
+
+  const initTabla = () => {
+    crearTTareas().then((data) => {
+      loadLista();
+    })
   }
 
   const irCrear = () => {
@@ -95,7 +81,8 @@ const Tareas = ({route}) => {
   //PRIMERA CARGA  
   
   useEffect(()=>{
-    loadLista()
+
+    initTabla()
   }, []); 
   
 
@@ -148,7 +135,7 @@ const Tareas = ({route}) => {
                     return (
                         <Pressable key={tarea.tarea_id} style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{showDetalle(tarea.tarea_id)}}>
                           <Text style={styles.textT}>{tarea.titulo}</Text>
-                          <Pressable style={styles.terminar} onPress={()=>{showConfirm("Terminar");}}>
+                          <Pressable style={styles.terminar} onPress={()=>{showConfirm(1, tarea.tarea_id, tarea.titulo);}}>
                             <Icon name='checkmark-circle-outline' size={40} color='#EDAC70'/>
                           </Pressable>  
                         </Pressable>
@@ -169,10 +156,12 @@ const Tareas = ({route}) => {
         }
 
         { confVisible &&
-          <modalConfirmacion 
+          <ModalConfirmacion 
             confVisible={confVisible}
             setconfVisible={setconfVisible}
-            type={2}
+            type={typeModal}
+            data={terminarData}
+            loadLista={loadLista}
           />
         }
 

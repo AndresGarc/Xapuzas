@@ -21,18 +21,24 @@ export const borrarTTarea = async (db) => {
 
 
 //BORRAR TODAS LAS TABLAS
-export const borrarTodo = async (db) => {
-    await db.transaction( tx => {
-        tx.executeSql(`DROP TABLE IF EXISTS trabajo;`, [],
-        () => {console.log("tabla trabajos borrada");},
-        (error) => {console.log(error.message);});
+export const borrarTodo = async () => {
+    const db = await conectarDB();
 
-        tx.executeSql(`DROP TABLE IF EXISTS estados;`, [],
-        () => {console.log("tabla estados borrada");},
-        (error) => {console.log(error.message);});
+    return await new Promise((resolve, reject) => {
 
-        tx.executeSql(`DROP TABLE IF EXISTS tarea;`, [],
-        () => {console.log("tabla tarea borrada");},
-        (error) => {console.log(error.message);});
-    });
+        db.transaction( tx => {
+            tx.executeSql(`DROP TABLE IF EXISTS trabajo;`, [],
+            () => {console.log("tabla trabajos borrada");},
+            (error) => {console.log(error.message);});
+    
+            tx.executeSql(`DROP TABLE IF EXISTS estados;`, [],
+            () => {console.log("tabla estados borrada");},
+            (error) => {console.log(error.message);});
+    
+            tx.executeSql(`DROP TABLE IF EXISTS tarea;`, [],
+            (txn, res) => {resolve(res)},
+            (error) => {reject(error.message);});
+        });
+    })
+    
 }

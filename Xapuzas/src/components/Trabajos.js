@@ -16,38 +16,24 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTrabajo from './DetalleTrabajo';
+import ModalConfirmacion from '../common/ModalConfirmacion'
 
 import { conectarDB, borrarTodo } from '../database/db-service'
-import { crearTTrabajos, deleteTrabajo, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
+import { crearTTrabajos, deleteTrabajo, dropEstados, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
 const Trabajos = ({route}) => {
 
   const [selected, setSelected] = useState(0); //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
   const [modalVisible, setModalVisible] = useState(false);
+  const [confVisible, setconfVisible] = useState(false);
   const [data, setData] = useState([]);
   const [trabDetalle, setDetalle] = useState([]);
+  
+  
+  const [borrarT, setBorrado] = useState([]);
+  const [typeModal, setType] = useState();
  
   const navegacion = useNavigation();
-
-
-  const loadTrabajos = async ()=> {
-    try {
-
-      const db = await conectarDB();
-      //await crearTTrabajos(db);
-      //await postTrabajos(db); //checke basico
-      //await getTrabajos(db); checke basico
-      //await getTrabajoID(db, 1); //checke basico
-      //await putTrabajos(db, 1); checke basico
-      //await putEstado(db, 1, 1); //checke basico
-      //await deleteTrabajo(db,4); // checke basico
-      //await postEstados(db); //checke basico
-      //await putIconoEstado(db, 4, "checkbox-outline"); //checke basico
-
-    } catch(error){
-      console.log(`error en el loader ${error}`);
-    }
-  }
 
   //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
   const setTrabajos = (value) =>{
@@ -57,12 +43,17 @@ const Trabajos = ({route}) => {
 
 
   const showDetalle = (id) => {
-    
     getTrabajoID(id).then((data) => {
       setDetalle(data);
       setModalVisible(true);
     })
 
+  }
+
+  const showConfirm = (type,id, titulo) => {
+    setBorrado([id,titulo]);
+    setType(type);
+    setconfVisible(true);
   }
 
   const loadLista = () => {
@@ -71,14 +62,26 @@ const Trabajos = ({route}) => {
     }).catch((error) => console.log(error)); 
   }
 
+  const initTabla = () => {
+    
+    crearTTrabajos().then((data) => {
+      getEstados().then((data) =>{
+        if(data==undefined){
+          postEstados();
+        }    
+      })
+      
+      loadLista();
+    })
+  }
+
   useEffect( ()=>{
-    loadLista();
+    initTabla();
   }, []);
 
   useFocusEffect( React.useCallback(() => {
     if(route.params!=undefined){
       if(route.params.creada==true){
-        console.log("lololo");
         loadLista();
         navegacion.setParams({creada:false});
       }
@@ -136,7 +139,7 @@ const Trabajos = ({route}) => {
                             <Icon name='eye-off-outline' size={35} color='#EDAC70'/>
                           </Pressable>  
 
-                          <Pressable style={styles.terminar} onPress={()=>{console.log("Borrar");}}>
+                          <Pressable style={styles.terminar} onPress={()=>{showConfirm(3, trab.trabajo_id, trab.titulo)}}>
                             <Icon name='trash-outline' size={35} color='#EDAC70'/>
                           </Pressable>  
 
@@ -155,8 +158,17 @@ const Trabajos = ({route}) => {
             data={trabDetalle}
             setDataDetalle={setDetalle}
           />
-
           }
+
+          { confVisible &&
+          <ModalConfirmacion 
+            confVisible={confVisible}
+            setconfVisible={setconfVisible}
+            type={typeModal}
+            data={borrarT}
+            loadLista={loadLista}
+          />
+        }
 
       </LinearGradient>
 

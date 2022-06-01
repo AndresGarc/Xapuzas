@@ -124,10 +124,10 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =
                     <Pressable style={styles.crearBtnModal}>
                         <Text style={styles.crearTxt}>Borrar/Visto</Text>
                         <Text style={styles.crearIcon}>
-                        <Icon name="add-circle" size={30} color='black'/>
-                    </Text>
+                            <Icon name="add-circle" size={30} color='black'/>
+                        </Text>
 
-        </Pressable>
+                    </Pressable>
 
                 </View>
 

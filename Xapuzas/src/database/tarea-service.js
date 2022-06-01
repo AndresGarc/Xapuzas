@@ -7,27 +7,29 @@ import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 
 
 //CREAR TABLA DE TAREAS
-export const crearTTareas = async (db) => {
+export const crearTTareas = async () => {
+    const db = await conectarDB();
     
-    await db.transaction( (tx) => {
-        tx.executeSql(`CREATE TABLE IF NOT EXISTS tarea (
-            tarea_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            titulo VARCHAR(255),
-            urgente INTEGER,
-            cliente VARCHAR(255),
-            direccion VARCHAR(255),
-            tlf INTEGER,
-            fecha DATETIME,
-            hora DATETIME,
-            fecha_creada DATETIME,
-            notas VARCHAR(255)
-            )`,
-            [],
-            () => {  console.log("tabla tarea creada"); },
-            (error) => {   console.log(error.message); }
-        );
-    }, error => {  console.log(error.message); });
-
+    return await new Promise((resolve, reject) => {
+        db.transaction( (tx) => {
+            tx.executeSql(`CREATE TABLE IF NOT EXISTS tarea (
+                tarea_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                titulo VARCHAR(255),
+                urgente INTEGER,
+                cliente VARCHAR(255),
+                direccion VARCHAR(255),
+                tlf INTEGER,
+                fecha DATETIME,
+                hora DATETIME,
+                fecha_creada DATETIME,
+                notas VARCHAR(255)
+                )`,
+                [],
+                (txn, res) => {  resolve(res) },
+                (error) => {   reject(error.message); }
+            );
+        }, error => {  console.log(error.message); });
+    });
 }
 
 
@@ -125,15 +127,23 @@ export const putTarea = async (id, data) => {
 }
 
 //DELETE - TAREAS
-export const deleteTarea = async (db, id) => {
+export const deleteTarea = async (id) => {
+    
+    const db = await conectarDB();
 
-    await db.transaction(async (tx) => {
-        await tx.executeSql(`DELETE FROM tarea
-            WHERE tarea_id LIKE ?;`,
-            [id],
-            () => {console.log("tarea borrada");},
-            (error) => {console.log(error.message);}
-        );
-    });
+    return await new Promise((resolve, reject) => {
+
+        db.transaction((tx) => {
+            tx.executeSql(`DELETE FROM tarea
+                WHERE tarea_id LIKE ?;`,
+                [id],
+                (txn,res) => {resolve(res)},
+                (error) => {reject(error.message);}
+            );
+        });
+
+
+    })
+    
 
 }

@@ -331,6 +331,9 @@ export const styles = StyleSheet.create({
     green:{
         backgroundColor: 'green'
     },
+    blue:{
+        backgroundColor: 'blue'
+    },
     
     black:{
         fontSize: 18,
@@ -351,6 +354,13 @@ export const styles = StyleSheet.create({
     },
     mBottomS:{
         marginBottom: 10
+    },
+    mHorizontalXl:{
+        marginHorizontal: 20,
+        marginBottom:80
+    },
+    bold:{
+        fontFamily:'OpenSans-SemiBold',
     },
 
     //ESTRUCTURA MODAL
@@ -438,6 +448,60 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius:10,
         borderBottomRightRadius:10,
     },
+
+    //MODAL DE CONFIRMACIÓN
+    confTop:{
+        flexDirection: 'row',
+        margin:10,
+        justifyContent:'space-between'
+    },
+    titConf:{
+        fontSize:26,
+        fontFamily:'OpenSans-SemiBold',
+        color: 'black',
+        marginBottom: 20,
+        marginLeft: 8,
+        marginTop: 5
+    },
+    mTopBlack:{
+        fontSize: 18,
+        color: 'black',
+        fontFamily:'OpenSans-Regular',
+        marginTop: 15
+    },
+    contentBtnConf:{
+        flexDirection: 'row',
+        flex:1,
+        position: 'absolute',
+        bottom:0,
+        width: '100%',
+        justifyContent:'space-between'
+    },
+    btnCancel:{
+        alignItems:'center',
+        width:'50%',
+        borderTopColor: '#F6D6B8',
+        borderTopWidth: 2,
+        borderBottomLeftRadius:10
+    },
+    btnConfirm:{
+        backgroundColor:'#EDAC70',
+        alignItems:'center',
+        width:'50%',
+        borderBottomRightRadius:10
+    },
+    btnConfText:{
+        padding:15,
+        color: 'black',
+        fontFamily:'OpenSans-SemiBold',
+        fontSize: 18,
+    },
+    btnCancText:{
+        padding:15,
+        color: 'black',
+        fontFamily:'OpenSans-Regular',
+        fontSize: 18,
+    }
 
 
 
