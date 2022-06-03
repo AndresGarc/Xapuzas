@@ -78,7 +78,7 @@ export const getTrabajoID = async (id) => {
 
     return await new Promise( (resolve, reject) => {
             db.transaction( async (tx) => {
-            tx.executeSql(`SELECT trabajo.*, icono, nombre
+            tx.executeSql(`SELECT trabajo.*, estados.*
                 FROM trabajo
                 INNER JOIN estados ON trabajo.estado_id = estados.estado_id
                 WHERE trabajo_id = ?;`, 
@@ -148,17 +148,21 @@ export const putTrabajos = async (id, data) => {
     
 }
 
-export const putEstado = async (db, id ,estado) =>{
+export const putEstado = async (id ,estado) =>{
 
-    await db.transaction( async (tx) => {
-        await tx.executeSql(`UPDATE trabajo
-            SET estado_id = ?
-            WHERE trabajo_id = ?;`, 
-            [estado, id],
-            () => {console.log("estado de trabajo editado");},
-            (error) => {console.log(error.message);}
-        );
-    });
+    const db = await conectarDB();
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`UPDATE trabajo
+                SET estado_id = ?
+                WHERE trabajo_id = ?;`, 
+                [estado, id],
+                (txn, res) => { resolve(res); },
+                (error) => { reject(error.message); }
+            );
+        });
+    })
+    
 
 }
 

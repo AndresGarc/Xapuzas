@@ -34,6 +34,7 @@ const Trabajos = ({route}) => {
   
   const [borrarT, setBorrado] = useState([]);
   const [typeModal, setType] = useState();
+  const [dataState, setDataState] = useState([]);
  
   const navegacion = useNavigation();
 
@@ -57,8 +58,9 @@ const Trabajos = ({route}) => {
     setconfVisible(true);
   }
 
-  const showEstado = (id) => {
+  const showEstado = (id, estadoid, titulo) => {
     //le tengo que pasar el estado actual para poder destacarlo en el selector de estados
+    setDataState([id,estadoid,titulo]);
     setestVisible(true);
 }
 
@@ -141,7 +143,7 @@ const Trabajos = ({route}) => {
                         <Pressable key={trab.trabajo_id} style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{showDetalle(trab.trabajo_id)}}>
                           <Text style={styles.textT}>{trab.titulo}</Text>
 
-                          <Pressable style={styles.terminar} onPress={()=>{showEstado(trab.trabajo_id)}}>
+                          <Pressable style={styles.terminar} onPress={()=>{showEstado(trab.trabajo_id, trab.estado_id, trab.titulo)}}>
                             <Icon name={trab.icono} size={35} color='#EDAC70'/>
                           </Pressable>  
 
@@ -181,6 +183,8 @@ const Trabajos = ({route}) => {
             <ModalEstado 
                 estVisible={estVisible}
                 setestVisible={setestVisible}
+                dataState={dataState}
+                loadLista={loadLista}
             />
           }
 

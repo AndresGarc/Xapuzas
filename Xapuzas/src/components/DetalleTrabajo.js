@@ -18,9 +18,11 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
     const navegacion = useNavigation();
 
     const [terminarData, setTerminar] = useState([]);
+    const [dataState, setDataState] = useState([]);
     const [typeModal, setType] = useState();
     const [confVisible, setconfVisible] = useState(false);
     const [estVisible, setestVisible] = useState(false);
+
 
     const showConfirm = (type,id, titulo) => {
         setTerminar([id,titulo]);
@@ -30,6 +32,7 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
 
     const showEstado = (id) => {
         //le tengo que pasar el estado actual para poder destacarlo en el selector de estados
+        setDataState([id, data.estado_id, data.titulo]);
         setestVisible(true);
     }
 
@@ -175,6 +178,9 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
                 <ModalEstado 
                     estVisible={estVisible}
                     setestVisible={setestVisible}
+                    dataState={dataState}
+                    loadLista={loadLista}
+                    setModalVisible={setModalVisible}
                 />
             }
         

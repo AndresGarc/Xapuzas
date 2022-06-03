@@ -14,11 +14,12 @@ import { borrarTodo } from '../database/db-service';
 import { deleteTrabajo } from '../database/trabajo-service';
 
 
-const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista, setModalVisible}) =>{
+const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista, setModalVisible, setestVisible}) =>{
 //TYPE: 1 terminar tarea / 2 terminar trabajo / 3 borrar trabajo / 4 borrar todos los datos
 
     const confirm = () => {
 
+        
         switch (type) {
             case 1:
 
@@ -30,9 +31,20 @@ const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista, 
                     }
                 })
                 break;
-            
-            case 2:
 
+            case 2:
+                deleteTrabajo(data[0]).then((data) => {
+                    loadLista();
+                    setconfVisible(false);
+                    if(setestVisible){
+                        setestVisible(false);
+                        if(setModalVisible){
+                            setModalVisible(false);
+                        }
+                    }
+                    
+                     
+                })
                 break;
             
             case 3:
@@ -101,7 +113,10 @@ const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista, 
                         }
 
                         { type==2 &&
-                            <Text style={styles.titConf}>Terminar trabajo</Text>
+                            <View>
+                                <Text style={styles.black}>¿Estás seguro/a de que quieres terminar el trabajo <Text style={styles.bold}>{data[1]}</Text>?</Text>
+                                <Text style={styles.mTopBlack}>Una vez terminado se borrará este trabajo</Text>
+                            </View>
                         }
 
                         { type==3 &&
