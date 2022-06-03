@@ -341,6 +341,14 @@ export const styles = StyleSheet.create({
         fontFamily:'OpenSans-Regular',
     },
 
+    blackMRight:{
+        fontSize: 18,
+        color: 'black',
+        fontFamily:'OpenSans-Regular',
+        marginRight: 30,
+        marginLeft: 20
+    },
+
     minBlack:{
         fontSize: 16,
         color: 'black',
@@ -358,6 +366,13 @@ export const styles = StyleSheet.create({
     mHorizontalXl:{
         marginHorizontal: 20,
         marginBottom:80
+    },
+    mHorizontalS:{
+        marginHorizontal: 20,
+        marginBottom:30,
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#EDAC70'
     },
     bold:{
         fontFamily:'OpenSans-SemiBold',
@@ -408,7 +423,8 @@ export const styles = StyleSheet.create({
         fontSize:18,
         fontFamily:'OpenSans-Regular',
         color: 'black',
-        marginLeft: 10
+        marginLeft: 10,
+        marginRight: 20
     },
     textTfl:{
         fontSize:18,
@@ -461,6 +477,7 @@ export const styles = StyleSheet.create({
         color: 'black',
         marginBottom: 20,
         marginLeft: 8,
+        marginRight: 5,
         marginTop: 5
     },
     mTopBlack:{
@@ -488,7 +505,7 @@ export const styles = StyleSheet.create({
         backgroundColor:'#EDAC70',
         alignItems:'center',
         width:'50%',
-        borderBottomRightRadius:10
+        borderBottomRightRadius:10,
     },
     btnConfText:{
         padding:15,
@@ -501,8 +518,34 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontFamily:'OpenSans-Regular',
         fontSize: 18,
-    }
+    },
 
+    //MODAL CAMBIO DE ESTADO
+    estTop:{
+        flexDirection: 'row',
+        margin:10,
+        marginRight: 35,
+        justifyContent:'space-between'
+    },
+    contentEstado:{
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginBottom: 20,
+        alignItems:'center'
+    },
+    btnEstado:{
+        padding:10,
+        borderWidth:2,
+        borderRadius: 10,
+        borderColor: '#EDAC70'
+    },
+    btnEstadoFocus:{
+        padding:10,
+        borderWidth:2,
+        borderRadius: 10,
+        backgroundColor: '#EDAC70',
+        borderColor: '#EDAC70'
+    }
 
 
 //END GENERAL ------------------------------------------------------------------------------------------------------------------------------------------

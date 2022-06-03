@@ -10,9 +10,28 @@ import {
   Modal
 } from 'react-native';
 
-const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
+import ModalConfirmacion from '../common/ModalConfirmacion';
+import ModalEstado from '../common/ModalEstado';
+
+const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista}) =>{
 
     const navegacion = useNavigation();
+
+    const [terminarData, setTerminar] = useState([]);
+    const [typeModal, setType] = useState();
+    const [confVisible, setconfVisible] = useState(false);
+    const [estVisible, setestVisible] = useState(false);
+
+    const showConfirm = (type,id, titulo) => {
+        setTerminar([id,titulo]);
+        setType(type);
+        setconfVisible(true);
+    }
+
+    const showEstado = (id) => {
+        //le tengo que pasar el estado actual para poder destacarlo en el selector de estados
+        setestVisible(true);
+    }
 
     const closeModal = () => {
         setModalVisible(false);
@@ -26,6 +45,10 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =
         navegacion.navigate("Crear trabajo",{mode:"Editor", data: datos});
     }
 
+    useEffect(() => {
+        return()  => {
+        }
+    })
 
     return(
         <Modal
@@ -121,17 +144,39 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle}) =
 
                     </View>
 
-                    <Pressable style={styles.crearBtnModal}>
-                        <Text style={styles.crearTxt}>Borrar/Visto</Text>
-                        <Text style={styles.crearIcon}>
-                            <Icon name="add-circle" size={30} color='black'/>
-                        </Text>
+                    <View style={styles.contentBtnConf}>
 
-                    </Pressable>
+                        <Pressable style={styles.btnCancel} onPress={() => showConfirm(3, data.trabajo_id, data.titulo)}>
+                            <Text style={styles.btnCancText}>Borrar <Icon name='trash-outline' size={25} color='black'/></Text>
+                        </Pressable>
+
+                        <Pressable style={styles.btnConfirm} onPress={() => showEstado(data.trabajo_id)}>
+                            <Text style={styles.btnConfText}>{data.nombre} <Icon name={data.icono} size={25} color='black'/></Text>
+                        </Pressable>
+                        
+                    </View>
 
                 </View>
 
             </View>
+
+            { confVisible &&
+                <ModalConfirmacion 
+                    confVisible={confVisible}
+                    setconfVisible={setconfVisible}
+                    type={typeModal}
+                    data={terminarData}
+                    loadLista={loadLista}
+                    setModalVisible = {setModalVisible}
+                />
+            }
+
+            { estVisible &&
+                <ModalEstado 
+                    estVisible={estVisible}
+                    setestVisible={setestVisible}
+                />
+            }
         
         </Modal>
     )

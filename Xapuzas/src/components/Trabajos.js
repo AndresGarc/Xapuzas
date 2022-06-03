@@ -15,10 +15,11 @@ import {
   Modal
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import DetalleTrabajo from './DetalleTrabajo';
-import ModalConfirmacion from '../common/ModalConfirmacion'
 
-import { conectarDB, borrarTodo } from '../database/db-service'
+import DetalleTrabajo from './DetalleTrabajo';
+import ModalConfirmacion from '../common/ModalConfirmacion';
+import ModalEstado from '../common/ModalEstado';
+
 import { crearTTrabajos, deleteTrabajo, dropEstados, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
 const Trabajos = ({route}) => {
@@ -28,6 +29,7 @@ const Trabajos = ({route}) => {
   const [confVisible, setconfVisible] = useState(false);
   const [data, setData] = useState([]);
   const [trabDetalle, setDetalle] = useState([]);
+  const [estVisible, setestVisible] = useState(false);
   
   
   const [borrarT, setBorrado] = useState([]);
@@ -40,7 +42,6 @@ const Trabajos = ({route}) => {
     setSelected(value);
     //filtrar
   }
-
 
   const showDetalle = (id) => {
     getTrabajoID(id).then((data) => {
@@ -55,6 +56,11 @@ const Trabajos = ({route}) => {
     setType(type);
     setconfVisible(true);
   }
+
+  const showEstado = (id) => {
+    //le tengo que pasar el estado actual para poder destacarlo en el selector de estados
+    setestVisible(true);
+}
 
   const loadLista = () => {
     getTrabajos().then((data) => {
@@ -135,8 +141,8 @@ const Trabajos = ({route}) => {
                         <Pressable key={trab.trabajo_id} style={(i === data.length-1) ? styles.last : styles.tarea} onPress={()=>{showDetalle(trab.trabajo_id)}}>
                           <Text style={styles.textT}>{trab.titulo}</Text>
 
-                          <Pressable style={styles.terminar} onPress={()=>{console.log("Estado");}}>
-                            <Icon name='eye-off-outline' size={35} color='#EDAC70'/>
+                          <Pressable style={styles.terminar} onPress={()=>{showEstado(trab.trabajo_id)}}>
+                            <Icon name={trab.icono} size={35} color='#EDAC70'/>
                           </Pressable>  
 
                           <Pressable style={styles.terminar} onPress={()=>{showConfirm(3, trab.trabajo_id, trab.titulo)}}>
@@ -152,23 +158,31 @@ const Trabajos = ({route}) => {
           }
 
           { modalVisible &&
-          <DetalleTrabajo
-            modalVisible = {modalVisible}
-            setModalVisible = {setModalVisible}
-            data={trabDetalle}
-            setDataDetalle={setDetalle}
-          />
+            <DetalleTrabajo
+              modalVisible = {modalVisible}
+              setModalVisible = {setModalVisible}
+              data={trabDetalle}
+              setDataDetalle={setDetalle}
+              loadLista={loadLista}
+            />
           }
 
           { confVisible &&
-          <ModalConfirmacion 
-            confVisible={confVisible}
-            setconfVisible={setconfVisible}
-            type={typeModal}
-            data={borrarT}
-            loadLista={loadLista}
-          />
-        }
+            <ModalConfirmacion 
+              confVisible={confVisible}
+              setconfVisible={setconfVisible}
+              type={typeModal}
+              data={borrarT}
+              loadLista={loadLista}
+            />
+          }
+
+          { estVisible &&
+            <ModalEstado 
+                estVisible={estVisible}
+                setestVisible={setestVisible}
+            />
+          }
 
       </LinearGradient>
 

@@ -152,6 +152,7 @@ const Tareas = ({route}) => {
             setModalVisible = {setModalVisible}
             data={dataDetalle}
             setDataDetalle={setDataDetalle}
+            loadLista={loadLista}
           />
         }
 

@@ -10,14 +10,22 @@ import {
   Modal
 } from 'react-native';
 
-import { ScrollView } from 'react-native-gesture-handler';
+import ModalConfirmacion from '../common/ModalConfirmacion';
 
-import { conectarDB, borrarTodo } from '../database/db-service'
-
-
-const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
+const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista}) =>{
 
     const navegacion = useNavigation();
+    
+    const [terminarData, setTerminar] = useState([]);
+    const [typeModal, setType] = useState();
+    const [confVisible, setconfVisible] = useState(false);
+
+    const showConfirm = (type,id, titulo) => {
+        setTerminar([id,titulo]);
+        setType(type);
+        setconfVisible(true);
+    }
+    
 
     const closeModal = () => {
         setModalVisible(false);
@@ -30,6 +38,11 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
         setDataDetalle([]);
         navegacion.navigate("Crear tarea",{mode:"Editor", data: datos});
     }
+
+    useEffect(() => {
+        return()  => {
+        }
+    })
 
     return(
         <Modal
@@ -103,16 +116,27 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle}) =>{
 
                     </View>
 
-                    <Pressable style={styles.crearBtnModal}>
+                    <Pressable style={styles.crearBtnModal} onPress={() => {showConfirm(1, data.tarea_id, data.titulo)}}>
                         <Text style={styles.crearTxt}>Terminar</Text>
                         <Text style={styles.crearIcon}>
-                        <Icon name='checkmark-circle-outline' size={30} color='black'/>
+                            <Icon name='checkmark-circle-outline' size={30} color='black'/>
                         </Text>
                     </Pressable>
 
                 </View>
 
             </View>
+
+        { confVisible &&
+          <ModalConfirmacion 
+            confVisible={confVisible}
+            setconfVisible={setconfVisible}
+            type={typeModal}
+            data={terminarData}
+            loadLista={loadLista}
+            setModalVisible = {setModalVisible}
+          />
+        }
         
         </Modal>
     )

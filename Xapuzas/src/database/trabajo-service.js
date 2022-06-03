@@ -56,8 +56,9 @@ export const getTrabajos = async () => {
 
     return await new Promise((resolve, reject) => {
         db.transaction( async (tx) => {
-            tx.executeSql(`SELECT trabajo_id, titulo
-                FROM trabajo;`, 
+            tx.executeSql(`SELECT trabajo_id, titulo, trabajo.estado_id, icono
+                FROM trabajo
+                INNER JOIN estados ON trabajo.estado_id = estados.estado_id;`, 
                 [],
                 (txn, res) => { 
                     resolve(res.rows.raw()); 
@@ -77,11 +78,14 @@ export const getTrabajoID = async (id) => {
 
     return await new Promise( (resolve, reject) => {
             db.transaction( async (tx) => {
-            tx.executeSql(`SELECT *
+            tx.executeSql(`SELECT trabajo.*, icono, nombre
                 FROM trabajo
-                WHERE trabajo_id = ?`, 
+                INNER JOIN estados ON trabajo.estado_id = estados.estado_id
+                WHERE trabajo_id = ?;`, 
                 [id],
-                (txn, res) => { resolve(res.rows.item(0)); },
+                (txn, res) => {
+                     resolve(res.rows.item(0)); 
+                    },
                 (error) => { reject(error.message); }
             );
         });
@@ -200,10 +204,10 @@ export const postEstados = async () => {
     const db = await conectarDB();
 
     await db.transaction(async (tx) => {
-        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Pendientes", "eye-off-outline")`, []);
-        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Vistos", "eye-outline")`, []);
-        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Aceptados", "checkmark")`, []);
-        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Terminados", "checkmark-circle-outline")`, []);
+        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("No visto", "eye-off-outline")`, []);
+        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Visto", "eye-outline")`, []);
+        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Aceptado", "checkmark")`, []);
+        tx.executeSql(`INSERT INTO estados (nombre, icono) VALUES ("Terminado", "checkmark-circle-outline")`, []);
     },(error) => {console.log(error.message);});
 
 }

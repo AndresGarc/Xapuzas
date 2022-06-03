@@ -14,16 +14,20 @@ import { borrarTodo } from '../database/db-service';
 import { deleteTrabajo } from '../database/trabajo-service';
 
 
-const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista}) =>{
+const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista, setModalVisible}) =>{
 //TYPE: 1 terminar tarea / 2 terminar trabajo / 3 borrar trabajo / 4 borrar todos los datos
 
     const confirm = () => {
 
         switch (type) {
             case 1:
+
                 deleteTarea(data[0]).then((data) =>{
                     loadLista();
                     setconfVisible(false);
+                    if(setModalVisible){
+                        setModalVisible(false);
+                    }
                 })
                 break;
             
@@ -35,8 +39,12 @@ const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista})
                 deleteTrabajo(data[0]).then((data) => {
                     loadLista();
                     setconfVisible(false);
+                    if(setModalVisible){
+                        setModalVisible(false);
+                    }
                 })
                 break;
+
 
             case 4:
                 borrarTodo().then((data) => {
@@ -115,7 +123,7 @@ const ModalConfirmacion = ({confVisible, setconfVisible, type, data, loadLista})
 
                     <View style={styles.contentBtnConf}>
 
-                        <Pressable style={styles.btnCancel}>
+                        <Pressable style={styles.btnCancel} onPress={() => setconfVisible(false)}>
                             <Text style={styles.btnCancText}>Cancelar</Text>
                         </Pressable>
 
