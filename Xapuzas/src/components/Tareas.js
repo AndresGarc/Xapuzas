@@ -19,7 +19,7 @@ import DetalleTarea from './DetalleTarea';
 import ModalConfirmacion from '../common/ModalConfirmacion';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
-import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea } from '../database/tarea-service'
+import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro } from '../database/tarea-service'
 
 const Tareas = ({route}) => {
 
@@ -32,18 +32,24 @@ const Tareas = ({route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [confVisible, setconfVisible] = useState(false);
 
+  var filtro =1;
+
   const navegacion = useNavigation();
 
 
   const showUrgentes = () => {
     if(urgente == 0){
       setUrgente(1);
+      filtro=1;
+      loadLista();
     }
   }
 
   const showPendientes = () => {
     if(urgente == 1){
       setUrgente(0);
+      filtro=0;
+      loadLista();
     }
   }
 
@@ -61,12 +67,20 @@ const Tareas = ({route}) => {
     setconfVisible(true);
   }
 
-  const loadLista= () => {
-    getTareas().then((data) => {
+  const loadListaTerminar=() => {
+    getTareasFiltro(urgente).then((data) => {
       setData(data);
       SplashScreen.hide();
     }).catch((error) => console.log(error))
   }
+
+  const loadLista= () => {
+    getTareasFiltro(filtro).then((data) => {
+      setData(data);
+      SplashScreen.hide();
+    }).catch((error) => console.log(error))
+  }
+
 
   const initTabla = () => {
     crearTTareas().then((data) => {
@@ -75,6 +89,7 @@ const Tareas = ({route}) => {
   }
 
   const irCrear = () => {
+    //setUrgente(1); filtro=1;
     navegacion.navigate("Crear tarea",{mode:"Creador"});
   }
 
@@ -82,13 +97,15 @@ const Tareas = ({route}) => {
   
   useEffect(()=>{
 
-    initTabla()
+    initTabla();
+
   }, []); 
   
 
   useFocusEffect( React.useCallback(() => {
     if(route.params!=undefined){
       if(route.params.creada==true){
+        setUrgente(1); //aqui yo se que DEBO si o si resetear el urgente, ya que FILTRO se resetea solo
         loadLista();
         navegacion.setParams({creada:false});
       }
@@ -122,7 +139,7 @@ const Tareas = ({route}) => {
           </View>
 
           {
-          data.length==0 ? 
+          data.length == 0 ? 
             <View style={styles.noData}>
               <Icon name='sad-outline' size={30}></Icon>
               <Text style={styles.minBlack}>No hay tareas creadas</Text>
@@ -152,7 +169,8 @@ const Tareas = ({route}) => {
             setModalVisible = {setModalVisible}
             data={dataDetalle}
             setDataDetalle={setDataDetalle}
-            loadLista={loadLista}
+            loadLista={loadListaTerminar}
+            setUrgente={setUrgente}
           />
         }
 
@@ -162,7 +180,7 @@ const Tareas = ({route}) => {
             setconfVisible={setconfVisible}
             type={typeModal}
             data={terminarData}
-            loadLista={loadLista}
+            loadLista={loadListaTerminar}
           />
         }
 

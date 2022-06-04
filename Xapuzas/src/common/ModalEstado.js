@@ -9,7 +9,7 @@ import {
   Modal
 } from 'react-native';
 
-import {putEstado} from '../database/trabajo-service'
+import {putEstado, getTrabajosFiltros} from '../database/trabajo-service'
 import ModalConfirmacion from '../common/ModalConfirmacion';
 
 const ModalEstado = ({estVisible, setestVisible, dataState, loadLista, setModalVisible}) =>{

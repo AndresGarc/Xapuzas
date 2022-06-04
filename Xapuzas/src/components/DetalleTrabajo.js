@@ -13,7 +13,7 @@ import {
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import ModalEstado from '../common/ModalEstado';
 
-const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista}) =>{
+const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista, setUrgente}) =>{
 
     const navegacion = useNavigation();
 

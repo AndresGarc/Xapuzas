@@ -54,6 +54,26 @@ export const getTareas = async () => {
     });
 }
 
+export const getTareasFiltro = async (filtro) => {
+    const db = await conectarDB();
+    
+    return await new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(`SELECT tarea_id, titulo
+                FROM tarea
+                WHERE urgente=?;`, 
+                [filtro],
+                (txn, res) => {
+                    resolve(res.rows.raw());
+                },
+                (error) => {
+                    reject(error.message);
+                }
+            );
+        });
+    })
+}
+
 export const getTareaID = async (id) => {
     const db = await conectarDB();
 

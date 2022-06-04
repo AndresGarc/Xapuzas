@@ -69,8 +69,27 @@ export const getTrabajos = async () => {
             );
         });
     });
+}
 
+export const getTrabajosFiltros = async (filtro) => {
+    const db = await conectarDB();
 
+    return await new Promise((resolve, reject) => {
+        db.transaction( async (tx) => {
+            tx.executeSql(`SELECT trabajo_id, titulo, trabajo.estado_id, icono
+                FROM trabajo
+                INNER JOIN estados ON trabajo.estado_id = estados.estado_id
+                WHERE trabajo.estado_id = ?;`, 
+                [filtro],
+                (txn, res) => { 
+                    resolve(res.rows.raw()); 
+                },
+                (error) => { 
+                    reject(error.message); 
+                }
+            );
+        });
+    });
 }
 
 export const getTrabajoID = async (id) => {

@@ -20,7 +20,7 @@ import DetalleTrabajo from './DetalleTrabajo';
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import ModalEstado from '../common/ModalEstado';
 
-import { crearTTrabajos, deleteTrabajo, dropEstados, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
+import { crearTTrabajos, getTrabajosFiltros, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
 const Trabajos = ({route}) => {
 
@@ -35,12 +35,17 @@ const Trabajos = ({route}) => {
   const [borrarT, setBorrado] = useState([]);
   const [typeModal, setType] = useState();
   const [dataState, setDataState] = useState([]);
+
+  var filtro = 0;
  
   const navegacion = useNavigation();
 
   //0 - todos / 1 - Pendientes / 2 - Vistos / 3 - Aceptados / 4 - Terminados
   const setTrabajos = (value) =>{
     setSelected(value);
+    filtro=value;
+    loadLista();
+
     //filtrar
   }
 
@@ -65,9 +70,36 @@ const Trabajos = ({route}) => {
 }
 
   const loadLista = () => {
-    getTrabajos().then((data) => {
-      setData(data);
-    }).catch((error) => console.log(error)); 
+    if(filtro==0){ // todos
+      
+      getTrabajos().then((data) => {
+        setData(data);
+      }).catch((error) => console.log(error)); 
+
+    } else{ // resto
+
+      getTrabajosFiltros(filtro).then((data) => {
+        setData(data);
+      }).catch((error) => console.log(error)); 
+    }
+
+  }
+
+  const loadListaFiltro= () => {
+    if(selected==0){ // todos
+      
+      getTrabajos().then((data) => {
+        setData(data);
+      }).catch((error) => console.log(error)); 
+
+    } else{ // resto
+
+      getTrabajosFiltros(selected).then((data) => {
+        setData(data);
+      }).catch((error) => console.log(error))
+      
+    }
+
   }
 
   const initTabla = () => {
@@ -88,8 +120,12 @@ const Trabajos = ({route}) => {
   }, []);
 
   useFocusEffect( React.useCallback(() => {
+    filtro=selected;
     if(route.params!=undefined){
       if(route.params.creada==true){
+        console.log("focuseffect");
+        filtro=0;
+        setSelected(0); //reseteo por que es el creador
         loadLista();
         navegacion.setParams({creada:false});
       }
@@ -165,7 +201,7 @@ const Trabajos = ({route}) => {
               setModalVisible = {setModalVisible}
               data={trabDetalle}
               setDataDetalle={setDetalle}
-              loadLista={loadLista}
+              loadLista={loadListaFiltro}
             />
           }
 
@@ -175,7 +211,7 @@ const Trabajos = ({route}) => {
               setconfVisible={setconfVisible}
               type={typeModal}
               data={borrarT}
-              loadLista={loadLista}
+              loadLista={loadListaFiltro}
             />
           }
 
@@ -184,7 +220,7 @@ const Trabajos = ({route}) => {
                 estVisible={estVisible}
                 setestVisible={setestVisible}
                 dataState={dataState}
-                loadLista={loadLista}
+                loadLista={loadListaFiltro}
             />
           }
 
