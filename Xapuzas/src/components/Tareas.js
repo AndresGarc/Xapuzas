@@ -17,9 +17,11 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTarea from './DetalleTarea';
 import ModalConfirmacion from '../common/ModalConfirmacion';
+import HelpTareas from '../common/tutorial/helpTareas';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro } from '../database/tarea-service'
+
 
 const Tareas = ({route}) => {
 
@@ -28,9 +30,11 @@ const Tareas = ({route}) => {
   const [dataDetalle, setDataDetalle] = useState([]);
   const [terminarData, setTerminar] = useState([]);
   const [typeModal, setType] = useState();
+  const [typeHelp, setHelp] = useState();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [confVisible, setconfVisible] = useState(false);
+  const [closeHelp, setCloseHelp] = useState(false);
 
   var filtro =1;
 
@@ -131,7 +135,7 @@ const Tareas = ({route}) => {
 
 
             <View style={styles.contentHelp}>
-              <Pressable style={styles.help}>
+              <Pressable style={styles.help} onPress={() => {setCloseHelp(true); setHelp(1)}}>
                 <Icon name="md-help-circle" size={50} color='#EDAC70' />
               </Pressable>
             </View>
@@ -184,16 +188,24 @@ const Tareas = ({route}) => {
           />
         }
 
+        { closeHelp &&
+
+          <HelpTareas
+            closeHelp={closeHelp}
+            setCloseHelp={setCloseHelp}
+          />
+
+        }
+
 
       </LinearGradient>
 
-      <Pressable onPress={()=>{irCrear()}}  style={styles.crearBtn}
-      >
+      <Pressable onPress={()=>{irCrear()}}  style={styles.crearBtn}>
           <Text style={styles.crearTxt}>Crear</Text>
           <Text style={styles.crearIcon}>
             <Icon name="add-circle" size={30} color='black'/>
           </Text>
-        </Pressable>
+      </Pressable>
 
     </SafeAreaView>
   );

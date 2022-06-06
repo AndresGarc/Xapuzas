@@ -19,6 +19,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTrabajo from './DetalleTrabajo';
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import ModalEstado from '../common/ModalEstado';
+import HelpTrabajos from '../common/tutorial/helpTrabajos';
 
 import { crearTTrabajos, getTrabajosFiltros, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
 
@@ -30,6 +31,7 @@ const Trabajos = ({route}) => {
   const [data, setData] = useState([]);
   const [trabDetalle, setDetalle] = useState([]);
   const [estVisible, setestVisible] = useState(false);
+  const [HelpT, setHelpT] = useState(false);
   
   
   const [borrarT, setBorrado] = useState([]);
@@ -157,7 +159,7 @@ const Trabajos = ({route}) => {
 
 
           <View style={styles.contentHelp}>
-            <Pressable style={styles.help}>
+            <Pressable style={styles.help} onPress={() => {setHelpT(true)}}>
               <Icon name="md-help-circle" size={50} color='#EDAC70' />
             </Pressable>
           </View>
@@ -193,36 +195,44 @@ const Trabajos = ({route}) => {
                 )}
               </View>
             </ScrollView>
-          }
+        }
 
-          { modalVisible &&
-            <DetalleTrabajo
-              modalVisible = {modalVisible}
-              setModalVisible = {setModalVisible}
-              data={trabDetalle}
-              setDataDetalle={setDetalle}
+        { modalVisible &&
+          <DetalleTrabajo
+            modalVisible = {modalVisible}
+            setModalVisible = {setModalVisible}
+            data={trabDetalle}
+            setDataDetalle={setDetalle}
+            loadLista={loadListaFiltro}
+          />
+        }
+
+        { confVisible &&
+          <ModalConfirmacion 
+            confVisible={confVisible}
+            setconfVisible={setconfVisible}
+            type={typeModal}
+            data={borrarT}
+            loadLista={loadListaFiltro}
+          />
+        }
+
+        { estVisible &&
+          <ModalEstado 
+              estVisible={estVisible}
+              setestVisible={setestVisible}
+              dataState={dataState}
               loadLista={loadListaFiltro}
-            />
-          }
+          />
+        }
 
-          { confVisible &&
-            <ModalConfirmacion 
-              confVisible={confVisible}
-              setconfVisible={setconfVisible}
-              type={typeModal}
-              data={borrarT}
-              loadLista={loadListaFiltro}
-            />
-          }
-
-          { estVisible &&
-            <ModalEstado 
-                estVisible={estVisible}
-                setestVisible={setestVisible}
-                dataState={dataState}
-                loadLista={loadListaFiltro}
-            />
-          }
+          
+        { HelpT &&
+          <HelpTrabajos
+            closeHelp={HelpT}
+            setCloseHelp={setHelpT}
+          />
+        }
 
       </LinearGradient>
 

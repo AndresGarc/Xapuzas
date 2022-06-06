@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import ModalConfirmacion from '../common/ModalConfirmacion';
+import HelpDTarea from '../common/tutorial/helpDTarea';
 
 const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista}) =>{
 
@@ -19,6 +20,7 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
     const [terminarData, setTerminar] = useState([]);
     const [typeModal, setType] = useState();
     const [confVisible, setconfVisible] = useState(false);
+    const [closeHelp, setCloseHelp] = useState(false);
 
     const showConfirm = (type,id, titulo) => {
         setTerminar([id,titulo]);
@@ -55,7 +57,7 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
 
                     <View style={styles.topModal}>
   
-                        <Pressable style={styles.iconModal}>
+                        <Pressable onPress={ () => setCloseHelp(true)} style={styles.iconModal}>
                             <Icon name="md-help-circle" size={50} color='#EDAC70' />
                         </Pressable>
 
@@ -135,6 +137,13 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
             data={terminarData}
             loadLista={loadLista}
             setModalVisible = {setModalVisible}
+          />
+        }
+
+        { closeHelp &&
+          <HelpDTarea
+            closeHelp={closeHelp}
+            setCloseHelp={setCloseHelp}
           />
         }
         
