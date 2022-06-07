@@ -38,7 +38,7 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
         let datos = data;
         setModalVisible(false);
         setDataDetalle([]);
-        navegacion.navigate("Crear tarea",{mode:"Editor", data: datos});
+        navegacion.navigate("Crear tarea",{mode:"Editar", data: datos});
     }
 
     useEffect(() => {

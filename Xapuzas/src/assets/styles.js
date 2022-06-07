@@ -4,6 +4,7 @@
 */
 
 import { StyleSheet } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 export const styles = StyleSheet.create({
@@ -32,45 +33,50 @@ export const styles = StyleSheet.create({
 //TAREAS------------------------------------------------------------------------------------------------------------------------------------------
     //PICKER TAREAS --------------------------------------------------------------------------------------------------------------------------------------
     contentPicker:{
-      marginVertical: 10,
-      marginHorizontal: 15,
-      flexDirection: 'row',
+        flex:3,
+        marginVertical: 10,
+        marginHorizontal: 15,
+        flexDirection: 'row',
     },
     btnPickerL:{
-      paddingVertical: 15,
-      paddingHorizontal:30,
-      borderBottomLeftRadius: 10,
-      borderTopLeftRadius: 10,
-      backgroundColor: 'white'
+        flex:2,
+        alignItems: 'center',
+        paddingVertical: 15,
+        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 10,
+        backgroundColor: 'white'
     },
     btnFocusL:{
+        flex:2,
+        alignItems: 'center',
         paddingVertical: 15,
-        paddingHorizontal:30,
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: '#EDAC70'
     },
     btnPickerR:{
+        flex:2,
+        alignItems: 'center',
         paddingVertical: 15,
-        paddingHorizontal:30,
         borderBottomRightRadius: 10,
         borderTopRightRadius: 10,
         backgroundColor: 'white'
     },
     btnFocusR:{
+        flex:2,
+        alignItems: 'center',
         paddingVertical: 15,
-        paddingHorizontal:30,
         borderBottomRightRadius: 10,
         borderTopRightRadius: 10,
         backgroundColor: '#EDAC70'
     },
     pickTxtF:{
-      fontSize: 18,
+      fontSize: RFPercentage(2.5)  ,
       color: 'black',
       fontFamily:'OpenSans-SemiBold',
     },
     pickTxt:{
-        fontSize: 18,
+        fontSize: RFPercentage(2.5)  ,
         color: 'black',
         fontFamily:'OpenSans-Regular',
     },
@@ -102,7 +108,7 @@ export const styles = StyleSheet.create({
     textT:{
         flex:1,
         padding:18,
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         fontFamily:'OpenSans-Regular',
         color: 'black'
     },
@@ -116,7 +122,7 @@ export const styles = StyleSheet.create({
 
 //CREAR ---------------------------------------------------------------------------------------------------------------------------------------
     titCrear:{
-        fontSize:25,
+         fontSize: RFPercentage(3.5),
         fontFamily:'OpenSans-Regular',
         color: 'black',
         textAlign: 'center'
@@ -134,12 +140,12 @@ export const styles = StyleSheet.create({
     inputTxt:{
         backgroundColor: '#FFF',
         borderRadius: 10,
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         paddingLeft: 15,
         marginRight: 20
     },
     label:{
-        fontSize: 22,
+        fontSize: RFPercentage(3.2),
         color: '#000',
         marginBottom:10,
         marginLeft: 5,
@@ -152,7 +158,7 @@ export const styles = StyleSheet.create({
     btnVoz:{
         flexDirection:'row',
         backgroundColor: '#EDAC70',
-        width: '40%',
+        width: '46%',
         padding: 10,
         borderRadius: 10,
         marginVertical: 10,
@@ -160,7 +166,7 @@ export const styles = StyleSheet.create({
     txtVoz:{
         color: 'black',
         fontFamily:'OpenSans-Regular',
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         marginLeft: 7,
         marginTop: 2
     },
@@ -186,7 +192,7 @@ export const styles = StyleSheet.create({
     },
     txtDate:{
         color: 'black',
-        fontSize: 16,
+          fontSize: RFPercentage(2.3),
         fontFamily:'OpenSans-Regular',
         padding: 13
     },
@@ -198,7 +204,7 @@ export const styles = StyleSheet.create({
     borderBot:{
         color: 'black',
         fontFamily:'OpenSans-Regular',
-        fontSize: 16,
+          fontSize: RFPercentage(2.3),
         paddingBottom: 10,
         marginBottom: 10,
         borderBottomColor: '#EDAC70',
@@ -213,7 +219,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 10,
         paddingLeft: 15,
-        fontSize: 16,
+          fontSize: RFPercentage(2.3),
         width: '48%',
     }, 
     inputNewTlf:{
@@ -221,11 +227,11 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         paddingLeft: 15,
-        fontSize: 16,
+          fontSize: RFPercentage(2.3),
         width: '42%',
     },
     newTlf:{
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
         paddingTop: 5,
@@ -235,7 +241,7 @@ export const styles = StyleSheet.create({
         marginTop: 13,
     },
     labelDateMat:{
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
         marginVertical: 10,
@@ -247,7 +253,7 @@ export const styles = StyleSheet.create({
 
 //TRABAJOS
     tituloTrabs: {
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         fontFamily:'OpenSans-Regular',
         marginLeft: 20,
         marginTop:10
@@ -266,7 +272,7 @@ export const styles = StyleSheet.create({
     titAjuste:{
         fontFamily:'OpenSans-Regular',
         textAlignVertical:"center",
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         marginLeft: 25
     },
     contentAjustes:{
@@ -292,7 +298,7 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     titulo:{
-        fontSize: 18
+          fontSize: RFPercentage(2.5)
     },
     text:{
         color: 'black',
@@ -308,7 +314,7 @@ export const styles = StyleSheet.create({
         color:'black',
         fontFamily:'OpenSans-SemiBold',
         textAlign: 'center',
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         textTransform: 'uppercase',
         margin: 10
     },
@@ -336,13 +342,14 @@ export const styles = StyleSheet.create({
     },
     
     black:{
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
     },
 
     blackMRight:{
-        fontSize: 18,
+        flex: 2,
+          fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
         marginRight: 30,
@@ -350,7 +357,7 @@ export const styles = StyleSheet.create({
     },
 
     minBlack:{
-        fontSize: 16,
+          fontSize: RFPercentage(2.3),
         color: 'black',
         fontFamily:'OpenSans-Regular',
     },
@@ -367,12 +374,16 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginBottom:80
     },
+    mEstBottom:{
+        marginHorizontal: 20,
+        marginBottom:50
+    },
     mLeftL:{
         marginLeft: 10
     },
     mHorizontalS:{
         marginHorizontal: 20,
-        marginBottom:30,
+        marginBottom:20,
         paddingBottom: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#EDAC70'
@@ -412,7 +423,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 30
     },
     titModal:{
-        fontSize:26,
+         fontSize: RFPercentage(3.5),
         fontFamily:'OpenSans-SemiBold',
         color: 'black',
         marginBottom: 20
@@ -423,21 +434,21 @@ export const styles = StyleSheet.create({
         marginBottom:10
     },
     textModal:{
-        fontSize:18,
+        fontSize:RFPercentage(2.5),
         fontFamily:'OpenSans-Regular',
         color: 'black',
         marginLeft: 10,
         marginRight: 20
     },
     textTfl:{
-        fontSize:18,
+        fontSize:RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
         marginBottom:20,
         marginLeft: 15
     },
     labTitModal:{
-        fontSize:18,
+        fontSize:RFPercentage(2.6),
         color: 'black',
         fontFamily:'OpenSans-SemiBold',
         marginLeft: 10,
@@ -475,7 +486,7 @@ export const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     titConf:{
-        fontSize:26,
+         fontSize: RFPercentage(3.5),
         fontFamily:'OpenSans-SemiBold',
         color: 'black',
         marginBottom: 20,
@@ -484,7 +495,7 @@ export const styles = StyleSheet.create({
         marginTop: 5
     },
     mTopBlack:{
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily:'OpenSans-Regular',
         marginTop: 15
@@ -514,27 +525,38 @@ export const styles = StyleSheet.create({
         padding:15,
         color: 'black',
         fontFamily:'OpenSans-SemiBold',
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
     },
     btnCancText:{
         padding:15,
         color: 'black',
         fontFamily:'OpenSans-Regular',
-        fontSize: 18,
+          fontSize: RFPercentage(2.5),
     },
 
     //MODAL CAMBIO DE ESTADO
     estTop:{
         flexDirection: 'row',
         margin:10,
-        marginRight: 35,
         justifyContent:'space-between'
+    },
+    titEst:{
+        flex: 6,
+         fontSize: RFPercentage(3.5)  ,
+        fontFamily:'OpenSans-SemiBold',
+        color: 'black',
+        marginLeft: 8,
+        marginRight: 5,
+    },
+    iconModal3:{
+        flex: 1,
+        marginRight: 5
     },
     contentEstado:{
         flexDirection: 'row',
         marginLeft: 10,
         marginBottom: 20,
-        alignItems:'center'
+        alignItems:'center',
     },
     btnEstado:{
         padding:10,

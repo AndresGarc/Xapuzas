@@ -45,7 +45,7 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
         let datos = data;
         setModalVisible(false);
         setDataDetalle([]);
-        navegacion.navigate("Crear trabajo",{mode:"Editor", data: datos});
+        navegacion.navigate("Crear trabajo",{mode:"Editar", data: datos});
     }
 
     useEffect(() => {

@@ -54,18 +54,19 @@ const ModalEstado = ({estVisible, setestVisible, dataState, loadLista, setModalV
 
                     <View style={styles.estTop}>
 
-                        <Text style={styles.titConf}>Cambiar el estado del trabajo</Text>
-                        <Pressable onPress={ () => {setestVisible(false)}} style={styles.iconModal2}>
+                        <Text style={styles.titEst}>Cambiar el estado del trabajo</Text>
+                        <Pressable onPress={ () => {setestVisible(false)}} style={styles.iconModal3}>
                             <Icon name="close" size={50} color='black'/>
                         </Pressable>
 
                     </View>
 
                     <View style={styles.mHorizontalS}>
-                        <Text style={styles.black}>Ahora mismo el trabajo: <Text style={styles.bold}>{dataState[2]}</Text>, está <Text style={styles.bold}>visto por el cliente</Text>, si quieres cambiar el estado toca en el icono del estado al que quieras cambiar y toca <Text style={styles.bold}>Aceptar</Text></Text>
+                        <Text style={styles.black}>Ahora mismo el trabajo: <Text style={styles.bold}>{dataState[2]}</Text>, está <Text style={styles.bold}>visto por el cliente</Text></Text>
+                        <Text style={styles.black}>Para cambiarlo toca en el icono de un estado y <Text style={styles.bold}>Acepta</Text></Text>
                     </View>
 
-                    <View style={styles.mHorizontalXl}>
+                    <View style={styles.mEstBottom}>
 
                         <View style={styles.contentEstado}>
                             <Pressable style={state==1 ? styles.btnEstadoFocus : styles.btnEstado} onPress={() => {cambiarEstado(1)}}>

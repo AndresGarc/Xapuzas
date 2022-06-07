@@ -236,7 +236,7 @@ const Trabajos = ({route}) => {
 
       </LinearGradient>
 
-      <Pressable onPress={ () => navegacion.navigate("Crear trabajo", {mode:"Creador"}) } style={styles.crearBtn}>
+      <Pressable onPress={ () => navegacion.navigate("Crear trabajo", {mode:"Crear"}) } style={styles.crearBtn}>
           <Text style={styles.crearTxt}>Crear</Text>
           <Text style={styles.crearIcon}>
             <Icon name="add-circle" size={30} color='black'/>

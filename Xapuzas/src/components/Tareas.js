@@ -94,7 +94,7 @@ const Tareas = ({route}) => {
 
   const irCrear = () => {
     //setUrgente(1); filtro=1;
-    navegacion.navigate("Crear tarea",{mode:"Creador"});
+    navegacion.navigate("Crear tarea",{mode:"Crear"});
   }
 
   //PRIMERA CARGA  

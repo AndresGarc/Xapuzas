@@ -214,7 +214,7 @@ const CrearTarea = ({route}) => {
                         </Pressable>
                         
                         <View style={styles.contentTitle}>
-                            <Text style={styles.titCrear}>{mode} de tareas</Text>
+                            <Text style={styles.titCrear}>{mode} tarea</Text>
                         </View>
 
                         <View style={styles.contentHelp}>
@@ -406,7 +406,7 @@ const CrearTarea = ({route}) => {
             </LinearGradient>
 
             <Pressable onPress={ () => handleTarea() } style={styles.crearBtn}>
-                <Text style={styles.crearTxt}>Crear</Text>
+                <Text style={styles.crearTxt}>{mode}</Text>
                 <Text style={styles.crearIcon}>
                     <Icon name="add-circle" size={30} color='black'/>
                 </Text>
