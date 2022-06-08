@@ -11,12 +11,15 @@ import {
   Pressable,
   Modal
 } from 'react-native';
+
 import ModalConfirmacion from '../common/ModalConfirmacion';
+import HelpAjustes from '../common/tutorial/helpAjustes';
 
 const Ajustes = () => {
 
   const [typeModal, setType] = useState();
   const [confVisible, setconfVisible] = useState(false);
+  const [closeHelp, setCloseHelp] = useState(false);
 
   
   const showConfirm = (type) => {
@@ -33,7 +36,7 @@ const Ajustes = () => {
           <Text style={styles.titAjuste}>¿Qué quieres hacer?</Text>
 
           <View style={styles.contentHelp}>
-            <Pressable style={styles.help}>
+            <Pressable style={styles.help} onPress={() => setCloseHelp(true)}>
               <Icon name="md-help-circle" size={50} color='#EDAC70' />
             </Pressable>
           </View>
@@ -55,12 +58,19 @@ const Ajustes = () => {
           </Pressable>
 
           { confVisible &&
-          <ModalConfirmacion 
-            confVisible={confVisible}
-            setconfVisible={setconfVisible}
-            type={typeModal}
-          />
-        }
+            <ModalConfirmacion 
+              confVisible={confVisible}
+              setconfVisible={setconfVisible}
+              type={typeModal}
+            />
+          }
+
+          { closeHelp &&
+            <HelpAjustes
+              closeHelp={closeHelp}
+              setCloseHelp={setCloseHelp}
+            />
+          }
 
         </View>
 

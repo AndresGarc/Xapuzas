@@ -12,6 +12,7 @@ import {
 
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import ModalEstado from '../common/ModalEstado';
+import HelpDTrab from '../common/tutorial/helpDTrab';
 
 const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, loadLista, setUrgente}) =>{
 
@@ -21,7 +22,8 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
     const [dataState, setDataState] = useState([]);
     const [typeModal, setType] = useState();
     const [confVisible, setconfVisible] = useState(false);
-    const [estVisible, setestVisible] = useState(false);
+    const [estVisible, setestVisible] = useState(false);    
+    const [closeHelp, setCloseHelp] = useState(false);
 
 
     const showConfirm = (type,id, titulo) => {
@@ -64,7 +66,7 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
 
                     <View style={styles.topModal}>
   
-                        <Pressable style={styles.iconModal}>
+                        <Pressable onPress={() => setCloseHelp(true)} style={styles.iconModal}>
                             <Icon name="md-help-circle" size={50} color='#EDAC70' />
                         </Pressable>
 
@@ -181,6 +183,13 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
                     dataState={dataState}
                     loadLista={loadLista}
                     setModalVisible={setModalVisible}
+                />
+            }
+
+            { closeHelp &&
+                <HelpDTrab
+                    closeHelp={closeHelp}
+                    setCloseHelp={setCloseHelp}
                 />
             }
         

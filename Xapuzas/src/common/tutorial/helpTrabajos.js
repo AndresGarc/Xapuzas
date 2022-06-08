@@ -3,6 +3,7 @@ import { styles } from '../../assets/styles';
 import { stlHelp } from '../../assets/stylesHelp';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import {Picker} from '@react-native-picker/picker';
+import { media } from '../../assets/mediaQuerys';
 
 import {
   Text,
@@ -53,7 +54,7 @@ const HelpTrabajos = ({closeHelp, setCloseHelp}) =>{
                 }
 
                 { (page==2 || page==4 || page==5) && //resaltar la tarea, estado y basura
-                    <View style={stlHelp.listaTareas}>
+                    <View style={stlHelp.listaTrabajos}>
 
                         <Pressable style={styles.last}>
                             <Text style={styles.textT}>Titulo del trabajo</Text>
@@ -78,17 +79,16 @@ const HelpTrabajos = ({closeHelp, setCloseHelp}) =>{
                     </Pressable>
                 }
 
-                <View style={(page==2 || page==4) ? stlHelp.mContent : styles.mContent}>
+                <View style={(page==2 || page==4 || page==5) ? media.styles.helpTrModal : styles.mContent}>
 
-                    <View style={styles.confTop}>
+                <View style={stlHelp.closeDetail}>
 
-                        <Text style={styles.titConf}>Cerrar ayuda</Text>
+                    <Pressable onPress={ () => {setCloseHelp(false)}} style={stlHelp.iconModal2}>   
+                        <Text style={stlHelp.titHelp}>Cerrar ayuda</Text>
+                        <Icon name="close" size={50} color='black'/>
+                    </Pressable>
 
-                        <Pressable onPress={ () => {setCloseHelp(false)}} style={styles.iconModal2}>
-                            <Icon name="close" size={50} color='black'/>
-                        </Pressable>
-
-                    </View>
+                </View>
 
                     <View style={styles.mHorizontalXl}>
                         { page==1 &&

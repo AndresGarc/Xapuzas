@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styles } from '../../assets/styles';
 import { stlHelp } from '../../assets/stylesHelp';
+import { media } from '../../assets/mediaQuerys';
 import Icon  from 'react-native-vector-icons/Ionicons';
 
 import {
@@ -70,13 +71,13 @@ const HelpTareas = ({closeHelp, setCloseHelp, type}) =>{
                 }
 
                 {/* MODAL */}
-                <View style={styles.mContent}>
+                <View style={media.styles.helpModal}>
+                
 
-                    <View style={styles.confTop}>
+                    <View style={stlHelp.closeDetail}>
 
-                        <Text style={styles.titConf}>Cerrar ayuda</Text>
-
-                        <Pressable onPress={ () => {setCloseHelp(false)}} style={styles.iconModal2}>
+                        <Pressable onPress={ () => {setCloseHelp(false)}} style={stlHelp.iconModal2}>   
+                            <Text style={stlHelp.titHelp}>Cerrar ayuda</Text>
                             <Icon name="close" size={50} color='black'/>
                         </Pressable>
 

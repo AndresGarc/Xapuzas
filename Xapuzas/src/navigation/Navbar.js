@@ -43,7 +43,7 @@ const Navbar = (props) => {
           tabBarIndicatorStyle: {
             backgroundColor: '#EDAC70',
             height:68,
-            width:110,
+            width:105,
             marginHorizontal:10,
             marginBottom:5,
             borderRadius:10

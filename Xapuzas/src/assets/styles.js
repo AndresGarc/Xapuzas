@@ -394,7 +394,7 @@ export const styles = StyleSheet.create({
 
     //ESTRUCTURA MODAL
     mFondo:{
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: 'rgba(0,0,0,0.4)',
         flex:1,
         justifyContent:'center'
     },
@@ -509,6 +509,7 @@ export const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     btnCancel:{
+        backgroundColor: 'white',
         alignItems:'center',
         width:'50%',
         borderTopColor: '#F6D6B8',

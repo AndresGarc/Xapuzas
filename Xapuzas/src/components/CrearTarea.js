@@ -22,6 +22,8 @@ import CheckBox from '@react-native-community/checkbox';
 import { IconReloj } from '../common/Octicons';
 import { postTarea, putTarea } from '../database/tarea-service';
 
+import HelpCTarea from '../common/tutorial/helpCTarea';
+
 
 
 //le mando las propiedades que me interesan => ({props})
@@ -42,6 +44,10 @@ const CrearTarea = ({route}) => {
     const [hora, setTime] = useState(null);
     const [defFecha, setDefF] = useState(new Date());
     const [defHora, setDefH] = useState(new Date());
+
+    
+    const [closeHelp, setCloseHelp] = useState(false);
+
     const defaultFecha = new Date();
 
     const navegacion = useNavigation();
@@ -219,7 +225,7 @@ const CrearTarea = ({route}) => {
 
                         <View style={styles.contentHelp}>
                             <Pressable style={styles.help}>
-                                <Icon onPress={ () => verDatos() } name="md-help-circle" size={50} color='#EDAC70' />
+                                <Icon onPress={ () => setCloseHelp(true) } name="md-help-circle" size={50} color='#EDAC70' />
                             </Pressable>
                         </View>
 
@@ -411,6 +417,15 @@ const CrearTarea = ({route}) => {
                     <Icon name="add-circle" size={30} color='black'/>
                 </Text>
             </Pressable>
+
+            { closeHelp &&
+
+                <HelpCTarea
+                closeHelp={closeHelp}
+                setCloseHelp={setCloseHelp}
+                />
+
+            }
 
         </SafeAreaView>
     )
