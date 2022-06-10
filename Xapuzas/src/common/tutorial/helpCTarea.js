@@ -10,6 +10,7 @@ import CheckBox from '@react-native-community/checkbox';
 import {
   Text,
   View,
+  Image,
   Pressable,
   Modal
 } from 'react-native';
@@ -38,14 +39,13 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
         >
             <View style={styles.mFondo}>
 
-
                 { page==2 && //resaltar campo input
                     <View style={stlHelp.inputTxt}>
                         <Text>escribe aquí el titulo...</Text>
                     </View>
                 }
 
-                { (page == 3 || page == 4) &&
+                { page == 3  &&
                     <View style={stlHelp.posVoz}>
                         <Pressable style={styles.btnVoz}>
                             <Icon name="mic-outline" color='black' size={30}/>
@@ -54,7 +54,7 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                     </View>
                 }
 
-                { page == 5 &&
+                { page == 4 &&
                     <View style={stlHelp.posCheck}>
                         <View style={styles.campo}>
                             <View style={styles.contentUrgente}>
@@ -70,7 +70,14 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                     </View>
                 }
 
-
+                { page == 9 &&
+                    <Pressable style={styles.crearBtn}>
+                        <Text style={styles.crearTxt}>Crear</Text>
+                        <Text style={styles.crearIcon}>
+                            <Icon name="add-circle" size={30} color='black'/>
+                        </Text>
+                    </Pressable>
+                }
 
                 {/* MODAL */}
                 <View style={(page>=3 && page<=5) ? media.styles.helpCTar : media.styles.helpModal }>
@@ -98,11 +105,8 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                             <Text style={styles.black}>Puedes usar tu voz para poner el título tocando en el botón Usar voz <Icon name='mic-outline' size={25} color='black'/></Text>
                         }
 
-                        { page==4 &&
-                            <Text style={styles.black}>Para poder grabar, deberás aceptar los permisos cuando te los pida el teléfono</Text>
-                        }
 
-                        { page==5 && 
+                        { page==4 && 
                             <View>
                                 <Text style={styles.black}>Tocando en el cuadrado podrás cambiar entre tarea urgente o tarea normal</Text>
                                 <View style={styles.content}>
@@ -116,8 +120,37 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                             </View>
                         }
 
+                        { (page==5 || page==7) &&
+                            <View>
+                                <Text style={styles.black}>Para marcar una {page==6 ? <Text style={styles.black}>fecha</Text> : <Text style={styles.black}>hora</Text>}, primero deberás pulsar en el cuadrado blanco para abrir el {page==6 ? <Text style={styles.black}>calendario</Text> : <Text style={styles.black}>reloj</Text>}</Text>
+                                <View style={styles.mTopBlack}>
+                                    <Pressable style={stlHelp.inputDate}>
+                                        <Text style={styles.placeholderDate}>Toca aquí para indicar la fecha/hora</Text>
+                                    </Pressable>
+                                    <Text style={styles.black}>Este es el cuadrado blanco</Text>
+                                </View>
+                            </View>
+
+                        }
                         { page==6 &&
-                            <Text style={styles.black}>Para crear tareas, deberás pulsar el botón <Icon name='add-circle' size={25} color='black'/> estando en la pantalla de Tareas </Text>
+                            <View>  
+                                <View style={stlHelp.gif}>
+                                    <Image source={require('./../../assets/pickFecha.gif')} style={stlHelp.resize}/>
+                                </View>
+                                <Text style={styles.black}>Puedes pasar los meses tocando en las flechas y tocando un día seleccionarás la fecha</Text>
+                            </View>
+                        }
+
+                        { page==8 &&
+                            <View>  
+                                <View style={stlHelp.gif}>
+                                    <Image source={require('./../../assets/pickHora.gif')} style={stlHelp.resizeH}/>
+                                </View>
+                                <Text style={styles.black}>Primero seleccionas la hora y luego los minutos tocando en ellos</Text>
+                            </View>
+                        }
+                        { page==9 &&
+                            <Text style={styles.black}>Una vez rellenados los campos que quieras, toca el botón Crear para crear la tarea</Text>
 
                         }
 

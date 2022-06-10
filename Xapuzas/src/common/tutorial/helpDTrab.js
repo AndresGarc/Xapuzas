@@ -47,7 +47,7 @@ const HelpDTrab = ({closeHelp, setCloseHelp, type}) =>{
                 </View>
 
                 {page==1 &&
-                    <Text style={stlHelp.explain}>Este es el detalle completo de una tarea</Text>
+                    <Text style={stlHelp.explain}>Este es el detalle completo de un trabajo</Text>
                 }
                 
                 
@@ -81,7 +81,7 @@ const HelpDTrab = ({closeHelp, setCloseHelp, type}) =>{
 
                     <View style={styles.contentDetalle}>
 
-                        <Text style={styles.titModal}>Título de la tarea</Text>
+                        <Text style={styles.titModal}>Título del trabajo</Text>
 
                         <View style={(page==2) && stlHelp.focus}>
                             <View style={stlHelp.labelModal}>

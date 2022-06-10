@@ -20,6 +20,7 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { postTrabajos, putTrabajos } from '../database/trabajo-service';
+import HelpCTrab from '../common/tutorial/helpCTrab';
 
 
 //le mando las propiedades que me interesan => ({props})
@@ -45,6 +46,8 @@ const CrearTrabajo = ({route}) => {
     //añadidos
     const [show, setShow] = useState(false);
     const [radio, setRadio] = useState(0);
+
+    const [closeHelp, setCloseHelp] = useState(false);
 
     const navegacion = useNavigation();
 
@@ -261,7 +264,7 @@ const CrearTrabajo = ({route}) => {
                         </View>
 
                         <View style={styles.contentHelp}>
-                            <Pressable style={styles.help}>
+                            <Pressable style={styles.help} onPress={() => {setCloseHelp(true)}}>
                                 <Icon name="md-help-circle" size={50} color='#EDAC70' />
                             </Pressable>
                         </View>
@@ -509,6 +512,13 @@ const CrearTrabajo = ({route}) => {
                     <Icon name="add-circle" size={30} color='black'/>
                 </Text>
             </Pressable>
+
+            { closeHelp &&
+                <HelpCTrab
+                closeHelp={closeHelp}
+                setCloseHelp={setCloseHelp}
+                />
+            }
 
         </SafeAreaView>
     )

@@ -260,6 +260,59 @@ export const stlHelp = StyleSheet.create({
         width: '90%',
         backgroundColor: 'white',
         borderRadius:10
+    },
+    inputDate:{
+        backgroundColor: '#FFF',
+        borderWidth:1,
+        width: '75%',
+        borderRadius: 10
+    },
+    gif:{
+        alignItems: 'center',
+        paddingBottom:0
+    },
+    resize:{
+        resizeMode: 'stretch',
+        width: '80%',
+        height: 350
+    },
+    resizeH:{
+        resizeMode: 'stretch',
+        width: '80%',
+        height: 290
+    },
+    inputTlf:{
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        paddingLeft: 15,
+        fontSize: RFPercentage(2.3),
+        width: '40%',
+        borderWidth: 1,
+        borderRadius:10,
+        justifyContent: "center",
+        marginLeft: 5
+    },
+    inputTlf2:{
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        paddingLeft: 15,
+        paddingVertical: 10,
+        fontSize: RFPercentage(2.3),
+        width: '40%',
+        borderWidth: 1,
+        borderRadius:10,
+        justifyContent: "center",
+        marginLeft: 5
+    },
+    contentTlf:{
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    focusremoveTlf:{
+        marginTop: 13,
+        borderWidth:3,
+        borderColor: '#EDAC70',
+        borderRadius: 10
     }
 
 })
