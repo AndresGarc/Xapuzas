@@ -4,7 +4,10 @@ import {  SafeAreaView, View } from 'react-native';
 import SplashScreen from  "react-native-splash-screen";
 import Navbar from './src/navigation/Navbar';
 
+import {Notifications} from 'react-native-notifications';
+
 import { crearTConn, getConn, postConn } from './src/database/conexion-service';
+
 
 const ref = createNavigationContainerRef();
 
@@ -21,8 +24,14 @@ const App = () => {
   }
   
   useEffect(() => {
-    loadConn();
-  });
+    //loadConn();
+    
+    Notifications.postLocalNotification({
+      title: "Notificacion local",
+      body: "UEEE soy una notifiacion local",
+      extra: "data"
+    });
+  }, []);
   
 
   return (

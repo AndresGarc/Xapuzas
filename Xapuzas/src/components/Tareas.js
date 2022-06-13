@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from  "react-native-splash-screen";
+import {Notifications} from 'react-native-notifications';
 
 import { styles } from '../assets/styles';
 
@@ -22,7 +23,7 @@ import QuickStart from '../common/tutorial/quickStart';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro } from '../database/tarea-service'
-import { getConn } from '../database/conexion-service';
+import {  crearTConn, getConn, postConn } from '../database/conexion-service';
 
 
 const Tareas = ({route}) => {
@@ -86,22 +87,41 @@ const Tareas = ({route}) => {
     }).catch((error) => console.log(error))
   }
 
-  const initTabla = () => {
-    crearTTareas().then((data) => {
+
+  const initTabla = async () => {
+    await crearTTareas().then((data) => {
       getTareasFiltro(filtro).then((data) => {
         setData(data);
-        firstTime();
+        //firstTime();
       }).catch((error) => console.log(error))
     })
   }
 
-  const firstTime = () => {
-    getConn("conexion").then((data) =>{
-      if(data.conexion==0) setClose(true);
+  const firstTime = async () => {
+    crearTConn().then((data) => {
+      getConn("conexion").then((data) => {
+        if(data==undefined) {
+          postConn();
+          setClose(true);
+        } else if(data==0){
+          setClose(true);
+        }
+        
+      SplashScreen.hide();
+      })
+
+    })
+    /*getConn("conexion").then((data) =>{
+      if(data.conexion==0) 
       
       SplashScreen.hide();
-    });
+    }); */
   }
+
+  const init = async () => {
+    initTabla();
+    firstTime();
+  } 
 
   const irCrear = () => {
     navegacion.navigate("Crear tarea",{mode:"Crear"});
@@ -109,8 +129,9 @@ const Tareas = ({route}) => {
 
   //PRIMERA CARGA  + VER SI TENGO QUE SACAR EL TUTORIAL
   useEffect(()=>{
-
+    console.log("a ver");
     initTabla();
+    init();
 
   }, []); 
   

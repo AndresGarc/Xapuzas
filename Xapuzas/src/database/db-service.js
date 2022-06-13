@@ -38,6 +38,10 @@ export const borrarTodo = async () => {
             tx.executeSql(`DROP TABLE IF EXISTS tarea;`, [],
             (txn, res) => {resolve(res)},
             (error) => {reject(error.message);});
+
+            tx.executeSql(`DROP TABLE IF EXISTS conexion;`, [],
+            (txn, res) => {resolve(res)},
+            (error) => {reject(error.message);});
         });
     })
     
