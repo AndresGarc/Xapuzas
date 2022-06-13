@@ -25,12 +25,7 @@ const App = () => {
   
   useEffect(() => {
     //loadConn();
-    
-    Notifications.postLocalNotification({
-      title: "Notificacion local",
-      body: "UEEE soy una notifiacion local",
-      extra: "data"
-    });
+
   }, []);
   
 

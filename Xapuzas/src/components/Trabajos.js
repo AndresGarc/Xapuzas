@@ -5,6 +5,8 @@ import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
 
+import {Notifications} from 'react-native-notifications';
+
 import {
   SafeAreaView,
   Text,
@@ -21,7 +23,7 @@ import ModalConfirmacion from '../common/ModalConfirmacion';
 import ModalEstado from '../common/ModalEstado';
 import HelpTrabajos from '../common/tutorial/helpTrabajos';
 
-import { crearTTrabajos, getTrabajosFiltros, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos } from '../database/trabajo-service';
+import { crearTTrabajos, getTrabajosFiltros, getEstados, getTrabajoID, getTrabajos, postEstados, postTrabajos, putEstado, putIconoEstado, putTrabajos, getMaterialAtrasado } from '../database/trabajo-service';
 
 const Trabajos = ({route}) => {
 
@@ -104,6 +106,23 @@ const Trabajos = ({route}) => {
 
   }
 
+  const notificarMaterial = () => {
+    let hoy = new Date(); hoy.setHours(0,0,0,0); hoy.setMinutes(0,0,0,0);
+    getMaterialAtrasado().then((data) => {
+      data.forEach(element => {
+        let split = element.dia_pedido.split('/');
+        let fecha = new Date(parseInt(split[2]),parseInt(split[1])-1, parseInt(split[0]));
+        if((hoy-fecha)/86400000 >= 30 ) 
+          Notifications.postLocalNotification({
+            title: `Revisa los materiales de ${element.titulo}`,
+            body: `¡Ha pasado mas de un mes desde que los pediste!`,
+            
+          })
+
+      });
+    });
+  }
+
   const initTabla = () => {
     
     crearTTrabajos().then((data) => {
@@ -119,13 +138,13 @@ const Trabajos = ({route}) => {
 
   useEffect( ()=>{
     initTabla();
+    notificarMaterial();
   }, []);
 
   useFocusEffect( React.useCallback(() => {
     filtro=selected;
     if(route.params!=undefined){
       if(route.params.creada==true){
-        console.log("focuseffect");
         filtro=0;
         setSelected(0); //reseteo por que es el creador
         loadLista();

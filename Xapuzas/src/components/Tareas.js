@@ -22,7 +22,7 @@ import HelpTareas from '../common/tutorial/helpTareas';
 import QuickStart from '../common/tutorial/quickStart';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
-import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro } from '../database/tarea-service'
+import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro, getTareasHoy, getTareasAtras } from '../database/tarea-service'
 import {  crearTConn, getConn, postConn } from '../database/conexion-service';
 
 
@@ -111,11 +111,6 @@ const Tareas = ({route}) => {
       })
 
     })
-    /*getConn("conexion").then((data) =>{
-      if(data.conexion==0) 
-      
-      SplashScreen.hide();
-    }); */
   }
 
   const init = async () => {
@@ -123,15 +118,46 @@ const Tareas = ({route}) => {
     firstTime();
   } 
 
+  const notificarHoy = () => {
+    getTareasHoy().then((data) => {
+      let tareas=''; 
+      data.forEach(element => 
+        Notifications.postLocalNotification({
+          title: `Hoy tienes que ${element.titulo}`,
+          body: `Termina esta tarea antes de que termine el día aaaaaaaaa /br aaaaaaaaaaa`,
+          
+        })
+      );
+
+    });
+  }
+
+  const notificarViejas = () => {
+    let hoy = new Date(); hoy.setHours(0,0,0,0); hoy.setMinutes(0,0,0,0);
+    getTareasAtras().then((data) => {
+      data.forEach(element => {
+        let split = element.fecha.split('/');
+        let fecha = new Date(parseInt(split[2]),parseInt(split[1])-1, parseInt(split[0]));
+        if(fecha.valueOf() > hoy.valueOf()) 
+          Notifications.postLocalNotification({
+            title: `No has hecho la tarea ${element.titulo}`,
+            body: `Termina esta tarea antes de que termine el día`,
+            
+          })
+      });
+    });
+  }
+
   const irCrear = () => {
     navegacion.navigate("Crear tarea",{mode:"Crear"});
   }
 
   //PRIMERA CARGA  + VER SI TENGO QUE SACAR EL TUTORIAL
   useEffect(()=>{
-    console.log("a ver");
-    initTabla();
+
     init();
+    notificarHoy();
+    notificarViejas();
 
   }, []); 
   

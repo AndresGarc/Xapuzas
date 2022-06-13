@@ -94,6 +94,55 @@ export const getTareaID = async (id) => {
 
 }
 
+//Notifiación para las tareas de hoy
+export const getTareasHoy = async() => {
+    const db = await conectarDB();
+    const date = new Date();
+    let hoy; let dia; let mes; 
+    if(date.getDate()/10<1) dia=`0${date.getDate()}`; else dia=`${date.getDate()}`;
+    if(date.getMonth()/10<1) mes=`0${date.getMonth()+1}`; else mes=`${date.getMonth()+1}`
+
+    hoy = `${dia}/${mes}/${date.getFullYear()}`;
+
+
+    return await new Promise((resolve, reject) => {
+        db.transaction( (tx) => {
+            tx.executeSql(`SELECT titulo
+                FROM tarea
+                WHERE  fecha = ?`, 
+                [hoy],
+                (txn, res) => {
+                   resolve(res.rows.raw());
+                },
+                (error) => { 
+                   reject(error.message);
+                }
+           );
+       });
+    });
+}
+
+//Notifiación para las tareas atrasadas
+export const getTareasAtras = async() => {
+    const db = await conectarDB();
+
+    return await new Promise((resolve, reject) => {
+        db.transaction( (tx) => {
+            tx.executeSql(`SELECT titulo, fecha
+                FROM tarea
+                WHERE fecha not NULL`, 
+                [],
+                (txn, res) => {
+                   resolve(res.rows.raw());
+                },
+                (error) => { 
+                   reject(error.message);
+                }
+           );
+       });
+    });
+}
+
 //POST - TAREAS -- HAY QUE PASARLE DATA EN UNA SOLA VARIABLE
 export const postTarea = async (data) => {
     const db = await conectarDB();

@@ -111,6 +111,27 @@ export const getTrabajoID = async (id) => {
     })
 }
 
+export const getMaterialAtrasado = async () => {
+    const db = await conectarDB();
+
+    return await new Promise((resolve, reject) => {
+        db.transaction( (tx) => {
+            tx.executeSql(`SELECT titulo, dia_pedido
+                FROM trabajo
+                WHERE dia_pedido not NULL
+                AND pedido_mat = 1`, 
+                [],
+                (txn, res) => {
+                   resolve(res.rows.raw());
+                },
+                (error) => { 
+                   reject(error.message);
+                }
+           );
+       });
+    });
+}
+
 //POST - TRABAJOS
 export const postTrabajos = async (data) => {
     const db = await conectarDB();
