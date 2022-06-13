@@ -18,9 +18,11 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DetalleTarea from './DetalleTarea';
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import HelpTareas from '../common/tutorial/helpTareas';
+import QuickStart from '../common/tutorial/quickStart';
 
 import { conectarDB, borrarTodo, borrarTTarea } from '../database/db-service'
 import { crearTTareas, deleteTarea, getTareaID, getTareas, postTarea, putTarea, getTareasFiltro } from '../database/tarea-service'
+import { getConn } from '../database/conexion-service';
 
 
 const Tareas = ({route}) => {
@@ -35,11 +37,11 @@ const Tareas = ({route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [confVisible, setconfVisible] = useState(false);
   const [closeHelp, setCloseHelp] = useState(false);
+  const [close, setClose] = useState(false);
 
   var filtro =1;
 
   const navegacion = useNavigation();
-
 
   const showUrgentes = () => {
     if(urgente == 0){
@@ -81,24 +83,31 @@ const Tareas = ({route}) => {
   const loadLista= () => {
     getTareasFiltro(filtro).then((data) => {
       setData(data);
-      SplashScreen.hide();
     }).catch((error) => console.log(error))
   }
 
-
   const initTabla = () => {
     crearTTareas().then((data) => {
-      loadLista();
+      getTareasFiltro(filtro).then((data) => {
+        setData(data);
+        firstTime();
+      }).catch((error) => console.log(error))
     })
   }
 
+  const firstTime = () => {
+    getConn("conexion").then((data) =>{
+      if(data.conexion==0) setClose(true);
+      
+      SplashScreen.hide();
+    });
+  }
+
   const irCrear = () => {
-    //setUrgente(1); filtro=1;
     navegacion.navigate("Crear tarea",{mode:"Crear"});
   }
 
-  //PRIMERA CARGA  
-  
+  //PRIMERA CARGA  + VER SI TENGO QUE SACAR EL TUTORIAL
   useEffect(()=>{
 
     initTabla();
@@ -194,6 +203,16 @@ const Tareas = ({route}) => {
             closeHelp={closeHelp}
             setCloseHelp={setCloseHelp}
           />
+
+        }
+
+        
+        { close &&
+
+        <QuickStart
+          close={close}
+          setClose={setClose}
+        />
 
         }
 

@@ -281,6 +281,12 @@ export const stlHelp = StyleSheet.create({
         width: '80%',
         height: 290
     },
+    resizeLogo:{
+        marginTop: 15,
+        resizeMode: 'stretch',
+        width: '40%',
+        height: 150
+    },
     inputTlf:{
         backgroundColor: '#FFF',
         borderRadius: 10,
@@ -313,6 +319,31 @@ export const stlHelp = StyleSheet.create({
         borderWidth:3,
         borderColor: '#EDAC70',
         borderRadius: 10
+    },
+    mFondoTransparente:{
+        backgroundColor: 'rgba(0,0,0,0.0)',
+        flex:1,
+        justifyContent:'center'
+    },
+    mFondoQuick:{
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        flex:1,
+        justifyContent:'center',
+        marginTop: 90,
+        marginBottom: 53
+    },
+
+    //QUICK START
+    helpu:{
+        position: 'absolute',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#EDAC70',
+        top: 104,
+        right: 19
     }
+  
+
 
 })

@@ -4,14 +4,24 @@ import {  SafeAreaView, View } from 'react-native';
 import SplashScreen from  "react-native-splash-screen";
 import Navbar from './src/navigation/Navbar';
 
+import { crearTConn, getConn, postConn } from './src/database/conexion-service';
+
 const ref = createNavigationContainerRef();
 
 const App = () => {
 
   const [routeName, setRouteName] = useState();
 
+  const loadConn = () => {
+    crearTConn().then((data) => {
+      getConn("conexion").then((data) => {
+        if(data==undefined) postConn();
+      })
+    })
+  }
   
   useEffect(() => {
+    loadConn();
   });
   
 
