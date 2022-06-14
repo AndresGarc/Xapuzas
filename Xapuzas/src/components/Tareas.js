@@ -138,7 +138,7 @@ const Tareas = ({route}) => {
       data.forEach(element => {
         let split = element.fecha.split('/');
         let fecha = new Date(parseInt(split[2]),parseInt(split[1])-1, parseInt(split[0]));
-        if(fecha.valueOf() > hoy.valueOf()) 
+        if(fecha.valueOf() < hoy.valueOf()) 
           Notifications.postLocalNotification({
             title: `No has hecho la tarea ${element.titulo}`,
             body: `Termina esta tarea antes de que termine el día`,

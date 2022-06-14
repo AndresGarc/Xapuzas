@@ -8,6 +8,9 @@ import SQLite, { openDatabase, enablePromise } from 'react-native-sqlite-storage
 //CONECTAR A LA BASE DE DATOS
 export const conectarDB = async () => { return SQLite.openDatabase({name:"xapuzas.db", location:'default'}); }
 
+export const backupDB = async () => {
+    
+}
 
 //BORRAR TABLAS
 export const borrarTTarea = async (db) => {
