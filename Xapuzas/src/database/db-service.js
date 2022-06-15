@@ -75,7 +75,7 @@ export const restoreDB = async () => {
         );
 
         if(granted === PermissionsAndroid.RESULTS.GRANTED){
-            RNFetchBlob.cp(PATH_DB, PATH_BACKUP, alerta);
+            RNFetchBlob.cp(PATH_DB, PATH_BACKUP, alertaRestore);
         }
     } catch (error) {
         console.warn(error);

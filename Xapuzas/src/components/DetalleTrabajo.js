@@ -7,7 +7,8 @@ import {
   Text,
   View,
   Pressable,
-  Modal
+  Modal,
+  Linking
 } from 'react-native';
 
 import ModalConfirmacion from '../common/ModalConfirmacion';
@@ -48,6 +49,10 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
         setModalVisible(false);
         setDataDetalle([]);
         navegacion.navigate("Crear trabajo",{mode:"Editar", data: datos});
+    }
+
+    const llamar = (num) => {
+        Linking.openURL(`tel:${num}`);
     }
 
     useEffect(() => {
@@ -114,9 +119,11 @@ const DetalleTrabajo = ({modalVisible, setModalVisible, data, setDataDetalle, lo
                                     </View>
 
                                     <View style={styles.TlfModal}>
-                                        <Text style={styles.textTfl}>{data.tlf1}</Text>
-                                        {data.tlf2 != null && <Text style={styles.textTfl}>{data.tlf2}</Text>}
-                                        {data.tlf3 != null && <Text style={styles.textTfl}>{data.tlf3}</Text>}
+                                        <Pressable onPress={() => {llamar(data.tlf1)}}>
+                                            <Text style={styles.textTfl}>{data.tlf1}</Text>
+                                        </Pressable>
+                                        {data.tlf2 != null && <Pressable onPress={() => {llamar(data.tlf2)}}><Text style={styles.textTfl}>{data.tlf2}</Text></Pressable>}
+                                        {data.tlf3 != null && <Pressable onPress={() => {llamar(data.tlf3)}}><Text style={styles.textTfl}>{data.tlf3}</Text></Pressable>}
                                     </View>
                                 </View>
 

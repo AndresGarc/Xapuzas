@@ -7,7 +7,8 @@ import {
   Text,
   View,
   Pressable,
-  Modal
+  Modal,
+  Linking
 } from 'react-native';
 
 import ModalConfirmacion from '../common/ModalConfirmacion';
@@ -39,6 +40,15 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
         setModalVisible(false);
         setDataDetalle([]);
         navegacion.navigate("Crear tarea",{mode:"Editar", data: datos});
+    }
+
+    const llamar = (num) => {
+        Linking.openURL(`tel:${num}`);
+    }
+
+    const googleMaps = (dir) => {
+        let url = 'geo:0,0?q='+dir;
+        Linking.openURL(url);
     }
 
     useEffect(() => {
@@ -84,14 +94,18 @@ const DetalleTarea = ({modalVisible, setModalVisible, data, setDataDetalle, load
                         { data.direccion!= null &&  
                             <View style={styles.labelModal}>
                                 <Icon name="location-outline" color='#EDAC70' size={40}/>
-                                <Text style={styles.textModal}>{data.direccion}</Text>
+                                <Pressable onPress={() => {googleMaps(data.direccion)}}>
+                                    <Text style={styles.textModal}>{data.direccion}</Text>
+                                </Pressable>
                             </View>
                         }
 
                         { data.tlf!= null &&  
                             <View style={styles.labelModal}>
                                 <Icon name="call-outline" color='#EDAC70' size={40}/>
-                                <Text style={styles.textModal}>{data.tlf}</Text>
+                                <Pressable onPress={() => {llamar(data.tlf)}}>
+                                    <Text style={styles.textModal}>{data.tlf}</Text>
+                                </Pressable>
                             </View>
                         }
 
