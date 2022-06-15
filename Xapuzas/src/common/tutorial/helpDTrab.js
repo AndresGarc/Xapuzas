@@ -192,39 +192,39 @@ const HelpDTrab = ({closeHelp, setCloseHelp, type}) =>{
                     <View style={stlHelp.mExplain}>
 
                         {page==2 &&
-                            <Text style={styles.black}>Este es el cliente  <Icon name="person-outline" size={25} color='black'/></Text>
+                            <Text style={styles.black}>Este es el <Text style={styles.bold}>cliente</Text> <Icon name="person-outline" size={25} color='black'/></Text>
                         }
 
                         { page==3 &&
-                            <Text style={styles.black}>Esta es la dirección <Icon name='location-outline' size={25} color='black'/>, si la tocas la verás en Google Maps</Text>
+                            <Text style={styles.black}>Esta es la <Text style={styles.bold}>dirección</Text><Icon name='location-outline' size={25} color='black'/>, si la tocas la verás en Google Maps</Text>
                         }
 
                         { page==4 && 
-                            <Text style={styles.black}>Esto son los números de teléfono <Icon name='call-outline' size={25} color='black'/>, tocando en uno lo marcará directo para hacer una llamada</Text>
+                            <Text style={styles.black}>Esto son los números de <Text style={styles.bold}>teléfono</Text><Icon name='call-outline' size={25} color='black'/>, tocando en uno lo marcará directo para hacer una llamada</Text>
                         }
 
                         { page==5 &&
-                            <Text style={styles.black}>Aquí ves el estado de los materiales. Puede estar sin pedir, pedidos en una fecha o recogidos</Text>
+                            <Text style={styles.black}>Aquí ves el <Text style={styles.bold}>estado de los materiales</Text>. Puede estar sin pedir, pedidos en una fecha o recogidos</Text>
                         }
 
                         { page==6 &&
-                            <Text style={styles.black}>Estas son tus anotaciones <Icon name='document-outline' size={25} color='black'/> por si necesitas anotar algo extra</Text>
+                            <Text style={styles.black}>Estas son tus <Text style={styles.bold}>anotaciones</Text><Icon name='document-outline' size={25} color='black'/> por si necesitas anotar algo extra</Text>
                         }      
 
                         { page==7 &&
-                            <Text style={styles.black}>Este botón sirve para borrar el trabajo</Text>
+                            <Text style={styles.black}>Este botón sirve para <Text style={styles.bold}>borrar</Text> el trabajo</Text>
                         }  
 
                         { page==8 &&
-                            <Text style={styles.black}>Este es el estado del trabajo. Tocando en ese botón, podrás cambiar el estado</Text>
+                            <Text style={styles.black}>Este es el estado del trabajo. Tocando en ese botón, podrás <Text style={styles.bold}>cambiar el estado</Text></Text>
                         }    
 
                         { page==9 &&
-                            <Text style={styles.black}>Si tocas en <Icon name='create-outline' size={25} color='black'/>, podrás editar este trabajo</Text>
+                            <Text style={styles.black}>Si tocas en <Icon name='create-outline' size={25} color='black'/>, podrás <Text style={styles.bold}>editar</Text> este trabajo</Text>
                         } 
 
                         { page==10 &&
-                            <Text style={styles.black}>Si tocas en <Icon name='close' size={25} color='black'/>, cierras el detalle del trabajo y veras de nuevo tus trabajos</Text>
+                            <Text style={styles.black}>Si tocas en <Icon name='close' size={25} color='black'/>, <Text style={styles.bold}>cierras</Text> el detalle del trabajo y veras de nuevo tus trabajos</Text>
                         }
 
                     </View>

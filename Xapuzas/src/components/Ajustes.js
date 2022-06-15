@@ -15,6 +15,8 @@ import {
 import ModalConfirmacion from '../common/ModalConfirmacion';
 import HelpAjustes from '../common/tutorial/helpAjustes';
 
+import { backupDB, restoreDB } from '../database/db-service';
+
 const Ajustes = () => {
 
   const [typeModal, setType] = useState();
@@ -25,6 +27,10 @@ const Ajustes = () => {
   const showConfirm = (type) => {
     setType(type);
     setconfVisible(true);
+  }
+
+  const doBackup = () => {
+    backupDB();
   }
 
   return (
@@ -45,11 +51,11 @@ const Ajustes = () => {
 
         <View style={styles.contentAjustes}>
 
-          <Pressable style={styles.btnAjuste}>
+          <Pressable style={styles.btnAjuste} onPress={() => {doBackup()}}>
             <Text style={styles.text}>Crear copia de seguridad</Text>
           </Pressable>
 
-          <Pressable style={styles.btnAjuste}>
+          <Pressable style={styles.btnAjuste} onPress={() => {restoreDB()}}>
             <Text style={styles.text}>Recuperar información</Text>
           </Pressable>
 

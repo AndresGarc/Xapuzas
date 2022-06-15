@@ -39,18 +39,9 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
         >
             <View style={styles.mFondo}>
 
-                { page==2 && //resaltar campo input
+                { (page==2 || page==3) && //resaltar campo input
                     <View style={stlHelp.inputTxt}>
                         <Text>escribe aquí el titulo...</Text>
-                    </View>
-                }
-
-                { page == 3  &&
-                    <View style={stlHelp.posVoz}>
-                        <Pressable style={styles.btnVoz}>
-                            <Icon name="mic-outline" color='black' size={30}/>
-                            <Text style={styles.txtVoz}>Usar voz</Text>
-                        </Pressable>
                     </View>
                 }
 
@@ -80,7 +71,7 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                 }
 
                 {/* MODAL */}
-                <View style={(page>=3 && page<=5) ? media.styles.helpCTar : media.styles.helpModal }>
+                <View style={(page==4) ? media.styles.helpCTar : media.styles.helpModal }>
                 
 
                     <View style={stlHelp.closeDetail}>
@@ -102,7 +93,10 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                         }
 
                         { page==3 &&
-                            <Text style={styles.black}>Puedes usar tu voz para poner el título tocando en el botón Usar voz <Icon name='mic-outline' size={25} color='black'/></Text>
+                            <View>
+                                <Text style={styles.black}>En vez de escribir, también puedes usar tu voz</Text>
+                                   <Text style={styles.mTopBlack}>Tu teclado debe tener este icono <Icon name='mic-outline' size={25} color='black'/>, al pulsarlo te permitirá rellenar el campo con lo que digas</Text>
+                            </View>
                         }
 
 
@@ -122,7 +116,7 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
 
                         { (page==5 || page==7) &&
                             <View>
-                                <Text style={styles.black}>Para marcar una {page==6 ? <Text style={styles.black}>fecha</Text> : <Text style={styles.black}>hora</Text>}, primero deberás pulsar en el cuadrado blanco para abrir el {page==6 ? <Text style={styles.black}>calendario</Text> : <Text style={styles.black}>reloj</Text>}</Text>
+                                <Text style={styles.black}>Para marcar una {page==5 ? <Text style={styles.bold}>fecha</Text> : <Text style={styles.bold}>hora</Text>}, primero deberás pulsar en el cuadrado blanco para abrir el {page==6 ? <Text style={styles.black}>calendario</Text> : <Text style={styles.black}>reloj</Text>}</Text>
                                 <View style={styles.mTopBlack}>
                                     <Pressable style={stlHelp.inputDate}>
                                         <Text style={styles.placeholderDate}>Toca aquí para indicar la fecha/hora</Text>
@@ -150,7 +144,7 @@ const HelpCTarea = ({closeHelp, setCloseHelp, type}) =>{
                             </View>
                         }
                         { page==9 &&
-                            <Text style={styles.black}>Una vez rellenados los campos que quieras, toca el botón Crear para crear la tarea</Text>
+                            <Text style={styles.black}>Una vez rellenados los campos que quieras, toca el botón <Text style={styles.bold}>Crear</Text> para crear la tarea</Text>
 
                         }
 

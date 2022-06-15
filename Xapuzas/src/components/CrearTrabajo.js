@@ -281,12 +281,7 @@ const CrearTrabajo = ({route}) => {
                             value={titulo}
                             multiline
                             onChangeText={setTitulo}
-                        />
-
-                        <Pressable style={styles.btnVoz}>
-                            <Icon name="mic-outline" color='black' size={30}/>
-                            <Text style={styles.txtVoz}>Usar voz</Text>
-                        </Pressable>    
+                        />  
 
                         <Text style={styles.borderBot}>Para crear una tarea sólo es obligatorio escribir un título</Text>
                     

@@ -16,7 +16,7 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
     const [page, setPage] = useState(1); //la "pagina" en la que esta el tutorial
 
     const next = () => {
-        if(page==5){
+        if(page==6){
             setCloseHelp(false);
         }
         setPage(page+1);
@@ -36,7 +36,7 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
             <View style={styles.mFondo}>
 
 
-                { page==2 && //resaltar crear
+                { (page==2 || page==3) && //resaltar crear
                     <View style={stlHelp.copia}>
                         <Pressable style={styles.btnAjuste}>
                             <Text style={styles.text}>Crear copia de seguridad</Text>
@@ -44,7 +44,7 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
                     </View>
                 }
 
-                { (page==3 || page==4) && //resaltar recuperar
+                { (page==5 || page==4) && //resaltar recuperar
                     <View style={stlHelp.recuperar}>
                         <Pressable style={styles.btnAjuste}>
                             <Text style={styles.text}>Recuperar información</Text>
@@ -52,7 +52,7 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
                     </View>
                 }
 
-                { page==5 &&   
+                { page==6 &&   
                     <View style={stlHelp.delete}>         
                         <Pressable style={styles.btnAjuste} onPress={() => {showConfirm(4);}}>
                             <Text style={styles.text}>Borrar todos los datos</Text>
@@ -80,24 +80,27 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
 
                         { page==2 &&
                             <View>
-                                <Text style={styles.black}>Tocar en Crear copia de seguridad, entrarás a Google Drive, que es una aplicación de tu teléfono para guardar cosas</Text>
-                                <Text style={styles.mTopBlack}>Cuando estés allí deberás aceptar el mensaje que aparecerá para guardar los datos allí</Text>
+                                <Text style={styles.black}>Si tocas en <Text style={styles.bold}>Crear copia de seguridad</Text>, se creará el archivo <Text style={styles.bold}>xapuzas.db</Text> en tu carpeta de <Text style={styles.bold}>Descargas</Text></Text>
+                                <Text style={styles.mTopBlack}>Este archivo tiene toda la información que has creado para la aplicación</Text>
                             </View>
                         }
 
                         { page==3 &&
-
                             <View>
-                                <Text style={styles.black}>Tocar en Recuperar información, entrarás a Google Drive para recuperar los datos que has guardado allí</Text>
-                                <Text style={styles.mTopBlack}>Deberas tocar en el archivo con nombre XXX y la fecha mas reciente</Text>
+                                <Text style={styles.black}>Esto sirve por si pierdes o te cambias de teléfono y quieres recuperar tus trabajos y tareas anotadas</Text>
+                                <Text style={styles.mTopBlack}>Este archivo te lo puedes enviar a WhatsApp o a donde quieras desde el <Text style={styles.bold}>Gestor de archivos</Text>, buscándolo en la carpeta de <Text style={styles.bold}>Descargas</Text></Text>
                             </View>
                         }
 
-                        { page==4 && //no tengo mu claro que hacer con esto asi a voz de pronto
-                            <Text style={styles.black}>Esto sirve por si pierdes o te cambias de teléfono y quieres recuperar tus trabajos y tareas anotadas</Text>
+                        { page==4 &&
+                            <Text style={styles.black}>Si tocas en <Text style={styles.bold}>Recuperar información</Text>, cogerá el archivo <Text style={styles.bold}>xapuzas.db</Text> de la carpeta Descargas y recuperará la información que tenías guardada anteriormente</Text>
                         }
 
-                        { page==5 &&
+                        { page==5 && //no tengo mu claro que hacer con esto asi a voz de pronto
+                            <Text style={styles.black}>Deberás descargarte el archivo de donde lo tengas ya que este debe estar en la carpeta <Text style={styles.bold}>Descargas</Text></Text>
+                        }
+
+                        { page==6 &&
                             <Text style={styles.black}>Tocar en Borrar datos eliminará todos los datos creados en la aplicación</Text>
                         }
 
@@ -119,11 +122,11 @@ const HelpAjustes = ({closeHelp, setCloseHelp, type}) =>{
                             { (page==1) &&
                                 <Text style={styles.btnConfText}>Siguiente</Text>
                             }
-                            { (page>1 && page<5) &&
+                            { (page>1 && page<6) &&
                                 <Text style={styles.btnConfText}>Siguiente</Text>
                             }
 
-                            { (page==5) &&
+                            { (page==6) &&
                                 <Text style={styles.btnConfText}>Terminar</Text>
                             }
                         </Pressable>

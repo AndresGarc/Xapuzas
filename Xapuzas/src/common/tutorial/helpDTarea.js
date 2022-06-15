@@ -176,39 +176,39 @@ const HelpDTarea = ({closeHelp, setCloseHelp, type}) =>{
                     <View style={stlHelp.mExplain}>
 
                         {page==2 &&
-                            <Text style={styles.black}>Este es el cliente  <Icon name="person-outline" size={25} color='black'/></Text>
+                            <Text style={styles.black}>Este es el <Text style={styles.bold}>cliente</Text> <Icon name="person-outline" size={25} color='black'/></Text>
                         }
 
                         { page==3 &&
-                            <Text style={styles.black}>Esta es la dirección <Icon name='location-outline' size={25} color='black'/>, si la tocas la verás en Google Maps</Text>
+                            <Text style={styles.black}>Esta es la <Text style={styles.bold}>dirección</Text><Icon name='location-outline' size={25} color='black'/>, si la tocas la verás en Google Maps</Text>
                         }
 
                         { page==4 && 
-                            <Text style={styles.black}>Esto es el número de teléfono <Icon name='call-outline' size={25} color='black'/>, tocando en el número te lo marcará directo para hacer una llamada</Text>
+                            <Text style={styles.black}>Esto es el número de <Text style={styles.bold}>teléfono</Text><Icon name='call-outline' size={25} color='black'/>, tocando en el número te lo marcará directo para hacer una llamada</Text>
                         }
 
                         { page==5 &&
-                            <Text style={styles.black}>Esta es la fecha <Icon name='today-sharp' size={25} color='black'/></Text>
+                            <Text style={styles.black}>Esta es la <Text style={styles.bold}>fecha</Text><Icon name='today-sharp' size={25} color='black'/></Text>
                         }
 
                         { page==6 &&
-                            <Text style={styles.black}>Esta es la hora <Icon name='time-outline' size={25} color='black'/></Text>
+                            <Text style={styles.black}>Esta es la <Text style={styles.bold}>hora</Text><Icon name='time-outline' size={25} color='black'/></Text>
                         }      
 
                         { page==7 &&
-                            <Text style={styles.black}>Estas son tus anotaciones <Icon name='document-outline' size={25} color='black'/> por si necesitas anotar algo extra</Text>
+                            <Text style={styles.black}>Estas son tus <Text style={styles.bold}>anotaciones</Text><Icon name='document-outline' size={25} color='black'/> por si necesitas anotar algo extra</Text>
                         }  
 
                         { page==8 &&
-                            <Text style={styles.black}>Si tocas en terminar <Icon name='checkmark-circle-outline' size={25} color='black'/>, terminarás esta tarea</Text>
+                            <Text style={styles.black}>Si tocas en <Text style={styles.bold}>terminar</Text><Icon name='checkmark-circle-outline' size={25} color='black'/>, terminarás esta tarea</Text>
                         }    
 
                         { page==9 &&
-                            <Text style={styles.black}>Si tocas en <Icon name='create-outline' size={25} color='black'/>, podrás editar esta tarea</Text>
+                            <Text style={styles.black}>Si tocas en <Icon name='create-outline' size={25} color='black'/>, podrás <Text style={styles.bold}>editar</Text> esta tarea</Text>
                         } 
 
                         { page==10 &&
-                            <Text style={styles.black}>Si tocas en <Icon name='close' size={25} color='black'/>, cierras el detalle de la tarea y veras de nuevo tus tareas</Text>
+                            <Text style={styles.black}>Si tocas en <Icon name='close' size={25} color='black'/>, <Text style={styles.bold}>cierras</Text> el detalle de la tarea y veras de nuevo tus tareas</Text>
                         }
 
                     </View>

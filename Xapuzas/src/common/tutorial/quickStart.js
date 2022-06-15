@@ -106,16 +106,16 @@ const QuickStart = ({close, setClose}) =>{
                             }
 
                             { page==3 &&
-                                <Text style={styles.black}>Para crear tareas, deberás pulsar el botón <Icon name='add-circle' size={25} color='black'/>estando en la pantalla de Tareas</Text>
+                                <Text style={styles.black}>Para <Text style={styles.bold}>crear tareas</Text>, deberás pulsar el <Text style={styles.bold}>botón</Text> <Icon name='add-circle' size={25} color='black'/>estando en la <Text style={styles.bold}>pantalla de Tareas</Text></Text>
                             }
 
-                            { page==4 && //no tengo mu claro que hacer con esto asi a voz de pronto
-                                <Text style={styles.black}>Para crear trabajos, deberás pulsar el botón <Icon name='add-circle' size={25} color='black'/>estando en la pantalla de Trabajos</Text>
+                            { page==4 && 
+                                <Text style={styles.black}>Para <Text style={styles.bold}>crear trabajos</Text>, deberás pulsar el <Text style={styles.bold}>botón</Text> <Icon name='add-circle' size={25} color='black'/>estando en la <Text style={styles.bold}>pantalla de Trabajos</Text></Text>
                             }
 
                             { page==5 &&
                                 <View>
-                                    <Text style={styles.black}>Si necesitas ayuda para entender qué hace la pantalla, toca en el botón <Icon name="md-help-circle" size={25} color='black' /> para conseguir ayuda</Text>
+                                    <Text style={styles.black}>Si necesitas ayuda para entender qué hace la pantalla, toca en el <Text style={styles.bold}>botón</Text> <Icon name="md-help-circle" size={25} color='black' /> para conseguir ayuda</Text>
                                     <Text style={styles.mTopBlack}>Todas las pantallas tienen este botón y te recomendamos que sea lo primero que mires antes de usar la aplicación, para que no te pierdas nada de ella</Text>
                                 </View>
                             }

@@ -92,26 +92,26 @@ const HelpTrabajos = ({closeHelp, setCloseHelp}) =>{
 
                     <View style={styles.mHorizontalXl}>
                         { page==1 &&
-                            <Text style={styles.black}>Esta es la pantalla de los trabajos, aquí podrás ver los trabajos según su estado, tocando en el desplegable y eligiendo qué estado quieres ver</Text>
+                            <Text style={styles.black}>Esta es la pantalla de los <Text style={styles.bold}>trabajos</Text>, aquí podrás ver los trabajos según su <Text style={styles.bold}>estado, tocando en el desplegable y eligiendo</Text> qué estado quieres ver</Text>
                         }
 
                         { page==2 &&
                             <View>
-                                <Text style={styles.black}>Esto es un trabajo</Text>
-                                <Text style={styles.mTopBlack}>Para ver detalle de un trabajo, toca en el título del trabajo</Text>
+                                <Text style={styles.black}>Esto es un <Text style={styles.bold}>trabajo</Text></Text>
+                                <Text style={styles.mTopBlack}>Para ver <Text style={styles.bold}>detalle de un trabajo</Text>, toca en el <Text style={styles.bold}>título</Text> del trabajo</Text>
                             </View>
                         }
 
                         { page==3 && //no tengo mu claro que hacer con esto asi a voz de pronto
                             <View>
                                 
-                                <Text style={styles.black}>Los trabajos tienen cuatro estados, que son los siguientes:</Text>
+                                <Text style={styles.black}>Los trabajos tienen <Text style={styles.bold}>cuatro estados</Text>, que son los siguientes:</Text>
 
                                 <View style={styles.mLeftL}>
-                                    <Text style={styles.mTopBlack}><Icon name="eye-off-outline" size={35} color='#EDAC70'/>No visto por el cliente</Text>
-                                    <Text style={styles.mTopBlack}><Icon name="eye-outline" size={35} color='#EDAC70'/>Visto por el cliente</Text>
-                                    <Text style={styles.mTopBlack}><Icon name="checkmark" size={35} color='#EDAC70'/>Trabajo aceptado por el cliente</Text>
-                                    <Text style={styles.mTopBlack}><Icon name="checkmark-circle-outline" size={35} color='#EDAC70'/>Trabajo terminado</Text>   
+                                    <Text style={styles.mTopBlack}><Icon name="eye-off-outline" size={35} color='#EDAC70'/> <Text style={styles.bold}>No visto</Text> por el cliente</Text>
+                                    <Text style={styles.mTopBlack}><Icon name="eye-outline" size={35} color='#EDAC70'/> <Text style={styles.bold}>Visto</Text> por el cliente</Text>
+                                    <Text style={styles.mTopBlack}><Icon name="checkmark" size={35} color='#EDAC70'/> Trabajo <Text style={styles.bold}>aceptado</Text> por el cliente</Text>
+                                    <Text style={styles.mTopBlack}><Icon name="checkmark-circle-outline" size={35} color='#EDAC70'/> Trabajo <Text style={styles.bold}>terminado</Text></Text>   
                                 </View>
 
                             </View>
@@ -119,14 +119,14 @@ const HelpTrabajos = ({closeHelp, setCloseHelp}) =>{
 
                         { page==4 &&
                             <View>
-                                <Text style={styles.black}>Este icono muestra el estado en el que se encuentra ahora mismo ese trabajo</Text>
-                                <Text style={styles.mTopBlack}>Para ver detalle de un trabajo, toca en el título del trabajo</Text>
+                                <Text style={styles.black}>Este <Text style={styles.bold}>icono</Text> muestra el <Text style={styles.bold}>estado en el que se encuentra ahora mismo ese trabajo</Text></Text>
+                                <Text style={styles.mTopBlack}>Para ver <Text style={styles.bold}>detalle de un trabajo</Text>, toca en el <Text style={styles.bold}>título</Text> del trabajo</Text>
                             </View>
                         }
 
 
                         { page==5 &&
-                            <Text style={styles.black}>Para borrar un trabajo, toca el icono de la basura <Icon name='trash-outline' size={25} color='black'/></Text>
+                            <Text style={styles.black}>Para borrar un trabajo, toca el <Text style={styles.bold}>icono de la basura</Text> <Icon name='trash-outline' size={25} color='black'/></Text>
 
                         }
 
@@ -147,7 +147,7 @@ const HelpTrabajos = ({closeHelp, setCloseHelp}) =>{
                         }   
 
                         { page==7 &&
-                            <Text style={styles.black}>Para crear trabajos, deberás pulsar el botón <Icon name='add-circle' size={25} color='black'/> estando en la pantalla de Trabajos </Text>
+                            <Text style={styles.black}>Para <Text style={styles.bold}>crear trabajos</Text>, deberás pulsar el <Text style={styles.bold}>botón</Text> <Icon name='add-circle' size={25} color='black'/> estando en la <Text style={styles.bold}>pantalla de Trabajos</Text></Text>
                         }
 
 

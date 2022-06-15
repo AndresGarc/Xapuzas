@@ -244,11 +244,6 @@ const CrearTarea = ({route}) => {
                             value={titulo}
                             onChangeText={setTitulo}
                         />
-                    
-                        <Pressable style={styles.btnVoz}>
-                            <Icon name="mic-outline" color='black' size={30}/>
-                            <Text style={styles.txtVoz}>Usar voz</Text>
-                        </Pressable>                    
 
                         <Text style={styles.black}>Para crear una tarea sólo es obligatorio escribir un título</Text>
 

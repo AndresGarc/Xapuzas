@@ -20,7 +20,7 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
     const [page, setPage] = useState(1); //la "pagina" en la que esta el tutorial
 
     const next = () => {
-        if(page==8){
+        if(page==9){
             setCloseHelp(false);
         }
         setPage(page+1);
@@ -40,13 +40,13 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
             <View style={styles.mFondo}>
 
 
-                { page==2 && //resaltar campo input
+                { (page==2 || page==3) && //resaltar campo input
                     <View style={stlHelp.inputTxt}>
                         <Text>escribe aquí el titulo...</Text>
                     </View>
                 }
 
-                { page == 8 &&
+                { page == 9 &&
                     <Pressable style={styles.crearBtn}>
                         <Text style={styles.crearTxt}>Crear</Text>
                         <Text style={styles.crearIcon}>
@@ -76,16 +76,23 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
                             <Text style={styles.black}>Para rellenar un campo, toca en su recuadro para poder escribir en el</Text>
                         }
 
-                        { (page==3 || page==4) &&
+                        { page==3 && 
                             <View>
-                                { page==3 &&
+                                <Text style={styles.black}>En vez de escribir, también puedes usar tu voz</Text>
+                               <Text style={styles.mTopBlack}>Tu teclado debe tener este icono <Icon name='mic-outline' size={25} color='black'/>, al pulsarlo te permitirá rellenar el campo con lo que digas</Text>
+                            </View>
+                        }
+
+                        { (page==4 || page==5) &&
+                            <View>
+                                { page==4 &&
                                     <View>
-                                        <Text style={styles.black}>En los teléfonos puedes añadir hasta tres números tocando en <Text style={styles.bold}><Icon name='add-circle' size={25} color='black'/> Añadir otro teléfono</Text></Text>
+                                        <Text style={styles.black}>En los teléfonos puedes añadir hasta tres números tocando en <Text style={styles.bold}><Icon name='add-circle' size={25} color='black'/> <Text style={styles.bold}>Añadir otro teléfono</Text></Text></Text>
                                         <Text style={styles.mTopBlack}>Así se vería al añadir un número:</Text>
                                     </View>
                                 }
 
-                                { page==4 &&
+                                { page==5 &&
                                     <Text style={styles.black}>Para borrar un teléfono toca en el icono <Icon name='remove-circle-outline' size={25} color='black'/></Text>
                                 }
                                 
@@ -102,7 +109,7 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
 
                                     
                                     <View style={stlHelp.contentTlf}>
-                                        <Pressable style={(page==4) ? stlHelp.focusremoveTlf : styles.removeTlf}>
+                                        <Pressable style={(page==5) ? stlHelp.focusremoveTlf : styles.removeTlf}>
                                             <Icon name="remove-circle-outline" size={25} color='black'/>
                                         </Pressable>
 
@@ -121,7 +128,7 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
                         }
 
 
-                        { page==5 &&
+                        { page==6 &&
                             <View>
                                 <Text style={styles.black}>Si has hecho un pedido de materiales para un trabajo puedes marcar su estado tocando en el <Icon name="radio-button-off-outline" size={20} color='black'/> del estado que está</Text>
                                 <Text style={styles.mTopBlack}>Sabes cual está seleccionado por que está marcado así <Icon name="radio-button-on" size={20} color='black'/></Text>                        
@@ -137,7 +144,7 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
 
                         }
 
-                        { page==6 &&
+                        { page==7 &&
                             <View>  
                                 <Text style={styles.black}>Cuando seleccionas <Text style={styles.bold}>Material pedido el día</Text> aparece un botón blanco que al pulsar abre el calendario</Text>
                                 <View style={styles.mTopM}>
@@ -149,16 +156,16 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
                             </View>
                         }
 
-                        { page==7 &&
+                        { page==8 &&
                             <View>  
                                 <View style={stlHelp.gif}>
                                     <Image source={require('./../../assets/pickFecha.gif')} style={stlHelp.resize}/>
                                 </View>
-                                <Text style={styles.black}>Puedes pasar los meses tocando en las flechas y tocando un día seleccionarás la fecha</Text>
+                                <Text style={styles.black}>Puedes pasar los meses tocando en las flechas y tocando un día seleccionarás la <Text style={styles.bold}>fecha</Text></Text>
                             </View>
                         }
-                        { page==8 &&
-                            <Text style={styles.black}>Una vez rellenados los campos que quieras, toca el botón Crear para crear el trabajo</Text>
+                        { page==9 &&
+                            <Text style={styles.black}>Una vez rellenados los campos que quieras, toca el botón <Text style={styles.bold}>Crear</Text> para crear el trabajo</Text>
                         }
 
 
@@ -179,11 +186,11 @@ const HelpCTrab = ({closeHelp, setCloseHelp, type}) =>{
                             { (page==1) &&
                                 <Text style={styles.btnConfText}>Siguiente</Text>
                             }
-                            { (page>1 && page<8) &&
+                            { (page>1 && page<9) &&
                                 <Text style={styles.btnConfText}>Siguiente</Text>
                             }
 
-                            { (page==8) &&
+                            { (page==9) &&
                                 <Text style={styles.btnConfText}>Terminar</Text>
                             }
                         </Pressable>

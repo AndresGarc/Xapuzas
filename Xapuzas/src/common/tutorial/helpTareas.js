@@ -86,20 +86,20 @@ const HelpTareas = ({closeHelp, setCloseHelp, type}) =>{
                     <View style={styles.mHorizontalXl}>
                         { page==1 &&
                             <View>
-                                <Text style={styles.black}>Esta es la pantalla de las tareas, aquí podrás ver las tareas urgentes o pendientes tocando en los botones de Urgentes o Pendientes.</Text>
+                                <Text style={styles.black}>Esta es la pantalla de las tareas, aquí podrás <Text style={styles.bold}>ver las tareas urgentes o pendientes</Text> tocando en los botones de <Text style={styles.bold}>Urgentes</Text> o <Text style={styles.bold}>Pendientes</Text>.</Text>
                                 <Text style={styles.mTopBlack}>Ahora estas viendo tus tareas urgentes</Text>
                             </View>
                         }
 
                         { page==2 &&
                             <View>
-                                <Text style={styles.black}>Esto es una tarea</Text>
-                                <Text style={styles.mTopBlack}>Para ver detalle de la tarea, toca en el título de la tarea</Text>
+                                <Text style={styles.black}>Esto es una <Text style={styles.bold}>tarea</Text></Text>
+                                <Text style={styles.mTopBlack}>Para ver <Text style={styles.bold}>detalle de la tarea</Text>, toca en el <Text style={styles.bold}>título</Text> de la tarea</Text>
                             </View>
                         }
 
                         { page==3 &&
-                            <Text style={styles.black}>Para terminar una tarea, toca en el icono de <Icon name='checkmark-circle-outline' size={25} color='black'/> de esa tarea</Text>
+                            <Text style={styles.black}>Para terminar una tarea, toca en el <Text style={styles.bold}>icono de</Text> <Icon name='checkmark-circle-outline' size={25} color='black'/> de esa tarea</Text>
                         }
 
                         { page==4 && //no tengo mu claro que hacer con esto asi a voz de pronto
@@ -120,7 +120,7 @@ const HelpTareas = ({closeHelp, setCloseHelp, type}) =>{
                         }
 
                         { page==5 &&
-                            <Text style={styles.black}>Para crear tareas, deberás pulsar el botón <Icon name='add-circle' size={25} color='black'/> estando en la pantalla de Tareas </Text>
+                            <Text style={styles.black}>Para <Text style={styles.bold}>crear tareas</Text>, deberás pulsar el <Text style={styles.bold}>botón</Text> <Icon name='add-circle' size={25} color='black'/> estando en la <Text style={styles.bold}>pantalla de Tareas</Text></Text>
 
                         }
 
