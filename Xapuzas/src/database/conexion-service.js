@@ -62,7 +62,6 @@ export const postConn = async () => {
                 VALUES (0,0,0,0,0,0,0,0)`,
                 [],
                 (txn, res) =>{ 
-                    console.log("pum creao");
                     resolve(res); 
                 },
                 (error) => { 

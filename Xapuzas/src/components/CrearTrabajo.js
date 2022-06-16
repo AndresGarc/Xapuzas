@@ -81,9 +81,6 @@ const CrearTrabajo = ({route}) => {
         if(iTlf==2) setAddTlf(1);
     }
 
-    const verDatos = () => {
-        console.log(data);
-    }
 
     const handleCrear = () => {
 
@@ -91,7 +88,6 @@ const CrearTrabajo = ({route}) => {
         let cli; let dire; let not; let date; 
         let tlfo1; let tlfo2; let tlfo3;
         let ntlf1; let ntlf2; let ntlf3; 
-        console.log(titulo);
 
         //VALIDACION
         if(titulo!=null) vacio=titulo.trim();
@@ -190,7 +186,15 @@ const CrearTrabajo = ({route}) => {
                 }]
             )
 
-            }).catch((error) => console.log(error));
+            }).catch((error) => {
+                Alert.alert(
+                    '¡Algo ha ido mal!',
+                    'Este trabajo no se ha podido crear, inténtalo de nuevo',
+                    [{
+                        text: 'Entendido'
+                    }]
+                )
+            });
         
         } else { // EDITAR
 
@@ -205,7 +209,15 @@ const CrearTrabajo = ({route}) => {
                         })
                     }]
                 )
-            }).catch((error) => console.log(error))
+            }).catch((error) => {
+                Alert.alert(
+                    '¡Algo ha ido mal!',
+                    'Este trabajo no se ha podido editar, inténtalo de nuevo',
+                    [{
+                        text: 'Entendido'
+                    }]
+                )
+            })
 
         } 
 

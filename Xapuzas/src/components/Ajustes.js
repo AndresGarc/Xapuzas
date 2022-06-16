@@ -29,10 +29,6 @@ const Ajustes = () => {
     setconfVisible(true);
   }
 
-  const doBackup = () => {
-    backupDB();
-  }
-
   return (
     <SafeAreaView style={styles.background}>
       <LinearGradient colors={['#FAE7C4', '#FCF7ED']} style={styles.degradado}>
@@ -51,7 +47,7 @@ const Ajustes = () => {
 
         <View style={styles.contentAjustes}>
 
-          <Pressable style={styles.btnAjuste} onPress={() => {doBackup()}}>
+          <Pressable style={styles.btnAjuste} onPress={() => {backupDB()}}>
             <Text style={styles.text}>Crear copia de seguridad</Text>
           </Pressable>
 

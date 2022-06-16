@@ -72,12 +72,8 @@ const CrearTarea = ({route}) => {
          
     }
 
-    const verDatos = () => {
-        console.log(data);
-    }
-
     useFocusEffect( React.useCallback(() => {
-
+        
         
         if(data!=undefined){
             setTitulo(data.titulo)
@@ -180,7 +176,15 @@ const CrearTarea = ({route}) => {
                     }]
                 )
 
-            }).catch((error) => console.log(error))
+            }).catch((error) => {
+                Alert.alert(
+                    '¡Algo ha salido mal!',
+                    'La tarea no se ha podido crear, inténtalo más tarde',
+                    [{
+                        text: 'Entendido'
+                    }]
+                )
+            })
 
         } else { // EDITAR
 
@@ -197,7 +201,15 @@ const CrearTarea = ({route}) => {
                     }]
                 )
 
-            }).catch((error) => console.log(error))
+            }).catch((error) =>{
+                Alert.alert(
+                    '¡Algo ha salido mal!',
+                    'La tarea no se ha podido editar, inténtalo más tarde',
+                    [{
+                        text: 'Entendido'
+                    }]
+                )
+            })
 
         }
 

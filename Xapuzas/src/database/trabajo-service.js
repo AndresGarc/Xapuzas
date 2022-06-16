@@ -263,7 +263,6 @@ export const putIconoEstado = async (db, id, name) => {
             SET icono = ?
             WHERE estado_id = ?;`, 
             [name, id],
-            () => {console.log("icono editado");},
             (error) => {console.log(error.message);}
         );
     });
@@ -275,7 +274,6 @@ export const dropEstados = async () => {
 
     db.transaction(async (tx) => {
         tx.executeSql(`DROP TABLE IF EXISTS estados;`, [],
-        () => {console.log("tabla estados borrada");},
         (error) => {console.log(error.message);});
     })
     

@@ -87,7 +87,6 @@ export const restoreDB = async () => {
 export const borrarTTarea = async (db) => {
     await db.transaction( tx => {
         tx.executeSql(`DROP TABLE IF EXISTS tarea;`), [],
-        () => {console.log("tabla tarea borrada");},
         (error) => {console.log(error.message);}
     });
 }
@@ -102,11 +101,9 @@ export const borrarTodo = async () => {
 
         db.transaction( tx => {
             tx.executeSql(`DROP TABLE IF EXISTS trabajo;`, [],
-            () => {console.log("tabla trabajos borrada");},
             (error) => {console.log(error.message);});
     
             tx.executeSql(`DROP TABLE IF EXISTS estados;`, [],
-            () => {console.log("tabla estados borrada");},
             (error) => {console.log(error.message);});
     
             tx.executeSql(`DROP TABLE IF EXISTS tarea;`, [],
