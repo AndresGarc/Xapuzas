@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from  "react-native-splash-screen";
-import {Notifications} from 'react-native-notifications';
+import PushNotification  from 'react-native-push-notification';
 
 import { styles } from '../assets/styles';
 
@@ -119,17 +119,16 @@ const Tareas = ({route}) => {
   } 
 
   const notificarHoy = () => {
+
     getTareasHoy().then((data) => {
-      let tareas=''; 
       data.forEach(element => 
-        Notifications.postLocalNotification({
-          title: `Hoy tienes que ${element.titulo}`,
-          body: `Termina esta tarea antes de que termine el día aaaaaaaaa /br aaaaaaaaaaa`,
-          
+        PushNotification.localNotification({
+          channelId: 'channel-id',
+          title: `Hoy tienes que: ${element.titulo}`,
+          message: `Termina esta tarea antes de que termine el día`,
         })
       );
-
-    });
+    }); 
   }
 
   const notificarViejas = () => {
@@ -139,9 +138,10 @@ const Tareas = ({route}) => {
         let split = element.fecha.split('/');
         let fecha = new Date(parseInt(split[2]),parseInt(split[1])-1, parseInt(split[0]));
         if(fecha.valueOf() < hoy.valueOf()) 
-          Notifications.postLocalNotification({
-            title: `No has hecho la tarea ${element.titulo}`,
-            body: `Termina esta tarea antes de que termine el día`,
+          PushNotification.localNotification({
+            channelId: 'channel-id',
+            title: `No has hecho: ${element.titulo}`,
+            message: `Termina esta tarea antes de que termine el día`,
             
           })
       });

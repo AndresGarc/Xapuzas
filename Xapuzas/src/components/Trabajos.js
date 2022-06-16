@@ -4,8 +4,7 @@ import { styles } from '../assets/styles';
 import Icon  from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
-
-import {Notifications} from 'react-native-notifications';
+import PushNotification  from 'react-native-push-notification';
 
 import {
   SafeAreaView,
@@ -106,19 +105,18 @@ const Trabajos = ({route}) => {
 
   }
 
-  const notificarMaterial = () => {
+ const notificarMaterial = () => {
     let hoy = new Date(); hoy.setHours(0,0,0,0); hoy.setMinutes(0,0,0,0);
     getMaterialAtrasado().then((data) => {
       data.forEach(element => {
         let split = element.dia_pedido.split('/');
         let fecha = new Date(parseInt(split[2]),parseInt(split[1])-1, parseInt(split[0]));
         if((hoy-fecha)/86400000 >= 30 ) 
-          Notifications.postLocalNotification({
+          PushNotification.localNotification({
+            channelId: 'channel-id',
             title: `Revisa los materiales de ${element.titulo}`,
-            body: `¡Ha pasado mas de un mes desde que los pediste!`,
-            
+            message: `¡Ha pasado mas de un mes desde que los pediste!`,
           })
-
       });
     });
   }
